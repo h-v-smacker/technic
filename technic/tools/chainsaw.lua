@@ -125,7 +125,7 @@ if minetest.get_modpath("ethereal") then
 	timber_nodenames["ethereal:redwood_trunk"]         = true
 	timber_nodenames["ethereal:frost_tree"]            = true
 	timber_nodenames["ethereal:yellow_trunk"]          = true
-	timber_nodenames["ethereal:ethereal:birch_trunk"]  = true
+	timber_nodenames["ethereal:birch_trunk"]           = true
 	timber_nodenames["ethereal:palm_trunk"]            = true
 	timber_nodenames["ethereal:banana_trunk"]          = true
 	timber_nodenames["ethereal:bamboo"]                = true
@@ -144,6 +144,11 @@ if minetest.get_modpath("ethereal") then
 		timber_nodenames["ethereal:mushroom"]           = true
 		timber_nodenames["ethereal:mushroom_pore"]      = true
 		timber_nodenames["ethereal:orange_leaves"]      = true
+		-- fruits
+		timber_nodenames["ethereal:banana"]        = true
+		timber_nodenames["ethereal:orange"]        = true
+		timber_nodenames["ethereal:coconut"]       = true
+		timber_nodenames["ethereal:golden_apple"]  = true
 	end
 end
 
@@ -214,6 +219,53 @@ end
 -- position above it.  This does not return the bottom position to prevent
 -- the chainsaw from cutting down nodes below the cutting position.
 -- @param pos Sawing position.
+-- local function iterSawTries(pos)
+-- 	-- Copy position to prevent mangling it
+-- 	local pos = vector.new(pos)
+-- 	local i = 0
+-- 
+-- 	return function()
+-- 		i = i + 1
+-- 		-- Given a (top view) area like so (where 5 is the starting position):
+-- 		-- X -->
+-- 		-- Z 123
+-- 		-- | 456
+-- 		-- V 789
+-- 		-- This will return positions 1, 4, 7, 2, 8 (skip 5), 3, 6, 9,
+-- 		-- and the position above 5.
+-- 		if i == 1 then
+-- 			-- Move to starting position
+-- 			pos.x = pos.x - 1
+-- 			pos.z = pos.z - 1
+-- 		elseif i == 4 or i == 7 then
+-- 			-- Move to next X and back to start of Z when we reach
+-- 			-- the end of a Z line.
+-- 			pos.x = pos.x + 1
+-- 			pos.z = pos.z - 2
+-- 		elseif i == 5 then
+-- 			-- Skip the middle position (we've already run on it)
+-- 			-- and double-increment the counter.
+-- 			pos.z = pos.z + 2
+-- 			i = i + 1
+-- 		elseif i <= 9 then
+-- 			-- Go to next Z.
+-- 			pos.z = pos.z + 1
+-- 		elseif i == 10 then
+-- 			-- Move back to center and up.
+-- 			-- The Y+ position must be last so that we don't dig
+-- 			-- straight upward and not come down (since the Y-
+-- 			-- position isn't checked).
+-- 			pos.x = pos.x - 1
+-- 			pos.z = pos.z - 1
+-- 			pos.y = pos.y + 1
+-- 		else
+-- 			return nil
+-- 		end
+-- 		return pos
+-- 	end
+-- end
+
+
 local function iterSawTries(pos)
 	-- Copy position to prevent mangling it
 	local pos = vector.new(pos)
@@ -223,35 +275,37 @@ local function iterSawTries(pos)
 		i = i + 1
 		-- Given a (top view) area like so (where 5 is the starting position):
 		-- X -->
-		-- Z 123
-		-- | 456
-		-- V 789
+		-- Z 1  2  3  4  5
+		-- | 6  7  8  9  10
+		-- | 11 12 13 14 15
+		-- | 16 17 18 19 20
+		-- V 21 22 23 24 25
 		-- This will return positions 1, 4, 7, 2, 8 (skip 5), 3, 6, 9,
 		-- and the position above 5.
 		if i == 1 then
 			-- Move to starting position
-			pos.x = pos.x - 1
-			pos.z = pos.z - 1
-		elseif i == 4 or i == 7 then
+			pos.x = pos.x - 2
+			pos.z = pos.z - 2
+		elseif i == 6 or i == 11 or i == 16 or i == 21 then
 			-- Move to next X and back to start of Z when we reach
 			-- the end of a Z line.
 			pos.x = pos.x + 1
-			pos.z = pos.z - 2
-		elseif i == 5 then
+			pos.z = pos.z - 4
+		elseif i == 13 then
 			-- Skip the middle position (we've already run on it)
 			-- and double-increment the counter.
 			pos.z = pos.z + 2
 			i = i + 1
-		elseif i <= 9 then
+		elseif i <= 25 then
 			-- Go to next Z.
 			pos.z = pos.z + 1
-		elseif i == 10 then
+		elseif i == 26 then
 			-- Move back to center and up.
 			-- The Y+ position must be last so that we don't dig
 			-- straight upward and not come down (since the Y-
 			-- position isn't checked).
-			pos.x = pos.x - 1
-			pos.z = pos.z - 1
+			pos.x = pos.x - 2
+			pos.z = pos.z - 2
 			pos.y = pos.y + 1
 		else
 			return nil
