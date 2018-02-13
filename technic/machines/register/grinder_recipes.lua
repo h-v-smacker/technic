@@ -38,6 +38,30 @@ minetest.clear_craft({
 
 if minetest.get_modpath("farming") then
 	table.insert(recipes, {"farming:seed_wheat",   "farming:flour 1"})
+	table.insert(recipes, {"farming:seed_barley",   "farming:flour 1"})
+	
+	-- added by dhausmig
+	if minetest.registered_items["farming:corn"] ~= nil then
+		minetest.register_craftitem("technic:cornmeal", {
+			description = S("Corn Meal"),
+			inventory_image = "technic_cornmeal.png",
+		})
+		minetest.register_craftitem("technic:cornbread", {
+			description = S("Cornbread"),
+			inventory_image = "technic_cornbread.png",
+			on_use = minetest.item_eat(8),
+      })
+
+      minetest.register_craft({
+		type = "cooking",
+		cooktime = 10,
+		output = "technic:cornbread",
+		recipe = "technic:cornmeal"
+      })
+
+      table.insert(recipes, {"farming:corn",   "technic:cornmeal 2"})
+	-- end of dhausmig's addition
+	end
 end
 
 if minetest.get_modpath("moreores") then
