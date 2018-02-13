@@ -119,6 +119,34 @@ if minetest.get_modpath("growing_cactus") then
 	timber_nodenames["growing_cactus:branch_xx"]                    = true
 end
 
+-- Support ethereal
+if minetest.get_modpath("ethereal") then
+	timber_nodenames["ethereal:willow_trunk"]          = true
+	timber_nodenames["ethereal:redwood_trunk"]         = true
+	timber_nodenames["ethereal:frost_tree"]            = true
+	timber_nodenames["ethereal:yellow_trunk"]          = true
+	timber_nodenames["ethereal:ethereal:birch_trunk"]  = true
+	timber_nodenames["ethereal:palm_trunk"]            = true
+	timber_nodenames["ethereal:banana_trunk"]          = true
+	timber_nodenames["ethereal:bamboo"]                = true
+	timber_nodenames["ethereal:mushroom_trunk"]        = true
+	timber_nodenames["ethereal:scorched_tree"]         = true
+		
+	if chainsaw_leaves then
+		timber_nodenames["ethereal:willow_twig"]        = true
+		timber_nodenames["ethereal:redwood_leaves"]     = true
+		timber_nodenames["ethereal:frost_leaves"]       = true
+		timber_nodenames["ethereal:yellowleaves"]       = true
+		timber_nodenames["ethereal:birch_leaves"]       = true
+		timber_nodenames["ethereal:palmleaves"]         = true
+		timber_nodenames["ethereal:bananaleaves"]       = true
+		timber_nodenames["ethereal:bamboo_leaves"]      = true
+		timber_nodenames["ethereal:mushroom"]           = true
+		timber_nodenames["ethereal:mushroom_pore"]      = true
+		timber_nodenames["ethereal:orange_leaves"]      = true
+	end
+end
+
 -- Support farming_plus
 if minetest.get_modpath("farming_plus") then
 	if chainsaw_leaves then
