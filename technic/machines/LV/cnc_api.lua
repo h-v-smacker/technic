@@ -303,7 +303,8 @@ function technic.cnc.register_program(recipeitem, suffix, model, groups, images,
 		walkable      = true,
 		groups        = groups,
 		selection_box = sbox,
-		collision_box = cbox
+		collision_box = cbox,
+		light_source  = groups.light_source,
 	})
 end
 

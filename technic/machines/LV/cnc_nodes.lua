@@ -145,14 +145,6 @@ technic.cnc.register_all("default:silver_sandstone_block",
 
 
 
-
--- LEAVES
----------
-technic.cnc.register_all("default:leaves",
-                {snappy=2, choppy=2, oddly_breakable_by_hand=3, not_in_creative_inventory=1},
-                {"default_leaves.png"},
-                S("Leaves"))
-
 -- TREE
 -------
 technic.cnc.register_all("default:tree",
@@ -261,3 +253,13 @@ technic.cnc.register_all("technic:granite",
                 {"technic_granite.png"},
                 S("Granite"))
 
+
+if minetest.get_modpath("ethereal") then
+	-- Glostone
+	------------
+	technic.cnc.register_all("ethereal:glostone",
+			{cracky=1, not_in_creative_inventory=1, light_source=13},
+			{"glostone.png"},
+			S("Glo Stone"))
+
+end
