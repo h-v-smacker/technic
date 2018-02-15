@@ -498,7 +498,7 @@ minetest.register_craft({
 	recipe = {
 		{"technic:chainsaw",             "technic:stainless_steel_ingot", "technic:stainless_steel_ingot"},
 		{"technic:battery",              "technic:battery",               ""},
-		{"technic:battery",                    "",                              ""},
+		{"technic:battery",              "dye:green",                     ""},
 	}
 })
 
