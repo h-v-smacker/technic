@@ -196,7 +196,7 @@ end
 local S = technic.getter
 
 technic.register_power_tool("technic:chainsaw", chainsaw_max_charge)
-technic.register_power_tool("technic:chainsaw_mk2", chainsaw_max_charge*4)
+technic.register_power_tool("technic:chainsaw_mk2", chainsaw_max_charge*5)
 
 -- Table for saving what was sawed down
 local produced = {}
@@ -497,8 +497,8 @@ minetest.register_craft({
 	output = "technic:chainsaw_mk2",
 	recipe = {
 		{"technic:chainsaw",             "technic:stainless_steel_ingot", "technic:stainless_steel_ingot"},
-		{"technic:green_energy_crystal", "",                              ""},
-		{"",                             "",                              ""},
+		{"technic:red_energy_crystal",   "",                              ""},
+		{"dye:green",                    "",                              ""},
 	}
 })
 
