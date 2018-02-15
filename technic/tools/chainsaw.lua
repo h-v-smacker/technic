@@ -196,6 +196,7 @@ end
 local S = technic.getter
 
 technic.register_power_tool("technic:chainsaw", chainsaw_max_charge)
+technic.register_power_tool("technic:chainsaw_mk2", chainsaw_max_charge*4)
 
 -- Table for saving what was sawed down
 local produced = {}
@@ -266,57 +267,58 @@ local function iterSawTries(pos)
 end
 
 
--- local function iterSawTries(pos)
--- 	-- Copy position to prevent mangling it
--- 	local pos = vector.new(pos)
--- 	local i = 0
--- 
--- 	return function()
--- 		i = i + 1
--- 		-- Given a (top view) area like so (where 5 is the starting position):
--- 		-- X -->
--- 		-- Z 1  2  3  4  5
--- 		-- | 6  7  8  9  10
--- 		-- | 11 12 13 14 15
--- 		-- | 16 17 18 19 20
--- 		-- V 21 22 23 24 25
--- 		-- This will return positions 1...21, 2..,22, 3...23 (skip 13), 4...24, 5...25
--- 		-- and the position above 13.
--- 		if i == 1 then
--- 			-- Move to starting position
--- 			pos.x = pos.x - 2
--- 			pos.z = pos.z - 2
--- 		elseif i == 6 or i == 11 or i == 16 or i == 21 then
--- 			-- Move to next X and back to start of Z when we reach
--- 			-- the end of a Z line.
--- 			pos.x = pos.x + 1
--- 			pos.z = pos.z - 4
--- 		elseif i == 13 then
--- 			-- Skip the middle position (we've already run on it)
--- 			-- and double-increment the counter.
--- 			pos.z = pos.z + 2
--- 			i = i + 1
--- 		elseif i <= 25 then
--- 			-- Go to next Z.
--- 			pos.z = pos.z + 1
--- 		elseif i == 26 then
--- 			-- Move back to center and up.
--- 			-- The Y+ position must be last so that we don't dig
--- 			-- straight upward and not come down (since the Y-
--- 			-- position isn't checked).
--- 			pos.x = pos.x - 2
--- 			pos.z = pos.z - 2
--- 			pos.y = pos.y + 1
--- 		else
--- 			return nil
--- 		end
--- 		return pos
--- 	end
--- end
+
+local function iterSawTries_mk2(pos)
+	-- Copy position to prevent mangling it
+	local pos = vector.new(pos)
+	local i = 0
+
+	return function()
+		i = i + 1
+		-- Given a (top view) area like so (where 5 is the starting position):
+		-- X -->
+		-- Z 1  2  3  4  5
+		-- | 6  7  8  9  10
+		-- | 11 12 13 14 15
+		-- | 16 17 18 19 20
+		-- V 21 22 23 24 25
+		-- This will return positions 1...21, 2..,22, 3...23 (skip 13), 4...24, 5...25
+		-- and the position above 13.
+		if i == 1 then
+			-- Move to starting position
+			pos.x = pos.x - 2
+			pos.z = pos.z - 2
+		elseif i == 6 or i == 11 or i == 16 or i == 21 then
+			-- Move to next X and back to start of Z when we reach
+			-- the end of a Z line.
+			pos.x = pos.x + 1
+			pos.z = pos.z - 4
+		elseif i == 13 then
+			-- Skip the middle position (we've already run on it)
+			-- and double-increment the counter.
+			pos.z = pos.z + 2
+			i = i + 1
+		elseif i <= 25 then
+			-- Go to next Z.
+			pos.z = pos.z + 1
+		elseif i == 26 then
+			-- Move back to center and up.
+			-- The Y+ position must be last so that we don't dig
+			-- straight upward and not come down (since the Y-
+			-- position isn't checked).
+			pos.x = pos.x - 2
+			pos.z = pos.z - 2
+			pos.y = pos.y + 1
+		else
+			return nil
+		end
+		return pos
+	end
+end
 
 -- This function does all the hard work. Recursively we dig the node at hand
 -- if it is in the table and then search the surroundings for more stuff to dig.
-local function recursive_dig(pos, remaining_charge)
+local function recursive_dig(pos, remaining_charge, mk)
 	if remaining_charge < chainsaw_charge_per_node then
 		return remaining_charge
 	end
@@ -332,14 +334,37 @@ local function recursive_dig(pos, remaining_charge)
 	remaining_charge = remaining_charge - chainsaw_charge_per_node
 
 	-- Check surroundings and run recursively if any charge left
-	for npos in iterSawTries(pos) do
-		if remaining_charge < chainsaw_charge_per_node then
-			break
+	if mk == 1 then
+		for npos in iterSawTries(pos) do
+			if remaining_charge < chainsaw_charge_per_node then
+				break
+			end
+			if timber_nodenames[minetest.get_node(npos).name] then
+				remaining_charge = recursive_dig(npos, remaining_charge, mk)
+			end
 		end
-		if timber_nodenames[minetest.get_node(npos).name] then
-			remaining_charge = recursive_dig(npos, remaining_charge)
+	elseif mk == 2 then
+		for npos in iterSawTries_mk2(pos) do
+			if remaining_charge < chainsaw_charge_per_node then
+				break
+			end
+			if timber_nodenames[minetest.get_node(npos).name] then
+				remaining_charge = recursive_dig(npos, remaining_charge, mk)
+			else
+				local ct = {{x=-1,z=-1},{x=-1,z=1},{x=1,z=-1},{x=1,z=1}}
+				for _,c in ipairs(ct) do
+					local pos_alt = vector.new(npos)
+					pos_alt.x = pos_alt.x + c.x
+					pos_alt.z = pos_alt.z + c.z
+					pos_alt.y = pos_alt.y + 1
+					if timber_nodenames[minetest.get_node(pos_alt).name] then
+						remaining_charge = recursive_dig(pos_alt, remaining_charge, mk)
+					end
+				end
+			end
 		end
 	end
+	
 	return remaining_charge
 end
 
@@ -378,9 +403,9 @@ local function get_drop_pos(pos)
 end
 
 -- Chainsaw entry point
-local function chainsaw_dig(pos, current_charge)
+local function chainsaw_dig(pos, current_charge, mk)
 	-- Start sawing things down
-	local remaining_charge = recursive_dig(pos, current_charge)
+	local remaining_charge = recursive_dig(pos, current_charge, mk)
 	minetest.sound_play("chainsaw", {pos = pos, gain = 1.0,
 			max_hear_distance = 10})
 
@@ -404,6 +429,33 @@ local function chainsaw_dig(pos, current_charge)
 end
 
 
+local function use_chainsaw(itemstack, user, pointed_thing, mk)
+	if pointed_thing.type ~= "node" then
+		return itemstack
+	end
+
+	local meta = minetest.deserialize(itemstack:get_metadata())
+	if not meta or not meta.charge or
+			meta.charge < chainsaw_charge_per_node then
+		return
+	end
+
+	local name = user:get_player_name()
+	if minetest.is_protected(pointed_thing.under, name) then
+		minetest.record_protection_violation(pointed_thing.under, name)
+		return
+	end
+
+	-- Send current charge to digging function so that the
+	-- chainsaw will stop after digging a number of nodes
+	meta.charge = chainsaw_dig(pointed_thing.under, meta.charge, mk)
+	if not technic.creative_mode then
+		technic.set_RE_wear(itemstack, meta.charge, chainsaw_max_charge)
+		itemstack:set_metadata(minetest.serialize(meta))
+	end
+	return itemstack
+end
+
 minetest.register_tool("technic:chainsaw", {
 	description = S("Chainsaw"),
 	inventory_image = "technic_chainsaw.png",
@@ -411,42 +463,42 @@ minetest.register_tool("technic:chainsaw", {
 	wear_represents = "technic_RE_charge",
 	on_refill = technic.refill_RE_charge,
 	on_use = function(itemstack, user, pointed_thing)
-		if pointed_thing.type ~= "node" then
-			return itemstack
+			use_chainsaw(itemstack, user, pointed_thing, 1)
+			return(itemstack)
 		end
-
-		local meta = minetest.deserialize(itemstack:get_metadata())
-		if not meta or not meta.charge or
-				meta.charge < chainsaw_charge_per_node then
-			return
-		end
-
-		local name = user:get_player_name()
-		if minetest.is_protected(pointed_thing.under, name) then
-			minetest.record_protection_violation(pointed_thing.under, name)
-			return
-		end
-
-		-- Send current charge to digging function so that the
-		-- chainsaw will stop after digging a number of nodes
-		meta.charge = chainsaw_dig(pointed_thing.under, meta.charge)
-		if not technic.creative_mode then
-			technic.set_RE_wear(itemstack, meta.charge, chainsaw_max_charge)
-			itemstack:set_metadata(minetest.serialize(meta))
-		end
-		return itemstack
-	end,
 })
 
+minetest.register_tool("technic:chainsaw_mk2", {
+	description = S("Chainsaw Mk2"),
+	inventory_image = "technic_chainsaw_mk2.png",
+	stack_max = 1,
+	wear_represents = "technic_RE_charge",
+	on_refill = technic.refill_RE_charge,
+	on_use = function(itemstack, user, pointed_thing)
+			use_chainsaw(itemstack, user, pointed_thing, 2)
+			return(itemstack)
+		end
+})
+
+	
 local mesecons_button = minetest.get_modpath("mesecons_button")
 local trigger = mesecons_button and "mesecons_button:button_off" or "default:mese_crystal_fragment"
 
 minetest.register_craft({
 	output = "technic:chainsaw",
 	recipe = {
-		{"technic:stainless_steel_ingot", trigger,                      "technic:battery"},
-		{"technic:fine_copper_wire",      "technic:motor",              "technic:battery"},
-		{"",                              "",                           "technic:stainless_steel_ingot"},
+		{"technic:stainless_steel_ingot", trigger,         "technic:battery"},
+		{"technic:fine_copper_wire",      "technic:motor", "technic:battery"},
+		{"",                              "",              "technic:stainless_steel_ingot"},
+	}
+})
+
+minetest.register_craft({
+	output = "technic:chainsaw_mk2",
+	recipe = {
+		{"technic:chainsaw",             "technic:stainless_steel_ingot", "technic:stainless_steel_ingot"},
+		{"technic:green_energy_crystal", "",                              ""},
+		{"",                             "",                              ""},
 	}
 })
 
