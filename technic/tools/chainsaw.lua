@@ -1,6 +1,7 @@
 -- Configuration
 
-local chainsaw_max_charge      = 30000 -- Maximum charge of the saw
+local chainsaw_max_charge      =  30000 -- Maximum charge of the saw
+local chainsaw_max_charge_mk2  = 120000
 -- Gives 2500 nodes on a single charge (about 50 complete normal trees)
 local chainsaw_charge_per_node = 12
 -- Cut down tree leaves.  Leaf decay may cause slowness on large trees
@@ -196,7 +197,7 @@ end
 local S = technic.getter
 
 technic.register_power_tool("technic:chainsaw", chainsaw_max_charge)
-technic.register_power_tool("technic:chainsaw_mk2", chainsaw_max_charge*4)
+technic.register_power_tool("technic:chainsaw_mk2", chainsaw_max_charge_mk2)
 
 -- Table for saving what was sawed down
 local produced = {}
@@ -450,7 +451,11 @@ local function use_chainsaw(itemstack, user, pointed_thing, mk)
 	-- chainsaw will stop after digging a number of nodes
 	meta.charge = chainsaw_dig(pointed_thing.under, meta.charge, mk)
 	if not technic.creative_mode then
-		technic.set_RE_wear(itemstack, meta.charge, chainsaw_max_charge)
+		if mk == 1 then
+			technic.set_RE_wear(itemstack, meta.charge, chainsaw_max_charge)
+		elseif mk == 2 then
+			technic.set_RE_wear(itemstack, meta.charge, chainsaw_max_charge_mk2)
+		end
 		itemstack:set_metadata(minetest.serialize(meta))
 	end
 	return itemstack
