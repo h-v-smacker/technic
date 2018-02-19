@@ -185,3 +185,14 @@ minetest.register_craft({
 		{ "technic:raw_latex", "default:fence_wood", "technic:raw_latex"},
 	}
 })
+
+minetest.register_craftitem(":technic:diamond_seed", {
+	description = "Diamond Seed",
+	inventory_image = "technic_diamond_seed.png",
+})
+
+minetest.register_craft({
+	type = "cooking",
+	output = "technic:diamond_seed",
+	recipe = "technic:graphite"
+})
