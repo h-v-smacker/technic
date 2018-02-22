@@ -27,6 +27,7 @@ local recipes = {
 	{"default:cobble",          "default:gravel"},
 	{"default:gravel",          "default:sand"},
 	{"default:sandstone",       "default:sand 2"}, -- reverse recipe can be found in the compressor
+	{"technic:stone_dust",      "default:silver_sand"}
 }
 
 if minetest.get_modpath("ethereal") then
