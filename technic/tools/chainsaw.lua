@@ -150,6 +150,8 @@ if minetest.get_modpath("ethereal") then
 		timber_nodenames["ethereal:orange"]        = true
 		timber_nodenames["ethereal:coconut"]       = true
 		timber_nodenames["ethereal:golden_apple"]  = true
+		-- extra
+		timber_nodenames["ethereal:vine"]  = true
 	end
 end
 

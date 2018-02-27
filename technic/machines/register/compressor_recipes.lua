@@ -11,6 +11,7 @@ end
 local recipes = {
 	{"default:snowblock",          "default:ice"},
 	{"default:sand 2",             "default:sandstone"},
+	{"default:silver_sand 2",      "default:silver_sandstone"},
 	{"default:desert_sand",        "default:desert_stone"},
 	{"technic:mixed_metal_ingot",  "technic:composite_plate"},
 	{"default:copper_ingot 5",     "technic:copper_plate"},

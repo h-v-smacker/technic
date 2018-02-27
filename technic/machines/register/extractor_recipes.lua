@@ -29,6 +29,10 @@ if minetest.get_modpath("dye") then
 		{"bushes:blueberry",                  unifieddyes and "unifieddyes:magenta_s50 4" or "dye:magenta 4"},
 	}
 
+	if minetest.get_modpath("hunger") and minetest.get_modpath("ethereal") then
+		table.insert(dye_recipes, {"ethereal:willow_twig 12", "technic:aspirin_pill"})
+	end
+	
 	for _, data in ipairs(dye_recipes) do
 		technic.register_extractor_recipe({input = {data[1]}, output = data[2]})
 	end
