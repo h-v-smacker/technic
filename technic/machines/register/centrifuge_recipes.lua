@@ -43,6 +43,14 @@ if minetest.get_modpath("farming") then
 	end
 end
 
+-- using centfuge as a sorting machine for grass seeds
+table.insert(recipes, { "default:grass_1 99", "default:dry_grass_1 80", "default:dry_shrub 7", "default:junglegrass 12" })
+if minetest.get_modpath("ethereal") then
+	table.insert(recipes, { "default:junglegrass 99", "ethereal:dry_shrub 10", "ethereal:crystalgrass 5", "ethereal:snowygrass 5" })
+	table.insert(recipes, { "default:dry_grass_1 99", "ethereal:fern 5" })
+end
+
+
 for _, data in pairs(recipes) do
 	technic.register_separating_recipe({ input = { data[1] }, output = { data[2], data[3], data[4] } })
 end
