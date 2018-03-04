@@ -22,6 +22,8 @@ local recipes = {
 	{"technic:sulfur_lump",        "technic:sulfur_dust 2"},
 	{"default:stone",              "technic:stone_dust"},
 	{"default:sand",               "technic:stone_dust"},
+	-- recycle glass panels
+	{"xpanes:pane_flat 8",         "vessels:glass_fragments 3"},
 	
 	-- Other
 	{"default:cobble",          "default:gravel"},
