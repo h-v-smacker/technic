@@ -307,7 +307,7 @@ local function iterSawTries_mk2(pos)
 		elseif i == 26 then
 			-- Move back to center and up.
 			-- The Y+ position must be last so that we don't dig
-			-- straight upward and not come down (since the Y-
+			-- straight upward and notminetest.record_protection_violation(pointed_thing.under, name) come down (since the Y-
 			-- position isn't checked).
 			pos.x = pos.x - 2
 			pos.z = pos.z - 2
@@ -321,7 +321,7 @@ end
 
 -- This function does all the hard work. Recursively we dig the node at hand
 -- if it is in the table and then search the surroundings for more stuff to dig.
-local function recursive_dig(pos, remaining_charge, mk)
+local function recursive_dig(pos, remaining_charge, mk, username)
 	if remaining_charge < chainsaw_charge_per_node then
 		return remaining_charge
 	end
@@ -330,7 +330,11 @@ local function recursive_dig(pos, remaining_charge, mk)
 	if not timber_nodenames[node.name] then
 		return remaining_charge
 	end
-
+	
+	if minetest.is_protected(pos, username) then
+		return remaining_charge
+	end
+	
 	-- Wood found - cut it
 	handle_drops(minetest.get_node_drops(node.name, ""))
 	minetest.remove_node(pos)
@@ -343,7 +347,7 @@ local function recursive_dig(pos, remaining_charge, mk)
 				break
 			end
 			if timber_nodenames[minetest.get_node(npos).name] then
-				remaining_charge = recursive_dig(npos, remaining_charge, mk)
+				remaining_charge = recursive_dig(npos, remaining_charge, mk, username)
 			end
 		end
 	elseif mk == 2 then
@@ -352,7 +356,7 @@ local function recursive_dig(pos, remaining_charge, mk)
 				break
 			end
 			if timber_nodenames[minetest.get_node(npos).name] then
-				remaining_charge = recursive_dig(npos, remaining_charge, mk)
+				remaining_charge = recursive_dig(npos, remaining_charge, mk, username)
 			else
 				local ct = {{x=-1,z=-1},{x=-1,z=1},{x=1,z=-1},{x=1,z=1}}
 				for _,c in ipairs(ct) do
@@ -361,7 +365,7 @@ local function recursive_dig(pos, remaining_charge, mk)
 					pos_alt.z = pos_alt.z + c.z
 					pos_alt.y = pos_alt.y + 1
 					if timber_nodenames[minetest.get_node(pos_alt).name] then
-						remaining_charge = recursive_dig(pos_alt, remaining_charge, mk)
+						remaining_charge = recursive_dig(pos_alt, remaining_charge, mk, username)
 					end
 				end
 			end
@@ -406,9 +410,9 @@ local function get_drop_pos(pos)
 end
 
 -- Chainsaw entry point
-local function chainsaw_dig(pos, current_charge, mk)
+local function chainsaw_dig(pos, current_charge, mk, username)
 	-- Start sawing things down
-	local remaining_charge = recursive_dig(pos, current_charge, mk)
+	local remaining_charge = recursive_dig(pos, current_charge, mk, username)
 	minetest.sound_play("chainsaw", {pos = pos, gain = 1.0,
 			max_hear_distance = 10})
 
@@ -451,7 +455,7 @@ local function use_chainsaw(itemstack, user, pointed_thing, mk)
 
 	-- Send current charge to digging function so that the
 	-- chainsaw will stop after digging a number of nodes
-	meta.charge = chainsaw_dig(pointed_thing.under, meta.charge, mk)
+	meta.charge = chainsaw_dig(pointed_thing.under, meta.charge, mk, name)
 	if not technic.creative_mode then
 		if mk == 1 then
 			technic.set_RE_wear(itemstack, meta.charge, chainsaw_max_charge)
