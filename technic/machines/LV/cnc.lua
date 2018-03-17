@@ -28,8 +28,11 @@ local onesize_products = {
 	pyramid                  = 2,
 	spike                    = 1,
 	cylinder                 = 2,
+	cylinder_fluted          = 2,
 	oblate_spheroid          = 1,
 	sphere                   = 1,
+	sphere_half              = 2,
+	sphere_quarter           = 4,
 	stick                    = 8,
 	slope_upsdown            = 2,
 	slope_edge_upsdown       = 1,
@@ -38,6 +41,20 @@ local onesize_products = {
 	slope_lying              = 2,
 	onecurvededge            = 1,
 	twocurvededge            = 1,
+	innercurvededge          = 1,
+	opposedcurvededge        = 1,
+	block_fluted             = 1,
+	tile_beveled             = 9,
+	arch216                  = 1,
+	arch216_flange           = 1,
+	cylinder_half            = 4,
+	cylinder_half_corner     = 4,
+	beam216                  = 8,
+	beam216_cross            = 2,
+	beam216_tee              = 2,
+	beam216_cross_column     = 1,
+	diagonal_truss           = 6,
+	diagonal_truss_cross     = 4,
 }
 local twosize_products = {
 	element_straight         = 4,
@@ -48,43 +65,60 @@ local twosize_products = {
 }
 
 local cnc_formspec =
-	"invsize[9,11;]"..
-	"label[1,0;"..S("Choose Milling Program:").."]"..
-	"image_button[1,0.5;1,1;technic_cnc_slope.png;slope; ]"..
-	"image_button[2,0.5;1,1;technic_cnc_slope_edge.png;slope_edge; ]"..
-	"image_button[3,0.5;1,1;technic_cnc_slope_inner_edge.png;slope_inner_edge; ]"..
-	"image_button[4,0.5;1,1;technic_cnc_pyramid.png;pyramid; ]"..
-	"image_button[5,0.5;1,1;technic_cnc_spike.png;spike; ]"..
-	"image_button[6,0.5;1,1;technic_cnc_cylinder.png;cylinder; ]"..
-	"image_button[7,0.5;1,1;technic_cnc_oblate_spheroid.png;oblate_spheroid; ]"..
-	"image_button[8,0.5;1,1;technic_cnc_stick.png;stick; ]"..
+	"invsize[11,11;]"..
+	"label[0,0;"..S("Choose Milling Program:").."]"..
+	"image_button[0,0.5;1,1;technic_cnc_slope.png;slope; ]"..
+	"image_button[1,0.5;1,1;technic_cnc_slope_edge.png;slope_edge; ]"..
+	"image_button[2,0.5;1,1;technic_cnc_slope_inner_edge.png;slope_inner_edge; ]"..
+	"image_button[3,0.5;1,1;technic_cnc_pyramid.png;pyramid; ]"..
+	"image_button[4,0.5;1,1;technic_cnc_spike.png;spike; ]"..
+	"image_button[5,0.5;1,1;technic_cnc_tile_beveled.png;tile_beveled; ]"..
+	"image_button[6,0.5;1,1;technic_cnc_stick.png;stick; ]"..
+	"image_button[7,0.5;1,1;technic_cnc_beam216.png;beam216; ]"..
+	"image_button[8,0.5;1,1;technic_cnc_beam216_cross.png;beam216_cross; ]"..
+	"image_button[9,0.5;1,1;technic_cnc_beam216_tee.png;beam216_tee; ]"..
+	"image_button[10,0.5;1,1;technic_cnc_beam216_cross_column.png;beam216_cross_column; ]"..
 
-	"image_button[1,1.5;1,1;technic_cnc_slope_upsdwn.png;slope_upsdown; ]"..
-	"image_button[2,1.5;1,1;technic_cnc_slope_edge_upsdwn.png;slope_edge_upsdown; ]"..
-	"image_button[3,1.5;1,1;technic_cnc_slope_inner_edge_upsdwn.png;slope_inner_edge_upsdown; ]"..
+	"image_button[0,1.5;1,1;technic_cnc_slope_upsdwn.png;slope_upsdown; ]"..
+	"image_button[1,1.5;1,1;technic_cnc_slope_edge_upsdwn.png;slope_edge_upsdown; ]"..
+	"image_button[2,1.5;1,1;technic_cnc_slope_inner_edge_upsdwn.png;slope_inner_edge_upsdown; ]"..
+	"image_button[3,1.5;1,1;technic_cnc_cylinder.png;cylinder; ]"..
 	"image_button[4,1.5;1,1;technic_cnc_cylinder_horizontal.png;cylinder_horizontal; ]"..
-	"image_button[5,1.5;1,1;technic_cnc_sphere.png;sphere; ]"..
+	"image_button[5,1.5;1,1;technic_cnc_cylinder_half.png;cylinder_half; ]"..
+	"image_button[6,1.5;1,1;technic_cnc_cylinder_half_corner.png;cylinder_half_corner; ]"..
+	"image_button[7,1.5;1,1;technic_cnc_oblate_spheroid.png;oblate_spheroid; ]"..
+	"image_button[8,1.5;1,1;technic_cnc_sphere.png;sphere; ]"..
+	"image_button[9,1.5;1,1;technic_cnc_sphere_half.png;sphere_half; ]"..
+	"image_button[10,1.5;1,1;technic_cnc_sphere_quarter.png;sphere_quarter; ]"..
+	
+	"image_button[0,2.5;1,1;technic_cnc_slope_lying.png;slope_lying; ]"..
+	"image_button[1,2.5;1,1;technic_cnc_onecurvededge.png;onecurvededge; ]"..
+	"image_button[2,2.5;1,1;technic_cnc_twocurvededge.png;twocurvededge; ]"..
+	"image_button[3,2.5;1,1;technic_cnc_innercurvededge.png;innercurvededge; ]"..
+	"image_button[4,2.5;1,1;technic_cnc_opposedcurvededge.png;opposedcurvededge; ]"..
+	"image_button[5,2.5;1,1;technic_cnc_block_fluted.png;block_fluted; ]"..
+	"image_button[6,2.5;1,1;technic_cnc_cylinder_fluted.png;cylinder_fluted; ]"..
+	"image_button[7,2.5;1,1;technic_cnc_arch216.png;arch216; ]"..
+	"image_button[8,2.5;1,1;technic_cnc_arch216_flange.png;arch216_flange; ]"..
+	"image_button[9,2.5;1,1;technic_cnc_diagonal_truss.png;diagonal_truss; ]"..
+	"image_button[10,2.5;1,1;technic_cnc_diagonal_truss_cross.png;diagonal_truss_cross; ]"..
 
-	"image_button[1,2.5;1,1;technic_cnc_slope_lying.png;slope_lying; ]"..
-	"image_button[2,2.5;1,1;technic_cnc_onecurvededge.png;onecurvededge; ]"..
-	"image_button[3,2.5;1,1;technic_cnc_twocurvededge.png;twocurvededge; ]"..
+	"label[0,3.5;"..S("Slim Elements half / normal height:").."]"..
 
-	"label[1,3.5;"..S("Slim Elements half / normal height:").."]"..
+	"image_button[0,4;1,0.5;technic_cnc_full.png;full; ]"..
+	"image_button[0,4.5;1,0.5;technic_cnc_half.png;half; ]"..
+	"image_button[1,4;1,1;technic_cnc_element_straight.png;element_straight; ]"..
+	"image_button[2,4;1,1;technic_cnc_element_end.png;element_end; ]"..
+	"image_button[3,4;1,1;technic_cnc_element_cross.png;element_cross; ]"..
+	"image_button[4,4;1,1;technic_cnc_element_t.png;element_t; ]"..
+	"image_button[5,4;1,1;technic_cnc_element_edge.png;element_edge; ]"..
 
-	"image_button[1,4;1,0.5;technic_cnc_full.png;full; ]"..
-	"image_button[1,4.5;1,0.5;technic_cnc_half.png;half; ]"..
-	"image_button[2,4;1,1;technic_cnc_element_straight.png;element_straight; ]"..
-	"image_button[3,4;1,1;technic_cnc_element_end.png;element_end; ]"..
-	"image_button[4,4;1,1;technic_cnc_element_cross.png;element_cross; ]"..
-	"image_button[5,4;1,1;technic_cnc_element_t.png;element_t; ]"..
-	"image_button[6,4;1,1;technic_cnc_element_edge.png;element_edge; ]"..
+	"label[1, 5.5;"..S("In:").."]"..
+	"list[current_name;src;1.5,5.5;1,1;]"..
+	"label[4.5, 5.5;"..S("Out:").."]"..
+	"list[current_name;dst;5.5,5.5;4,1;]"..
 
-	"label[0, 5.5;"..S("In:").."]"..
-	"list[current_name;src;0.5,5.5;1,1;]"..
-	"label[4, 5.5;"..S("Out:").."]"..
-	"list[current_name;dst;5,5.5;4,1;]"..
-
-	"list[current_player;main;0,7;8,4;]"..
+	"list[current_player;main;1.5,7;8,4;]"..
 	"listring[current_name;dst]"..
 	"listring[current_player;main]"..
 	"listring[current_name;src]"..
