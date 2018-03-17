@@ -103,12 +103,24 @@ technic.cnc.programs = {
 	
 	{ suffix  = "technic_cnc_sphere_half",
 		model = "technic_sphere_half.obj",
-		desc  = S("Half Sphere")
+		desc  = S("Half Sphere"),
+		cbox  = {
+			type = "fixed",
+			fixed = {
+				{ -0.5,  -0.5, -0.5, 0.5,  0, 0.5 },
+			}
+		}
 	},
 	
 	{ suffix  = "technic_cnc_sphere_quarter",
 		model = "technic_sphere_quarter.obj",
-		desc  = S("Quarter Sphere")
+		desc  = S("Quarter Sphere"),
+		cbox  = {
+			type = "fixed",
+			fixed = {
+				{ -0.5,  -0.5, -0.5, 0.5,  0, 0 },
+			}
+		}
 	},
 
 	{ suffix  = "technic_cnc_cylinder_horizontal",
@@ -123,17 +135,34 @@ technic.cnc.programs = {
 	
 	{ suffix  = "technic_cnc_cylinder_half",
 		model = "technic_cylinder_half.obj",
-		desc  = S("Half Cylinder")
+		desc  = S("Half Cylinder"),
+		cbox  = {
+			type = "fixed",
+			fixed = {
+				{ -0.5,  -0.5, -0.5, 0.5,  0, 0.5 },
+			}
+		}
 	},
 	
 	{ suffix  = "technic_cnc_cylinder_half_corner",
 		model = "technic_cylinder_half_corner.obj",
-		desc  = S("Half Cylinder Corner")
+		desc  = S("Half Cylinder Corner"),
+		cbox  = {
+			type = "fixed",
+			fixed = {
+				{ -0.5,  -0.5, -0.5, 0.5,  0, 0.5 },
+			}
+		}
 	},
 
 	{ suffix  = "technic_cnc_cylinder_fluted",
 		model = "technic_cylinder_fluted.obj",
 		desc  = S("Fluted Cylinder Column")
+	},
+	
+	{ suffix  = "technic_cnc_block_fluted",
+		model = "technic_block_fluted.obj",
+		desc  = S("Fluted Square Column")
 	},
 	
 	{ suffix  = "technic_cnc_twocurvededge",
@@ -156,19 +185,28 @@ technic.cnc.programs = {
 		desc  = S("Opposed Curved Edges Block")
 	},
 	
+	-- 4/16 Diagonal truss
+	
 	{ suffix  = "technic_cnc_diagonal_truss",
 		model = "technic_diagonal_truss.obj",
-		desc  = S("Diagonal Truss")
+		desc  = S("Diagonal Truss"),
+		cbox  = {
+			type = "fixed",
+			fixed = {
+				{ -0.5,  -0.5, -0.25, 0.5,  0.5, 0.25 },
+			}
+		}
 	},
-	
+		
 	{ suffix  = "technic_cnc_diagonal_truss_cross",
 		model = "technic_diagonal_truss_cross.obj",
-		desc  = S("Diagonal Truss Cross")
-	},
-	
-	{ suffix  = "technic_cnc_block_fluted",
-		model = "technic_block_fluted.obj",
-		desc  = S("Fluted Square Column")
+		desc  = S("Diagonal Truss Cross"),
+		cbox  = {
+			type = "fixed",
+			fixed = {
+				{ -0.5,  -0.5, -0.25, 0.5,  0.5, 0.25 },
+			}
+		}
 	},
 	
 	-- 2/16 Beams
