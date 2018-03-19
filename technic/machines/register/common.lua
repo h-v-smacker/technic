@@ -19,16 +19,20 @@ function technic.handle_machine_upgrades(meta)
 
 	if upg_item1 == "technic:control_logic_unit" then
 		tube_upgrade = tube_upgrade + 1
+	elseif upg_item1 == "technic:control_logic_unit_adv" then
+		tube_upgrade = tube_upgrade + 6
 	elseif upg_item1 == "technic:battery" then
 		EU_upgrade = EU_upgrade + 1
 	end
 
 	if upg_item2 == "technic:control_logic_unit" then
 		tube_upgrade = tube_upgrade + 1
+	elseif upg_item2 == "technic:control_logic_unit_adv" then
+		tube_upgrade = tube_upgrade + 6
 	elseif  upg_item2 == "technic:battery" then
 		EU_upgrade = EU_upgrade + 1
 	end
-
+	
 	return EU_upgrade, tube_upgrade
 end
 
@@ -39,6 +43,7 @@ local function on_machine_upgrade(meta, stack)
 		meta:set_int("public", 1)
 		return 1
 	elseif stack_name ~= "technic:control_logic_unit"
+	   and stack_name ~= "technic:control_logic_unit_adv"
 	   and stack_name ~= "technic:battery" then
 		return 0
 	end
@@ -60,7 +65,7 @@ local function on_machine_downgrade(meta, stack, list)
 end
 
 
-function technic.send_items(pos, x_velocity, z_velocity, output_name)
+function technic.send_items(pos, x_velocity, z_velocity, output_name, full)
 	-- Send items on their way in the pipe system.
 	if output_name == nil then
 		output_name = "dst"
@@ -68,20 +73,28 @@ function technic.send_items(pos, x_velocity, z_velocity, output_name)
 	
 	local meta = minetest.get_meta(pos) 
 	local inv = meta:get_inventory()
+	
 	local i = 0
 	for _, stack in ipairs(inv:get_list(output_name)) do
 		i = i + 1
 		if stack then
 			local item0 = stack:to_table()
 			if item0 then 
-				item0["count"] = "1"
-				technic.tube_inject_item(pos, pos, vector.new(x_velocity, 0, z_velocity), item0)
-				stack:take_item(1)
+				if full then
+					technic.tube_inject_item(pos, pos, vector.new(x_velocity, 0, z_velocity), item0)
+					stack:clear()
+				else
+					item0["count"] = "1"
+					technic.tube_inject_item(pos, pos, vector.new(x_velocity, 0, z_velocity), item0)
+					stack:take_item(1)
+				end
 				inv:set_stack(output_name, i, stack)
 				return
 			end
 		end
 	end
+	
+	
 end
 
 
@@ -128,11 +141,18 @@ function technic.handle_machine_pipeworks(pos, tube_upgrade, send_function)
 	if minetest.get_item_group(node1.name, "tubedevice") > 0 then
 		output_tube_connected = true
 	end
+	
+	local send_stack = false
+	if tube_upgrade > 2 then
+		send_stack = true
+		tube_upgrade = tube_upgrade % 5
+	end
+	
 	local tube_time = meta:get_int("tube_time") + tube_upgrade
 	if tube_time >= 2 then
 		tube_time = 0
 		if output_tube_connected then
-			send_function(pos, x_velocity, z_velocity)
+			send_function(pos, x_velocity, z_velocity, nil, send_stack)
 		end
 	end
 	meta:set_int("tube_time", tube_time)

@@ -115,6 +115,12 @@ minetest.register_craftitem( "technic:control_logic_unit", {
 	inventory_image = "technic_control_logic_unit.png",
 })
 
+minetest.register_craftitem( "technic:control_logic_unit_adv", {
+	description = S("Advanced Control Logic Unit"),
+	inventory_image = "technic_control_logic_unit_adv.png",
+})
+
+
 minetest.register_craftitem("technic:mixed_metal_ingot", {
 	description = S("Mixed Metal Ingot"),
 	inventory_image = "technic_mixed_metal_ingot.png",

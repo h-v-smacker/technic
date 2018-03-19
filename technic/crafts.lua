@@ -8,6 +8,12 @@ minetest.clear_craft({
 	output = "default:bronze_ingot"
 })
 
+minetest.register_craft({
+	type = "shapeless",
+	output = "default:bronze_ingot 9",
+	recipe = {"default:bronzeblock"}
+})
+
 -- Accelerator tube
 if pipeworks.enable_accelerator_tube then
 	minetest.clear_craft({
@@ -156,6 +162,15 @@ minetest.register_craft({
 		{'', 'technic:fine_gold_wire', ''},
 		{'default:copper_ingot', 'technic:silicon_wafer', 'default:copper_ingot'},
 		{'', 'technic:chromium_ingot', ''},
+	}
+})
+
+minetest.register_craft({
+	output = 'technic:control_logic_unit_adv',
+	recipe = {
+		{'technic:fine_gold_wire', 'technic:fine_gold_wire', 'technic:fine_gold_wire'},
+		{'technic:silicon_wafer', 'technic:silicon_wafer', 'technic:silicon_wafer'},
+		{'default:copper_ingot', 'technic:chromium_ingot', 'default:copper_ingot'},
 	}
 })
 
