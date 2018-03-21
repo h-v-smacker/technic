@@ -1,7 +1,7 @@
 -- A geothermal EU generator
 -- Using hot lava and water this device can create energy from steam
 -- The machine is only producing LV EUs and can thus not drive more advanced equipment
--- The output is a little more than the coal burning generator (max 300EUs)
+-- The output is 4 times that of the coal burning generator (max 800EUs)
 
 minetest.register_alias("geothermal", "technic:geothermal")
 
@@ -56,10 +56,10 @@ local run = function(pos, node)
 		if check == 2 then lava_nodes  = lava_nodes  + 1 end
 	end
 
-	if water_nodes == 1 and lava_nodes == 1 then production_level =  25; eu_supply = 50 end
-	if water_nodes == 2 and lava_nodes == 1 then production_level =  50; eu_supply = 100 end
-	if water_nodes == 1 and lava_nodes == 2 then production_level =  75; eu_supply = 200 end
-	if water_nodes == 2 and lava_nodes == 2 then production_level = 100; eu_supply = 300 end
+	if water_nodes == 1 and lava_nodes == 1 then production_level =  25; eu_supply = 200 end
+	if water_nodes == 2 and lava_nodes == 1 then production_level =  50; eu_supply = 400 end
+	if water_nodes == 1 and lava_nodes == 2 then production_level =  75; eu_supply = 600 end
+	if water_nodes == 2 and lava_nodes == 2 then production_level = 100; eu_supply = 800 end
 
 	if production_level > 0 then
 		meta:set_int("LV_EU_supply", eu_supply)
