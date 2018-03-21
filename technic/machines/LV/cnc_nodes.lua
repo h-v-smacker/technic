@@ -316,6 +316,13 @@ if minetest.get_modpath("ethereal") then
                 {snappy=2, choppy=2, oddly_breakable_by_hand=2, not_in_creative_inventory=1},
                 {"redwood_wood.png"},
                 S("Redwood"))
+	
+	-- Glorious bamboo
+	-------------------
+	technic.cnc.register_all("ethereal:bamboo_floor",
+                {snappy=2, choppy=2, oddly_breakable_by_hand=2, not_in_creative_inventory=1},
+                {"bamboo_floor.png"},
+                S("Bamboo"))
 end
 
 
