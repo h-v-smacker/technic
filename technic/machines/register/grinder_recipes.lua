@@ -38,10 +38,12 @@ if minetest.get_modpath("ethereal") then
 end
 
 -- defuse the sandstone -> 4 sand recipe to avoid infinite sand bugs (also consult the inverse compressor recipe)
+-- this snippet, when executed, also corrupts some dye+wool combinations. A remedial
+-- workaround is included in extractor recipes, since it's where we work with dyes.
 minetest.clear_craft({
 	recipe = {
-		{'default:sandstone'}
-	},
+		{"default:sandstone"}
+	}
 })
 
 if minetest.get_modpath("farming") then
