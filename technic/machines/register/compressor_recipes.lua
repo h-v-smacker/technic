@@ -22,14 +22,15 @@ local recipes = {
 }
 
 
--- compressing most copious leaves into more compact fuel
--- this conversion is based on the burn time (1 vs. 10) + some overhead
-table.insert(recipes, {"default:acacia_leaves 15", "ethereal:charcoal_lump 1"})
-table.insert(recipes, {"default:aspen_leaves 15", "ethereal:charcoal_lump 1"})
-table.insert(recipes, {"default:leaves 15", "ethereal:charcoal_lump 1"})
-table.insert(recipes, {"default:jungleleaves 15", "ethereal:charcoal_lump 1"})
-
 if minetest.get_modpath("ethereal") then
+	
+	-- compressing most copious leaves into more compact fuel
+	-- this conversion is based on the burn time (1 vs. 10) + some overhead
+	table.insert(recipes, {"default:acacia_leaves 15", "ethereal:charcoal_lump 1"})
+	table.insert(recipes, {"default:aspen_leaves 15", "ethereal:charcoal_lump 1"})
+	table.insert(recipes, {"default:leaves 15", "ethereal:charcoal_lump 1"})
+	table.insert(recipes, {"default:jungleleaves 15", "ethereal:charcoal_lump 1"})
+
 	-- the density of charcoal is ~1/10 of coal, otherwise it's pure carbon
 	table.insert(recipes, {"ethereal:charcoal_lump 10", "default:coal_lump 1"})
 	-- + some leaves which are most often left over in large amounts
@@ -40,6 +41,11 @@ if minetest.get_modpath("ethereal") then
 	table.insert(recipes, {"ethereal:birch_leaves 15", "ethereal:charcoal_lump 1"})
 	table.insert(recipes, {"ethereal:bamboo_leaves 15", "ethereal:charcoal_lump 1"})
 	table.insert(recipes, {"ethereal:orange_leaves 15", "ethereal:charcoal_lump 1"})
+	
+	if minetest.get_modpath("technic_worldgen") or minetest.get_modpath("moretrees") then
+		table.insert(recipes, {"moretrees:rubber_tree_leaves 15", "ethereal:charcoal_lump 1"})
+	end
+	
 end
 
 
@@ -51,6 +57,7 @@ minetest.clear_craft({
 		{'group:sand', 'group:sand'}
 	},
 })
+
 
 for _, data in pairs(recipes) do
 	technic.register_compressor_recipe({input = {data[1]}, output = data[2]})
