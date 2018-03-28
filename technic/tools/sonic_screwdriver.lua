@@ -1,4 +1,5 @@
 local sonic_screwdriver_max_charge = 15000
+local sonic_screwdriver_rotation_cost = 10
 
 local S = technic.getter
 
@@ -64,7 +65,7 @@ local function screwdriver_handler(itemstack, user, pointed_thing, mode)
 	minetest.swap_node(pos, node)
 
 	if not technic.creative_mode then
-		meta1.charge = meta1.charge - 100
+		meta1.charge = meta1.charge - sonic_screwdriver_rotation_cost
 		itemstack:set_metadata(minetest.serialize(meta1))
 		technic.set_RE_wear(itemstack, meta1.charge, sonic_screwdriver_max_charge)
 	end
