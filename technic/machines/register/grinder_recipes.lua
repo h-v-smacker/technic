@@ -22,8 +22,16 @@ local recipes = {
 	{"technic:sulfur_lump",        "technic:sulfur_dust 2"},
 	{"default:stone",              "technic:stone_dust"},
 	{"default:sand",               "technic:stone_dust"},
-	-- recycle glass panels
+	-- recycle some items:
 	{"xpanes:pane_flat 8",         "vessels:glass_fragments 3"},
+	{"doors:door_glass",           "vessels:glass_fragments 6"},
+	{"doors:door_wood",            "technic:sawdust 24"},
+	{"doors:trapdoor",             "technic:sawdust 12"},
+	{"doors:trapdoor_steel",       "technic:wrought_iron_dust 4"},
+	{"doors:door_obsidian_glass",  "default:obsidian_shard 6"},
+	{"doors:door_steel",           "technic:wrought_iron_dust 6"},
+	{"default:sign_wall_steel",    "technic:wrought_iron_dust 6"},
+	{"default:sign_wall_wood",     "technic:sawdust 24"},
 	
 	-- Other
 	{"default:cobble",          "default:gravel"},
@@ -36,6 +44,18 @@ if minetest.get_modpath("ethereal") then
 	-- the density of charcoal is ~1/10 of coal, otherwise it's the same graphitic carbon
 	table.insert(recipes, {"ethereal:charcoal_lump 5", "technic:coal_dust 1"})
 end
+
+if minetest.get_modpath("moreblocks") then
+	table.insert(recipes, {"moreblocks:cobble_compressed", "default:gravel 9"})
+	-- there is no other place to throw in the cooking recipe
+	minetest.register_craft({
+		type = "cooking",
+		cooktime = 5,
+		output = "default:stone 9",
+		recipe = "moreblocks:cobble_compressed"
+      })
+end
+
 
 -- defuse the sandstone -> 4 sand recipe to avoid infinite sand bugs (also consult the inverse compressor recipe)
 -- this snippet, when executed, also corrupts some dye+wool combinations. A remedial
