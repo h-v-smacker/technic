@@ -30,8 +30,8 @@ local recipes = {
 	{"doors:trapdoor_steel",       "technic:wrought_iron_dust 4"},
 	{"doors:door_obsidian_glass",  "default:obsidian_shard 6"},
 	{"doors:door_steel",           "technic:wrought_iron_dust 6"},
-	{"default:sign_wall_steel",    "technic:wrought_iron_dust 6"},
-	{"default:sign_wall_wood",     "technic:sawdust 24"},
+	{"default:sign_wall_steel",    "technic:wrought_iron_dust 2"},
+	{"default:sign_wall_wood",     "technic:sawdust 8"},
 	
 	-- Other
 	{"default:cobble",          "default:gravel"},
