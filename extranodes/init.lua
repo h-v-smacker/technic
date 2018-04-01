@@ -3,6 +3,10 @@
 -- Boilerplate to support localized strings if intllib mod is installed.
 local S = rawget(_G, "intllib") and intllib.Getter() or function(s) return s end
 
+-- some extras to the extras
+local path = string.gsub(technic.modpath, "technic/technic", "technic/extranodes")
+dofile(path.."/straight_tube.lua")
+
 if minetest.get_modpath("moreblocks") then
 
 	-- register stairsplus/circular_saw nodes
@@ -256,6 +260,7 @@ minetest.register_node(":technic:trampoline", {
 	groups = {crumbly = 3, bouncy = 100, fall_damage_add_percent = -100},
 	sounds = {footstep = {name = "trampoline_boing", gain = 1.0}}
 })
+
 
 minetest.register_craft({
 	output = "technic:fall_dampener_50",
