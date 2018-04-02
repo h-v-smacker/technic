@@ -5,7 +5,9 @@ local S = rawget(_G, "intllib") and intllib.Getter() or function(s) return s end
 
 -- some extras to the extras
 local path = string.gsub(technic.modpath, "technic/technic", "technic/extranodes")
-dofile(path.."/straight_tube.lua")
+dofile(path.."/aspirin.lua")
+dofile(path.."/trampoline.lua")
+dofile(path.."/extratubes.lua")
 
 if minetest.get_modpath("moreblocks") then
 
@@ -191,8 +193,10 @@ minetest.register_craft({
 	}
 })
 
+-- Artificial diamonds
+
 minetest.register_craftitem(":technic:diamond_seed", {
-	description = "Diamond Seed",
+	description = S("Diamond Seed"),
 	inventory_image = "technic_diamond_seed.png",
 })
 
@@ -203,127 +207,4 @@ minetest.register_craft({
 })
 
 
--- bouncy-bouncy
-
-minetest.register_craftitem(":technic:latex_foam", {
-	description = "Latex Foam",
-	inventory_image = "technic_latex_foam.png",
-})
-
-minetest.register_node(":technic:fall_dampener_50", {
-	description = S("Fall Dampener 50%"),
-	drawtype = "nodebox",
-	node_box = {
-		type = "fixed",
-		fixed = {-0.5,-0.5,-0.5,0.5,0,0.5}
-		},
-	collision_box = {
-		type = "fixed",
-		fixed = {-0.5,-0.5,-0.5,0.5,0,0.5}
-		},
-	selection_box = {
-		type = "fixed",
-		fixed = {-0.5,-0.5,-0.5,0.5,0,0.5}
-		},
-	tiles = { "technic_fall_dampener_top.png", 
-               "technic_fall_dampener_bottom.png", 
-               "technic_fall_dampener_side.png",
-               "technic_fall_dampener_side.png",
-               "technic_fall_dampener_side.png",
-               "technic_fall_dampener_side.png"},
-	groups = {crumbly = 3, fall_damage_add_percent = -50},
-	sounds = default.node_sound_dirt_defaults(),
-})
-
-minetest.register_node(":technic:fall_dampener_100", {
-	description = S("Fall Dampener 100%"),
-	drawtype = "normal",
-	tiles = {"technic_fall_dampener_top.png", 
-               "technic_fall_dampener_bottom.png", 
-               "technic_fall_dampener_side.png",
-               "technic_fall_dampener_side.png",
-               "technic_fall_dampener_side.png",
-               "technic_fall_dampener_side.png"},
-	groups = {crumbly = 3, fall_damage_add_percent = -100},
-	sounds = default.node_sound_dirt_defaults(),
-})
-
-minetest.register_node(":technic:trampoline", {
-	drawtype = "normal",
-	tiles = {"technic_trampoline_top.png", 
-		"technic_fall_dampener_bottom.png", -- cost cuts
-		"technic_trampoline_side.png",
-		"technic_trampoline_side.png",
-		"technic_trampoline_side.png",
-		"technic_trampoline_side.png"},
-	description = S("Trampoline"),
-	groups = {crumbly = 3, bouncy = 100, fall_damage_add_percent = -100},
-	sounds = {footstep = {name = "trampoline_boing", gain = 1.0}}
-})
-
-
-minetest.register_craft({
-	output = "technic:fall_dampener_50",
-	recipe = {
-		{ "", "", ""},
-		{ "technic:raw_latex", "technic:raw_latex", "technic:raw_latex"},
-		{ "technic:latex_foam", "technic:latex_foam", "technic:latex_foam"},
-	}
-})
-
-minetest.register_craft({
-	output = "technic:fall_dampener_100",
-	recipe = {
-		{ "technic:raw_latex", "technic:raw_latex", "technic:raw_latex"},
-		{ "technic:latex_foam", "technic:latex_foam", "technic:latex_foam"},
-		{ "technic:latex_foam", "technic:latex_foam", "technic:latex_foam"},
-	}
-})
-
-minetest.register_craft({
-	output = "technic:trampoline",
-	recipe = {
-		{ "dye:green", "dye:green", "dye:green"},
-		{ "technic:rubber", "technic:rubber", "technic:rubber"},
-		{ "technic:rubber", "technic:rubber", "technic:rubber"},
-	}
-})
-
--- aspirin
-
--- makes any sence only when there is hunger as a separate status of the player
--- also it uses willow twigs - ethereal dependency
-
-if minetest.get_modpath("hunger") and minetest.get_modpath("ethereal") then
-
-	minetest.register_craftitem(":technic:aspirin_pill", {
-		description = "Aspirin pill",
-		inventory_image = "technic_aspirin_pill.png",
-		on_use = function(itemstack, user, pointed_thing)
-			user:set_hp(user:get_hp() + 2)
-			itemstack:take_item()
-			return itemstack
-		end
-	})
-
-	minetest.register_craftitem(":technic:aspirin_bottle", {
-		description = "Aspirin pills",
-		inventory_image = "technic_aspirin_bottle.png",
-		on_use = function(itemstack, user, pointed_thing)
-			user:set_hp(20)
-			itemstack:take_item()
-			return itemstack
-		end
-	})
-
-	minetest.register_craft({
-			type = "shapeless",
-			output = "technic:aspirin_bottle",
-			recipe = {"technic:aspirin_pill", "technic:aspirin_pill", 
-				"technic:aspirin_pill", "technic:aspirin_pill",
-				"technic:aspirin_pill", "technic:aspirin_pill", 
-				"technic:aspirin_pill", "vessels:glass_bottle"}
-		})
-
-end
 
