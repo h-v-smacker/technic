@@ -5,10 +5,12 @@ local S = rawget(_G, "intllib") and intllib.Getter() or function(s) return s end
 
 if minetest.get_modpath("pipeworks") then
 
+	---------------------------------------------------------------------
 	-- straight-only pipe
 	-- does not connect side-wise, allows items in both directions
 	-- a counterpart to straight-only pipe, and a cheap alternative 
 	-- to one-way tube for long segments of parallel pipes
+	---------------------------------------------------------------------
 	
 	minetest.register_node(":pipeworks:straight_tube", {
 		description = S("Straight-only Tube"),
@@ -48,7 +50,11 @@ if minetest.get_modpath("pipeworks") then
 		},
 	})
 
+	
+	---------------------------------------------------------------------
 	-- conducting one-way tube - to stop making those ugly shunting wires
+	---------------------------------------------------------------------
+			
 	
 	if pipeworks.enable_one_way_tube and pipeworks.enable_conductor_tube then
 		minetest.register_node(":pipeworks:conductor_one_way_tube_on", {
@@ -134,6 +140,102 @@ if minetest.get_modpath("pipeworks") then
 			},
 		})
 	end
+	
+	---------------------------------------------------------------------
+	-- mesecon-controlled valve (bidirectional)
+	---------------------------------------------------------------------
+	
+	minetest.register_node(":pipeworks:tube_valve_on", {
+		description = S("Tube Valve"),
+		tiles = {"pipeworks_tube_valve_side_on.png", 
+			"pipeworks_tube_valve_side_on.png", 
+			"pipeworks_straight_tube_output.png",
+			"pipeworks_straight_tube_input.png", 
+			"pipeworks_tube_valve_side_on.png", 
+			"pipeworks_tube_valve_side_on.png"},
+		paramtype2 = "facedir",
+		drawtype = "nodebox",
+		paramtype = "light",
+		node_box = {type = "fixed",
+			fixed = {{-1/2, -9/64, -9/64, 1/2, 9/64, 9/64}}},
+		groups = {snappy = 2, choppy = 2, oddly_breakable_by_hand = 2, tubedevice = 1, mesecon = 2, not_in_creative_inventory = 1},
+		sounds = default.node_sound_wood_defaults(),
+		tube = {
+			connect_sides = {left = 1, right = 1},
+			can_go = function(pos, node, velocity, stack)
+				return {velocity}
+			end,
+			can_insert = function(pos, node, stack, direction)
+				local dir = pipeworks.facedir_to_right_dir(node.param2)
+				local opdir = vector.multiply(dir, -1)
+				return vector.equals(dir, direction) or vector.equals(opdir, direction)
+			end,
+			priority = 50 -- regular tube
+		},
+		after_place_node = pipeworks.after_place,
+		after_dig_node = pipeworks.after_dig,
+		mesecons = {
+			effector = {
+				rules = pipeworks.mesecons_rules,
+				action_on = function (pos, node) 
+					minetest.swap_node(pos, {name = "pipeworks:tube_valve_on", param2 = node.param2 })
+				end,
+				action_off = function (pos, node)
+					minetest.swap_node(pos, {name = "pipeworks:tube_valve_off", param2 = node.param2 })
+				end,
+			}
+		},
+		drop = "pipeworks:tube_valve_off",
+	})
+	
+	minetest.register_node(":pipeworks:tube_valve_off", {
+		description = S("Tube Valve"),
+		tiles = {"pipeworks_tube_valve_side_off.png", 
+			"pipeworks_tube_valve_side_off.png", 
+			"pipeworks_straight_tube_output.png",
+			"pipeworks_straight_tube_input.png", 
+			"pipeworks_tube_valve_side_off.png", 
+			"pipeworks_tube_valve_side_off.png"},
+		paramtype2 = "facedir",
+		drawtype = "nodebox",
+		paramtype = "light",
+		node_box = {type = "fixed",
+			fixed = {{-1/2, -9/64, -9/64, 1/2, 9/64, 9/64}}},
+		groups = {snappy = 2, choppy = 2, oddly_breakable_by_hand = 2, tubedevice = 1, mesecon = 2},
+		sounds = default.node_sound_wood_defaults(),
+		tube = {
+			connect_sides = {left = 1, right = 1},
+			can_go = function(pos, node, velocity, stack)
+				return {velocity}
+			end,
+			can_insert = function(pos, node, stack, direction)
+				return false
+			end,
+			priority = 50 -- regular tube
+		},
+		after_place_node = pipeworks.after_place,
+		after_dig_node = pipeworks.after_dig,
+		mesecons = {
+			effector = {
+				rules = pipeworks.mesecons_rules,
+				action_on = function (pos, node) 
+					minetest.swap_node(pos, {name = "pipeworks:tube_valve_on", param2 = node.param2 })
+				end,
+				action_off = function (pos, node)
+					minetest.swap_node(pos, {name = "pipeworks:tube_valve_off", param2 = node.param2 })
+				end,
+			}
+		},
+		drop = "pipeworks:tube_valve_off",
+	})
+	
+	minetest.register_craft({
+		output = "pipeworks:tube_valve_off 2",
+		recipe = {
+			{ "pipeworks:tube_1", "homedecor:plastic_sheeting", "pipeworks:tube_1"},
+			{ "", "mesecons:wire_00000000_off", ""}
+		},
+	})
 	
 
 end
