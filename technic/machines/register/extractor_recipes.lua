@@ -33,6 +33,12 @@ if minetest.get_modpath("dye") then
 		table.insert(dye_recipes, {"ethereal:willow_twig 12", "technic:aspirin_pill"})
 	end
 	
+	if minetest.get_modpath("farming") then
+		-- cottonseed oil: a fuel and a potent fertilizer (irl: pesticide)
+		-- hemp oil calls for 8 seeds, but extractor recipes are normally twice as potent
+		table.insert(dye_recipes, {"farming:seed_cotton 4", "technic:cottonseed_oil"})
+	end
+	
 	for _, data in ipairs(dye_recipes) do
 		technic.register_extractor_recipe({input = {data[1]}, output = data[2]})
 	end

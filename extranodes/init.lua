@@ -206,5 +206,55 @@ minetest.register_craft({
 	recipe = "technic:graphite"
 })
 
+-- Cotton seed oil: fuel and fertilizer
+
+if minetest.get_modpath("farming") then
+	if minetest.get_modpath("bonemeal") then
+		minetest.register_craftitem(":technic:cottonseed_oil", {
+			description = S("Cottonseed Oil"),
+			inventory_image = "technic_cottonseed_oil.png",
+			on_use = function(itemstack, user, pointed_thing)
+				if pointed_thing.type ~= "node" then
+					return
+				end
+				if minetest.is_protected(pointed_thing.under, user:get_player_name()) then
+					return
+				end
+				if not is_creative(user:get_player_name()) then
+					itemstack:take_item()
+				end
+				bonemeal:on_use(pointed_thing.under, 4)
+				return itemstack
+			end,
+		})
+	else
+		minetest.register_craftitem(":technic:cottonseed_oil", {
+			description = S("Cottonseed Oil"),
+			inventory_image = "technic_cottonseed_oil.png",
+		})
+	end
+
+	minetest.register_craft({
+		type = "fuel",
+		recipe = "technic:cottonseed_oil",
+		burntime = 20,
+	})
+
+end
+
+
+-- -- Additional recipe for straw blocks out of straw mat from cottages (if present)
+-- -- not to let the centifuge output go to waste, since farming:straw can be used with a saw...
+-- 
+-- if minetest.get_modpath("cottages") and minetest.get_modpath("farming") then
+-- 	minetest.register_craft({
+-- 		output = "farming:straw 2",
+-- 		recipe = {
+-- 			{ "cottages:straw_mat", "cottages:straw_mat", "cottages:straw_mat" },
+-- 			{ "cottages:straw_mat", "cottages:straw_mat", "cottages:straw_mat" },
+-- 			{ "cottages:straw_mat", "cottages:straw_mat", "cottages:straw_mat" },
+-- 		}
+-- 	})
+-- end
 
 
