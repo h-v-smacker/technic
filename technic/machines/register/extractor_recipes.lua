@@ -37,6 +37,22 @@ if minetest.get_modpath("dye") then
 		-- cottonseed oil: a fuel and a potent fertilizer (irl: pesticide)
 		-- hemp oil calls for 8 seeds, but extractor recipes are normally twice as potent
 		table.insert(dye_recipes, {"farming:seed_cotton 4", "technic:cottonseed_oil"})
+		-- Himalayan rhubarb root can give yellow dye
+		table.insert(dye_recipes, {"farming:rhubarb", "dye:yellow 4"})
+		table.insert(dye_recipes, {"farming:blueberries", "dye:blue 4"})
+		table.insert(dye_recipes, {"farming:raspberries", "dye:red 4"})
+		table.insert(dye_recipes, {"farming:onion", "dye:yellow 4"})
+	end
+	
+	if minetest.get_modpath("ethereal") then
+		table.insert(dye_recipes, {"ethereal:fern", "dye:dark_green 4"})
+		table.insert(dye_recipes, {"ethereal:snowygrass", "dye:grey 4"})
+		table.insert(dye_recipes, {"ethereal:crystalgrass", "dye:blue 4"})
+	end
+	
+	if minetest.get_modpath("bonemeal") then
+		table.insert(dye_recipes, {"bonemeal:bone", "dye:white 8"})
+		table.insert(dye_recipes, {"bonemeal:bonemeal", "dye:white 4"})
 	end
 	
 	for _, data in ipairs(dye_recipes) do

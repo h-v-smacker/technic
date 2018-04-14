@@ -8,6 +8,7 @@ local path = string.gsub(technic.modpath, "technic/technic", "technic/extranodes
 dofile(path.."/aspirin.lua")
 dofile(path.."/trampoline.lua")
 dofile(path.."/extratubes.lua")
+dofile(path.."/lox.lua")
 
 if minetest.get_modpath("moreblocks") then
 

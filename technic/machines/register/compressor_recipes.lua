@@ -48,6 +48,7 @@ if minetest.get_modpath("ethereal") then
 	
 end
 
+table.insert(recipes, {"vessels:steel_bottle", "technic:lox"})
 
 -- defuse the default sandstone recipe, since we have the compressor to take over in a more realistic manner
 minetest.clear_craft({
