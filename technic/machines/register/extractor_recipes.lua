@@ -34,14 +34,21 @@ if minetest.get_modpath("dye") then
 	end
 	
 	if minetest.get_modpath("farming") then
-		-- cottonseed oil: a fuel and a potent fertilizer (irl: pesticide)
+		-- Cottonseed oil: a fuel and a potent fertilizer (irl: pesticide) ---
 		-- hemp oil calls for 8 seeds, but extractor recipes are normally twice as potent
 		table.insert(dye_recipes, {"farming:seed_cotton 4", "technic:cottonseed_oil"})
-		-- Himalayan rhubarb root can give yellow dye
+		
+		-- Dyes ---
+		-- better recipes for farming's crafting methods (twice the output)
+		table.insert(dye_recipes, {"farming:chili_pepper", "dye:red 4"})
+		table.insert(dye_recipes, {"farming:beans", "dye:green 4"})
+		table.insert(dye_recipes, {"farming:grapes", "dye:violet 4"})
+		-- Some extra recipes:
+		-- Himalayan rhubarb root can give yellow dye IRL
 		table.insert(dye_recipes, {"farming:rhubarb", "dye:yellow 4"})
+		table.insert(dye_recipes, {"farming:onion", "dye:yellow 4"})
 		table.insert(dye_recipes, {"farming:blueberries", "dye:blue 4"})
 		table.insert(dye_recipes, {"farming:raspberries", "dye:red 4"})
-		table.insert(dye_recipes, {"farming:onion", "dye:yellow 4"})
 	end
 	
 	if minetest.get_modpath("ethereal") then
