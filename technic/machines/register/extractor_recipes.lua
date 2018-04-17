@@ -43,6 +43,7 @@ if minetest.get_modpath("dye") then
 		table.insert(dye_recipes, {"farming:chili_pepper", "dye:red 4"})
 		table.insert(dye_recipes, {"farming:beans", "dye:green 4"})
 		table.insert(dye_recipes, {"farming:grapes", "dye:violet 4"})
+		table.insert(dye_recipes, {"farming:cocoa_beans", "dye:brown 4"})
 		-- Some extra recipes:
 		-- Himalayan rhubarb root can give yellow dye IRL
 		table.insert(dye_recipes, {"farming:rhubarb", "dye:yellow 4"})

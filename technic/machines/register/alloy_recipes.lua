@@ -36,6 +36,10 @@ if minetest.get_modpath("ethereal") then
 	table.insert(recipes, {"default:clay", "dye:orange", "bakedclay:orange"})
 	table.insert(recipes, {"default:clay", "dye:grey", "bakedclay:grey"})
 	table.insert(recipes, {"ethereal:crystal_spike", "ethereal:fire_dust 2", "default:mese_crystal 2"})
+	if minetest.get_modpath("bonemeal") then
+		table.insert(recipes, {"default:sand", "bonemeal:mulch", "ethereal:sandy 2"})
+		table.insert(recipes, {"default:sand", "bonemeal:bonemeal", "ethereal:sandy"})
+	end
 end
 
 for _, data in pairs(recipes) do

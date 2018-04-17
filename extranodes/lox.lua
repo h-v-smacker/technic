@@ -42,7 +42,7 @@ minetest.register_craftitem(":technic:lox", {
 
 		local loc = {}
 		local wrk = false
-		for y=0,2,1 do
+		for y=0,3,1 do
 			for x=-2,2,1 do
 				for z = -2,2,1 do
 					loc = {x = pos.x - x, y = pos.y - y, z = pos.z - z}
