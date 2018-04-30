@@ -55,6 +55,12 @@ local ripe_for_harvest = {
 	"ethereal:strawberry_8",
 }
 
+local compatible_soils = {
+	"group:soil", 
+	"default:dirt_with_snow", 
+	"ethereal:dry_dirt"
+}
+
 local node_removed
 
 -- Mode switcher for the tool
@@ -167,7 +173,7 @@ local function work_on_soil(itemstack, user, pointed_thing)
 	
 	if meta.mode <= 3 then
 	-- tilling
-		local found_obj = minetest.find_nodes_in_area(start_pos, end_pos, {"group:soil"})
+		local found_obj = minetest.find_nodes_in_area(start_pos, end_pos, compatible_soils)
 		for _, f in ipairs(found_obj) do
 			-- unfortunately, there is no callback to track the node change without
 			-- digging it first
