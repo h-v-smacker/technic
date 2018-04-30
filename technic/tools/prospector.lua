@@ -1,6 +1,6 @@
 local S = technic.getter
 
-technic.register_power_tool("technic:prospector", 300000)
+technic.register_power_tool("technic:prospector", 650000)
 
 local function get_metadata(toolstack)
 	local m = minetest.deserialize(toolstack:get_metadata())
