@@ -386,3 +386,11 @@ if minetest.get_modpath("moreblocks") then
 			S("Grey Clay"))
 	
 end
+
+
+if minetest.get_modpath("maple") then
+	technic.cnc.register_all("maple:maple_wood",
+                {snappy=2, choppy=2, oddly_breakable_by_hand=2, not_in_creative_inventory=1},
+                {"maple_wood.png"},
+                S("Maple"))
+end

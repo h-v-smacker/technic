@@ -155,6 +155,14 @@ if minetest.get_modpath("ethereal") then
 	end
 end
 
+-- Support maple
+if minetest.get_modpath("maple") then
+	timber_nodenames["maple:maple_tree"]         = true
+	if chainsaw_leaves then
+		timber_nodenames["maple:maple_leaves"] = true
+	end
+end
+
 -- Support farming_plus
 if minetest.get_modpath("farming_plus") then
 	if chainsaw_leaves then
