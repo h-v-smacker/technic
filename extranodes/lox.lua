@@ -190,3 +190,10 @@ minetest.register_craft({
 			{ "technic:lox", "tnt:tnt",     "technic:lox"}
 		},
 	})
+
+-- since there will be a significant surplus of snow slabs, a recipe for recycling is in order
+minetest.register_craft({
+		output = "default:snowblock",
+		type = "shapeless",
+		recipe = { "stairs:slab_snowblock", "stairs:slab_snowblock" },
+	})
