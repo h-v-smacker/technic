@@ -53,6 +53,9 @@ local ripe_for_harvest = {
 	"farming:wheat_8",
 	"ethereal:onion_5",
 	"ethereal:strawberry_8",
+	-- also doubles as a snow-plough
+	"default:snowblock",
+	"stairs:slab_snowblock",
 }
 
 local compatible_soils = {
