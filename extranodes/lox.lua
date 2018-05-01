@@ -16,23 +16,19 @@ local freezing_rules = {
 	["ethereal:mushroom_dirt"] = "default:dirt_with_snow",
 }
 
-local function freeze(user, pos, radius, itemstack)
+local function freeze(user, pos, radius)
 
-	-- itemstack is true if the function is used in a tool callback
-	-- if so, user is a playerref
-	-- if itemstack is false, it's a node using the function, and the
-	-- user name is plain text string
+	-- if the function is used by a node: user is a string
+	-- if it's called by an item, user is a PlayerRef
 	
-	if (itemstack) then
-
-		if minetest.is_protected(pos, user:get_player_name()) then
-			minetest.record_protection_violation(pos, user:get_player_name())
-			return
-		end
-	
-	else
+	if type(user) == 'string' then
 		if minetest.is_protected(pos, user) then
 			minetest.record_protection_violation(pos, user)
+			return
+		end
+	else
+		if minetest.is_protected(pos, user:get_player_name()) then
+			minetest.record_protection_violation(pos, user:get_player_name())
 			return
 		end
 	end
@@ -66,22 +62,7 @@ local function freeze(user, pos, radius, itemstack)
 		minetest.sound_play("default_cool_lava", {gain = 1, pos = pos})
 	end
 
-	if (itemstack) then
-	
-		itemstack:take_item()
-		local uinv = user:get_inventory()
-		if uinv:room_for_item("main", "vessels:steel_bottle 1") then
-			uinv:add_item("main", "vessels:steel_bottle 1")
-		else 
-			minetest.item_drop(ItemStack("vessels:steel_bottle 1"), user, user:getpos())
-		end
-		
-		user:set_hp(user:get_hp() - 1)
-		
-		return itemstack
-	else
-		return true
-	end
+	return true
 
 end
 		
@@ -104,7 +85,21 @@ minetest.register_craftitem(":technic:lox", {
 		if pointed_thing.type ~= "node" then
 			return itemstack
 		end
-		freeze(user, pointed_thing.under, 2, itemstack)
+                                            
+		itemstack:take_item()
+                                            
+		freeze(user, pointed_thing.under, 2)
+                                            
+		local uinv = user:get_inventory()
+		if uinv:room_for_item("main", "vessels:steel_bottle 1") then
+			uinv:add_item("main", "vessels:steel_bottle 1")
+		else 
+			minetest.item_drop(ItemStack("vessels:steel_bottle 1"), user, user:getpos())
+		end
+		
+		user:set_hp(user:get_hp() - 1)
+                                            
+		return itemstack
 	end
 })
 
