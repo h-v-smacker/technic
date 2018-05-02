@@ -79,12 +79,15 @@ local function trim_the_lawn(itemstack, user)
 		return -- no charge for even a single node, aborting
 	end
 	
+	local pos = user:get_pos()
+	
 	minetest.sound_play("technic_lawn_trimmer", {
-		to_player = user:get_player_name(),
+-- 		to_player = user:get_player_name(),
+		pos = pos,
 		gain = 0.4,
 	})
 	
-	local pos = user:get_pos()
+	
 	-- Defining the area for the search needs two positions
 	-- The tool has a limited range in the vertical axis, which is capped at +/- 1 node
 	local start_pos = {
