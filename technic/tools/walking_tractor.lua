@@ -117,7 +117,7 @@ local function work_on_soil(itemstack, user, pointed_thing)
 	
 	minetest.sound_play("technic_walking_tractor", {
 -- 		to_player = user:get_player_name(),
-		pos = pointed_thing.under,
+		pos = user:get_pos(),
 		gain = 0.5,
 	})
 	

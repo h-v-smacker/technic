@@ -1,5 +1,6 @@
 -- Configuration
 
+local chainsaw_max_charge_mini =  15000
 local chainsaw_max_charge      =  30000 -- Maximum charge of the saw
 local chainsaw_max_charge_mk2  = 120000
 -- Gives 2500 nodes on a single charge (about 50 complete normal trees)
@@ -17,7 +18,7 @@ local timber_nodenames = {
 	["default:cactus"]      = true,
 	["default:tree"]        = true,
 	["default:apple"]       = true,
-	["default:pine_tree"]    = true,
+	["default:pine_tree"]   = true,
 }
 
 if chainsaw_leaves then
@@ -206,6 +207,7 @@ end
 
 local S = technic.getter
 
+technic.register_power_tool("technic:chainsaw_mini", chainsaw_max_charge_mini)
 technic.register_power_tool("technic:chainsaw", chainsaw_max_charge)
 technic.register_power_tool("technic:chainsaw_mk2", chainsaw_max_charge_mk2)
 
@@ -383,6 +385,80 @@ local function recursive_dig(pos, remaining_charge, mk, username)
 	return remaining_charge
 end
 
+-- a non-recursive version
+local function nonrecursive_dig(pos, remaining_charge, username)
+	if remaining_charge < chainsaw_charge_per_node then
+		return remaining_charge
+	end
+	local node = minetest.get_node(pos)
+
+	if not timber_nodenames[node.name] then
+		return remaining_charge
+	end
+	
+	if minetest.is_protected(pos, username) then
+		return remaining_charge
+	end
+	
+	local start_pos = {
+		x = pos.x - 1,
+		z = pos.z - 1,
+		y = pos.y
+	} 
+	local end_pos = {
+		x = pos.x + 1,
+		z = pos.z + 1,
+		y = pos.y + 30
+	} 
+	
+	local positions = {}
+
+	for x = 1,-1,-1 do
+		for z = 1,-1,-1 do
+			table.insert(positions, {x = x, z = z})
+		end
+	end
+	
+	local h = 40
+	
+	-- find where the tree ends (counting from the ground)
+	for y=0,h,1 do
+		local c = 0
+		for _,offset in pairs(positions) do
+			local p = {x = pos.x + offset.x, y = pos.y + y, z = pos.z + offset.z}
+			local n = minetest.get_node(p)
+			if not timber_nodenames[n.name] then
+				c = c + 1
+			end
+		end
+		if c == #positions then
+-- 			minetest.chat_send_all("tree height: " .. y)
+			h = y
+			break
+		end
+	end
+	
+	for y=h,0,-1 do
+		for _,offset in pairs(positions) do
+			if remaining_charge < chainsaw_charge_per_node then
+				break
+			end
+			local p = {x = pos.x + offset.x, y = pos.y + y, z = pos.z + offset.z}
+			local n = minetest.get_node(p)
+			if timber_nodenames[n.name] then
+				-- Wood found - cut it
+				handle_drops(minetest.get_node_drops(n.name))
+				minetest.remove_node(p)
+				remaining_charge = remaining_charge - chainsaw_charge_per_node
+			end
+		end
+	end
+	
+	return remaining_charge
+end
+
+
+
 -- Function to randomize positions for new node drops
 local function get_drop_pos(pos)
 	local drop_pos = {}
@@ -420,7 +496,13 @@ end
 -- Chainsaw entry point
 local function chainsaw_dig(pos, current_charge, mk, username)
 	-- Start sawing things down
-	local remaining_charge = recursive_dig(pos, current_charge, mk, username)
+	local remaining_charge
+	if (mk) then
+		remaining_charge = recursive_dig(pos, current_charge, mk, username)
+	else
+		remaining_charge = nonrecursive_dig(pos, current_charge, username)
+	end
+	
 	minetest.sound_play("chainsaw", {pos = pos, gain = 1.0,
 			max_hear_distance = 10})
 
@@ -469,6 +551,8 @@ local function use_chainsaw(itemstack, user, pointed_thing, mk)
 			technic.set_RE_wear(itemstack, meta.charge, chainsaw_max_charge)
 		elseif mk == 2 then
 			technic.set_RE_wear(itemstack, meta.charge, chainsaw_max_charge_mk2)
+		else
+			technic.set_RE_wear(itemstack, meta.charge, chainsaw_max_charge_mini)
 		end
 		itemstack:set_metadata(minetest.serialize(meta))
 	end
@@ -499,9 +583,30 @@ minetest.register_tool("technic:chainsaw_mk2", {
 		end
 })
 
+minetest.register_tool("technic:chainsaw_mini", {
+	description = S("Chainsaw Mini"),
+	inventory_image = "technic_chainsaw_mini.png",
+	stack_max = 1,
+	wear_represents = "technic_RE_charge",
+	on_refill = technic.refill_RE_charge,
+	groups = {not_in_creative_inventory = 1},
+	on_use = function(itemstack, user, pointed_thing)
+			use_chainsaw(itemstack, user, pointed_thing, nil)
+			return(itemstack)
+		end
+})
 	
 local mesecons_button = minetest.get_modpath("mesecons_button")
 local trigger = mesecons_button and "mesecons_button:button_off" or "default:mese_crystal_fragment"
+
+minetest.register_craft({
+	output = "technic:chainsaw_mini",
+	recipe = {
+		{"technic:wrought_iron_ingot", "technic:wrought_iron_ingot", "technic:battery"},
+		{"",                           "technic:motor",              trigger},
+		{"",                           "",                           ""},
+	}
+})
 
 minetest.register_craft({
 	output = "technic:chainsaw",
