@@ -445,7 +445,7 @@ local function nonrecursive_dig(pos, remaining_charge, username)
 			end
 			local p = {x = pos.x + offset.x, y = pos.y + y, z = pos.z + offset.z}
 			local n = minetest.get_node(p)
-			if timber_nodenames[n.name] then
+			if timber_nodenames[n.name] and not minetest.is_protected(pos, username) then
 				-- Wood found - cut it
 				handle_drops(minetest.get_node_drops(n.name))
 				minetest.remove_node(p)

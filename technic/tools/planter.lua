@@ -7,7 +7,7 @@
 -- Configuration
 -- Intended to hold as much as the chainsaw, 20000 units
 local planter_max_charge        = 20000
--- Can remove a curious number of objects
+-- Cost of planting action
 local planter_charge_per_object = 25
 
 
