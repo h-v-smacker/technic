@@ -91,7 +91,7 @@ local function work_on_soil(itemstack, user, pointed_thing)
 	local inv = user:get_inventory()
 	
 	if not inv:contains_item("main", ItemStack({name=meta.selected, count = 2*offset+1})) then
-		minetest.chat_send_player(player_name, S("Not enough " .. meta.selected .. " seeds to continue!"))
+		minetest.chat_send_player(player_name, S("Not enough " .. meta.selected .. " to continue!"))
 		return itemstack
 	end
 	
@@ -167,7 +167,8 @@ local function select_plant(itemstack, user, pointed_thing)
 	if not user or not user:is_player() or user.is_fake_player then return end
 	local meta = minetest.deserialize(itemstack:get_metadata())
 	
-	if not meta.selected then
+	if not meta or not meta.selected then
+		meta = {}
 		meta.selected = "farming:seed_wheat"
 		itemstack:set_metadata(minetest.serialize(meta))
 	end
@@ -197,12 +198,15 @@ minetest.register_on_player_receive_fields(function(user, formname, fields)
 	if not string.find(itemstack:get_name(), "^technic:planter") then return true end
                                           
 	local meta = minetest.deserialize(itemstack:get_metadata())
+	if not meta then
+		meta = {}
+	end
                                           
 	if fields.change then
 		local inv = user:get_inventory()
 		local item = inv:get_stack("main", 32) -- using the last cell
 		local n = item:get_name()
-		if n then
+		if n and n ~= "" then
 			meta.selected = n
 		end
 	end                                     
