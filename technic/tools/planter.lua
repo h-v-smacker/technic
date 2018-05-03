@@ -197,11 +197,15 @@ minetest.register_on_player_receive_fields(function(user, formname, fields)
 	local itemstack = user:get_wielded_item()
 	if not string.find(itemstack:get_name(), "^technic:planter") then return true end
                                           
+	if fields.quit then
+             return true
+	end
+                                          
 	local meta = minetest.deserialize(itemstack:get_metadata())
 	if not meta then
 		meta = {}
 	end
-                                          
+	                                    
 	if fields.change then
 		local inv = user:get_inventory()
 		local item = inv:get_stack("main", 32) -- using the last cell
