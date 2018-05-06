@@ -90,7 +90,7 @@ local function work_on_soil(itemstack, user, pointed_thing)
 	local player_name = user:get_player_name()
 	local inv = user:get_inventory()
 	
-	if not inv:contains_item("main", ItemStack({name=meta.selected, count = 2*offset+1})) then
+	if not inv:contains_item("main", ItemStack({name=meta.selected, count = offset + 1})) then
 		minetest.chat_send_player(player_name, S("Not enough " .. meta.selected .. " to continue!"))
 		return itemstack
 	end
