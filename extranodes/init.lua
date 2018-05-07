@@ -10,6 +10,15 @@ dofile(path.."/trampoline.lua")
 dofile(path.."/extratubes.lua")
 dofile(path.."/lox.lua")
 
+if minetest.get_modpath("bakedclay") then
+	-- bring back them sticks
+	minetest.register_craft( {
+		type = "shapeless",
+		output = "default:stick",
+		recipe = {"default:dry_shrub"}
+	})
+end
+
 if minetest.get_modpath("moreblocks") then
 
 	-- register stairsplus/circular_saw nodes

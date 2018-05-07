@@ -368,22 +368,24 @@ if minetest.get_modpath("moreblocks") then
 			{"moreblocks_copperpatina.png"},
 			S("Copper Patina"))
 	
-	-- Clay
-	------------
-	technic.cnc.register_all("bakedclay:red",
-			{cracky=3, not_in_creative_inventory=1},
-			{"baked_clay_red.png"},
-			S("Red Clay"))
-	
-	technic.cnc.register_all("bakedclay:orange",
-			{cracky=3, not_in_creative_inventory=1},
-			{"baked_clay_orange.png"},
-			S("Orange Clay"))
-	
-	technic.cnc.register_all("bakedclay:grey",
-			{cracky=3, not_in_creative_inventory=1},
-			{"baked_clay_grey.png"},
-			S("Grey Clay"))
+	if not minetest.get_modpath("bakedclay") then
+		-- Clay
+		------------
+		technic.cnc.register_all("bakedclay:red",
+				{cracky=3, not_in_creative_inventory=1},
+				{"baked_clay_red.png"},
+				S("Red Clay"))
+		
+		technic.cnc.register_all("bakedclay:orange",
+				{cracky=3, not_in_creative_inventory=1},
+				{"baked_clay_orange.png"},
+				S("Orange Clay"))
+		
+		technic.cnc.register_all("bakedclay:grey",
+				{cracky=3, not_in_creative_inventory=1},
+				{"baked_clay_grey.png"},
+				S("Grey Clay"))
+	end
 	
 end
 
@@ -393,4 +395,34 @@ if minetest.get_modpath("maple") then
                 {snappy=2, choppy=2, oddly_breakable_by_hand=2, not_in_creative_inventory=1},
                 {"maple_wood.png"},
                 S("Maple"))
+end
+
+
+if minetest.get_modpath("bakedclay") then
+	
+	local clay = {
+		{"white", "White"},
+		{"grey", "Grey"},
+		{"black", "Black"},
+		{"red", "Red"},
+		{"yellow", "Yellow"},
+		{"green", "Green"},
+		{"cyan", "Cyan"},
+		{"blue", "Blue"},
+		{"magenta", "Magenta"},
+		{"orange", "Orange"},
+		{"violet", "Violet"},
+		{"brown", "Brown"},
+		{"pink", "Pink"},
+		{"dark_grey", "Dark Grey"},
+		{"dark_green", "Dark Green"},
+	}
+
+	for _,c in ipairs(clay) do
+		technic.cnc.register_all("bakedclay:" .. c[1],
+				{cracky=3, not_in_creative_inventory=1},
+				{"baked_clay_" .. c[1] .. ".png"},
+				S(c[2] .. " Clay"))
+	end
+	
 end
