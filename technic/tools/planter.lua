@@ -143,8 +143,10 @@ local function work_on_soil(itemstack, user, pointed_thing)
 				ref = nil
 			}
 		end
+		
 
-		if (minetest.registered_items[meta.selected] or {on_place=minetest.item_place}).on_place(ItemStack({name=meta.selected, count=1}), user, work_pos) then
+		local k = (minetest.registered_items[meta.selected] or {on_place=minetest.item_place}).on_place(ItemStack({name=meta.selected, count=1}), user, work_pos)
+		if k then
 			c = c + 1
 		end
 		

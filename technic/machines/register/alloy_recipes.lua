@@ -50,8 +50,9 @@ if minetest.get_modpath("bakedclay") then
 	              "green", "cyan", "blue", "magenta", "orange", 
 	              "violet", "brown", "pink", "dark_grey", "dark_green"}
 
+	-- the recipe of the bakedclay mod yields 8 blocks, so we'll do two times better
 	for _,c in ipairs(clay) do
-		table.insert(recipes, {"default:clay 8", "dye:" .. c, "bakedclay:" .. c})
+		table.insert(recipes, {"default:clay 8", "dye:" .. c, "bakedclay:" .. c .. " 16"})
 	end
 	
 end
