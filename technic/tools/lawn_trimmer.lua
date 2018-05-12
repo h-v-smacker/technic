@@ -65,7 +65,7 @@ end
 
 
 -- Perform the trimming action
-local function trim_the_lawn(itemstack, user)
+local function trim_the_lawn(itemstack, user, pointed_thing)
 	local meta = minetest.deserialize(itemstack:get_metadata())
 	local keys = user:get_player_control()
 	
@@ -79,7 +79,13 @@ local function trim_the_lawn(itemstack, user)
 		return -- no charge for even a single node, aborting
 	end
 	
-	local pos = user:get_pos()
+	local pos
+	if user.get_pos ~= nil then
+		pos = user:get_pos()
+	else
+		-- we are held in a node breaker
+		pos = pointed_thing.under
+	end
 	
 	minetest.sound_play("technic_lawn_trimmer", {
 -- 		to_player = user:get_player_name(),
