@@ -63,6 +63,14 @@ if minetest.get_modpath("dye") then
 		table.insert(dye_recipes, {"ethereal:crystalgrass", "dye:blue 4"})
 	end
 	
+	if minetest.get_modpath("bakedclay") then
+		table.insert(dye_recipes, {"bakedclay:delphinium", "dye:cyan 8"})
+		table.insert(dye_recipes, {"bakedclay:thistle", "dye:magenta 8"})
+		table.insert(dye_recipes, {"bakedclay:lazarus", "dye:pink 8"})
+		table.insert(dye_recipes, {"bakedclay:mannagrass", "dye:dark_green 8"})
+	end
+
+	
 	if minetest.get_modpath("bonemeal") then
 		table.insert(dye_recipes, {"bonemeal:bone", "dye:white 8"})
 		table.insert(dye_recipes, {"bonemeal:bonemeal", "dye:white 4"})
