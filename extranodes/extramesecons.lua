@@ -8,11 +8,11 @@ if minetest.get_modpath("mesecons") then
 		is_ground_content = false,
 		sounds = default.node_sound_stone_defaults(),
 		after_place_node = function(pos, placer, itemstack, pointed_thing)
-			local meta = minetest:get_meta(pos)
+			local meta = minetest.get_meta(pos)
 			meta:set_string("owner", placer:get_player_name() or "")
 		end,
 		on_rightclick = function (pos, node, player)
-			local meta = minetest:get_meta(pos)
+			local meta = minetest.get_meta(pos)
 			local owner = meta:get_string("owner")
 			local pname = player:get_player_name();
 			if owner ~= pname then
@@ -28,15 +28,21 @@ if minetest.get_modpath("mesecons") then
 		end
 	},{
 		groups = {dig_immediate=2},
-		tiles = {	"mesecons_switch_side.png", "mesecons_switch_side.png",
-					"mesecons_switch_side.png^default_key.png", "mesecons_switch_side.png^default_key.png",
-					"mesecons_switch_side.png", "mesecons_switch_off.png^mesecons_switch_locked_frame.png"},
+		tiles = {	"mesecons_switch_side.png", 
+	                  "mesecons_switch_side.png",
+				"mesecons_switch_side.png^default_key.png^[transformR180",
+				"mesecons_switch_side.png^default_key.png^[transformR180FX",
+				"mesecons_switch_side.png", 
+				"mesecons_switch_off.png^mesecons_switch_locked_frame.png"},
 		mesecons = {receptor = { state = mesecon.state.off }}
 	},{
 		groups = {dig_immediate=2, not_in_creative_inventory=1},
-		tiles = {	"mesecons_switch_side.png", "mesecons_switch_side.png",
-					"mesecons_switch_side.png^default_key.png", "mesecons_switch_side.png^default_key.png",
-					"mesecons_switch_side.png", "mesecons_switch_on.png^mesecons_switch_locked_frame.png"},
+		tiles = {	"mesecons_switch_side.png", 
+	                  "mesecons_switch_side.png",
+				"mesecons_switch_side.png^default_key.png^[transformR180", 
+				"mesecons_switch_side.png^default_key.png^[transformR180FX",
+				"mesecons_switch_side.png",
+				"mesecons_switch_on.png^mesecons_switch_locked_frame.png"},
 		mesecons = {receptor = { state = mesecon.state.on }}
 	})
 

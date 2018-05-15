@@ -45,6 +45,10 @@ if minetest.get_modpath("ethereal") then
 	table.insert(recipes, {"ethereal:charcoal_lump 5", "technic:coal_dust 1"})
 end
 
+if minetest.get_modpath("bonemeal") then
+	table.insert(recipes, {"bonemeal:bone", "bonemeal:bonemeal 8"})
+end
+
 if minetest.get_modpath("moreblocks") then
 	table.insert(recipes, {"moreblocks:cobble_compressed", "default:gravel 9"})
 	-- there is no other place to throw in the cooking recipe
@@ -60,13 +64,11 @@ end
 -- defuse the sandstone -> 4 sand recipe to avoid infinite sand bugs (also consult the inverse compressor recipe)
 -- this snippet, when executed, also corrupts some dye+wool combinations. A remedial
 -- workaround is included in extractor recipes, since it's where we work with dyes.
--- UPD: after due consideration, this recipe removal is rejected altogether. 
--- The dye workaround, however, stays, just to be safe.
--- minetest.clear_craft({
--- 	recipe = {
--- 		{"default:sandstone"}
--- 	}
--- })
+minetest.clear_craft({
+	recipe = {
+		{"default:sandstone"}
+	}
+})
 
 if minetest.get_modpath("farming") then
 	table.insert(recipes, {"farming:seed_wheat",   "farming:flour 1"})

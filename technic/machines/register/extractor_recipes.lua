@@ -64,17 +64,21 @@ if minetest.get_modpath("dye") then
 	end
 	
 	if minetest.get_modpath("bakedclay") then
-		table.insert(dye_recipes, {"bakedclay:delphinium", "dye:cyan 8"})
-		table.insert(dye_recipes, {"bakedclay:thistle", "dye:magenta 8"})
-		table.insert(dye_recipes, {"bakedclay:lazarus", "dye:pink 8"})
-		table.insert(dye_recipes, {"bakedclay:mannagrass", "dye:dark_green 8"})
+		table.insert(dye_recipes, {"bakedclay:delphinium", "dye:cyan 6"})
+		table.insert(dye_recipes, {"bakedclay:thistle", "dye:magenta 6"})
+		table.insert(dye_recipes, {"bakedclay:lazarus", "dye:pink 6"})
+		table.insert(dye_recipes, {"bakedclay:mannagrass", "dye:dark_green 6"})
 	end
 
+	if minetest.get_modpath("wine") then
+		table.insert(dye_recipes, {"wine:blue_agave", "dye:cyan 6"})
+	end
 	
 	if minetest.get_modpath("bonemeal") then
 		table.insert(dye_recipes, {"bonemeal:bone", "dye:white 8"})
 		table.insert(dye_recipes, {"bonemeal:bonemeal", "dye:white 4"})
 	end
+
 	
 	for _, data in ipairs(dye_recipes) do
 		technic.register_extractor_recipe({input = {data[1]}, output = data[2]})

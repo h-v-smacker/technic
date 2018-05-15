@@ -48,16 +48,31 @@ if minetest.get_modpath("ethereal") then
 	
 end
 
+-- liquid oxygen
 table.insert(recipes, {"vessels:steel_bottle", "technic:lox"})
 
--- defuse the default sandstone recipe, since we have the compressor to take over in a more realistic manner
-minetest.clear_craft({
-	output = "default:sandstone",
-	recipe = {
-		{'group:sand', 'group:sand'},
-		{'group:sand', 'group:sand'}
-	},
-})
+
+-- defuse the default sandstone recipe, since we have the compressor to take over in a 
+-- more realistic manner. It also uses groups instead of proper sand, which is even more 
+-- important, given there are many types of sand and sandstone.
+-- minetest.clear_craft({
+-- 	output = "default:sandstone",
+-- 	recipe = {
+-- 		{'group:sand', 'group:sand'},
+-- 		{'group:sand', 'group:sand'}
+-- 	},
+-- })
+-- 
+-- -- provide an alternative recipe for sandstone, which demands the default sand in particular
+-- -- the compressing recipe offered by technic is still offering superior performance
+-- minetest.register_craft({
+-- 	output = "default:sandstone",
+-- 	recipe = {
+-- 		{'default:sand', 'default:sand'},
+-- 		{'default:sand', 'default:sand'}
+-- 	},
+-- })
+-- UPD: the above changes were made obsolete by default game development
 
 
 for _, data in pairs(recipes) do
