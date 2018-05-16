@@ -45,8 +45,14 @@ if minetest.get_modpath("ethereal") then
 	if minetest.get_modpath("technic_worldgen") or minetest.get_modpath("moretrees") then
 		table.insert(recipes, {"moretrees:rubber_tree_leaves 15", "ethereal:charcoal_lump 1"})
 	end
-	
+
 end
+
+if minetest.get_modpath("pathv7") then
+	table.insert(recipes, {"default:acacia_tree", "pathv7:bridgewood 1"})
+	table.insert(recipes, {"default:jungletree", "pathv7:junglewood 1"})
+end
+	
 
 -- liquid oxygen
 table.insert(recipes, {"vessels:steel_bottle", "technic:lox"})
