@@ -49,7 +49,8 @@ local default_extract = dye and "dye:brown 2"
 
 local grinding_recipes = {
 	{"Common Tree",	"group:tree",	 			"group:wood",		default_extract },
-	{"Rubber Tree",	"moretrees:rubber_tree_trunk",  	rubber_tree_planks, 	"technic:raw_latex"}
+	{"Rubber Tree",	"moretrees:rubber_tree_trunk",	rubber_tree_planks,	"technic:raw_latex"},
+	{"Rubber Tree",	"moretrees:rubber_tree_trunk_empty",rubber_tree_planks,	"technic:raw_latex"}
 }
 
 for _, data in pairs(grinding_recipes) do

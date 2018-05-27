@@ -49,8 +49,8 @@ if minetest.get_modpath("ethereal") then
 end
 
 if minetest.get_modpath("pathv7") then
-	table.insert(recipes, {"default:acacia_tree", "pathv7:bridgewood 1"})
-	table.insert(recipes, {"default:jungletree", "pathv7:junglewood 1"})
+	table.insert(recipes, {"default:acacia_wood", "pathv7:bridgewood 1"})
+	table.insert(recipes, {"default:junglewood", "pathv7:junglewood 1"})
 end
 	
 
