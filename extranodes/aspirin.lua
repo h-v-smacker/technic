@@ -6,7 +6,7 @@
 
 local S = rawget(_G, "intllib") and intllib.Getter() or function(s) return s end
 
-if minetest.get_modpath("hunger") and minetest.get_modpath("ethereal") then
+if (minetest.get_modpath("hunger") or minetest.get_modpath("hbhunger")) and minetest.get_modpath("ethereal") then
 
 	minetest.register_craftitem(":technic:aspirin_pill", {
 		description = S("Aspirin pill"),
