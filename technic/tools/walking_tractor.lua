@@ -51,6 +51,7 @@ local ripe_for_harvest = {
 	"farming:rhubarb_3",
 	"farming:tomato_8",
 	"farming:wheat_8",
+	"farming:beetroot_5",
 	"ethereal:onion_5",
 	"ethereal:strawberry_8",
 	-- also doubles as a snow-plough
