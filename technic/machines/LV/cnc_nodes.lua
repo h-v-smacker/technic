@@ -262,17 +262,6 @@ if minetest.get_modpath("ethereal") then
 			{"glostone.png"},
 			S("Glo Stone"))
 
-end
-
-
-if minetest.get_modpath("ethereal") then
-	-- Glostone
-	------------
-	technic.cnc.register_all("ethereal:glostone",
-			{cracky=1, not_in_creative_inventory=1, light_source=13},
-			{"glostone.png"},
-			S("Glo Stone"))
-
 	-- Crystal block
 	----------------
 	technic.cnc.register_all("ethereal:crystal_block",
@@ -389,6 +378,13 @@ if minetest.get_modpath("moreblocks") then
 	
 end
 
+if minetest.get_modpath("pathv7") then
+	-- jungle wood already exists (and hence the CNC'd parts would be identical)
+	technic.cnc.register_all("pathv7:bridgewood",
+                {snappy=2, choppy=2, oddly_breakable_by_hand=2, not_in_creative_inventory=1},
+                {"pathv7_bridgewood.png"},
+                S("Bridge Wood"))
+end
 
 if minetest.get_modpath("maple") then
 	technic.cnc.register_all("maple:maple_wood",
