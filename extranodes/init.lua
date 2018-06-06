@@ -21,7 +21,7 @@ if minetest.get_modpath("bakedclay") then
 end
 
 -- register procedurally-generated arcs
-if minetest.get_modpath("technic") then
+if minetest.get_modpath("pkarcs") then
 	pkarcs.register_node("technic:marble")
 	pkarcs.register_node("technic:granite")
 end
