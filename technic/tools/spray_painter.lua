@@ -1,7 +1,14 @@
+-- This is a decorative tool to paint exposed surfaces in some basic colors
+-- can be used to cover up unpleasant areas (e.g. cobblestone walls)
+-- or to mark areas with colors (colored paths on floors, color lines on walls)
+-- Colors are grouped together in 9 modes. The HEX values are taken from the dye
+-- textures from dye mod of minetest_game. Within every mode, the colors are cycled from
+-- brighter to darker hue on every subsequent application of the tool.
+
 local S = technic.getter
 
 local spray_painter_max_charge = 10000
-local spray_painter_charge_per_application = 1
+local spray_painter_cpa = 10
 
 local color_modes = {
 	{name = S("Red"), index = 1, n = 2, ct = {"c91818", "730505"}},
@@ -18,7 +25,6 @@ local color_modes = {
 minetest.register_node ("technic:paint_layer", {
 	description = S("Paint"),
 	drawtype = "nodebox",
--- 	tiles = {"technic_paint.png^[colorize:#FF0000"},
 	tiles = {"technic_paint.png"},
 	node_box = {
 			type = "wallmounted",
@@ -26,22 +32,17 @@ minetest.register_node ("technic:paint_layer", {
 			wall_top = {-0.5, 0.499, -0.5, 0.5, 0.5, 0.5},
 			wall_side = {-0.5, -0.5, -0.5, -0.499, 0.5, 0.5},
                 },
--- 	node_box = {
--- 		type = "fixed",
--- 		fixed = {-0.5, -0.5, -0.5, 0.5, -0.499, 0.5},
--- 		},
 	drop = "",
-	groups = {attached_node = 1, dig_immediate = 2},
+	groups = {attached_node = 1, dig_immediate = 2, not_in_creative_inventory = 1},
 	paramtype = "light",
 	paramtype2 = "colorwallmounted",
 	palette = "technic_paint_palette.png",
--- 	on_place = minetest.rotate_node,
 })
 
 
 local function spray_painter_setmode(user, itemstack, meta)
 	local player_name = user:get_player_name()
-
+	
 	if not meta then
 		meta = {mode = nil}
 	end
@@ -65,20 +66,43 @@ local function spray_paint(itemstack, user, pointed_thing)
 	local meta = minetest.deserialize(itemstack:get_metadata())
 	local keys = user:get_player_control()
 	
+	if user.get_pos == nil then
+		-- we are held in a node breaker and it will not work
+		return itemstack
+	end
+	
 	if not meta or not meta.mode or keys.sneak then
 		return spray_painter_setmode(user, itemstack, meta)
 	end
+	
+	if not meta or not meta.charge or meta.charge < spray_painter_cpa then
+		return itemstack
+	end
+	
 	
 	if pointed_thing.type ~= "node" then
 		return itemstack
 	end
 	
+	minetest.sound_play("technic_spray_painter", {
+		pos = pos,
+		gain = 0.4,
+	})
+	
+	-- player needs to own both the wall and its surface
+	if minetest.is_protected(pointed_thing.under, user:get_player_name()) or 
+		minetest.is_protected(pointed_thing.above, user:get_player_name()) then
+		minetest.record_protection_violation(pointed_thing.under, name)
+		return itemstack
+	end
 	
 	local target = minetest.get_node_or_nil(pointed_thing.under) 
 	
+	-- if the tool is pointed at a layer of paint -> cycling colors
+	
 	if target and target.name == "technic:paint_layer" then
+	
 		local p2 = target.param2
--- 		local p2 = meta:get_int("param2")
 		local orientation = p2 % 8
 		local cindex = (p2 - orientation) / 8
 		local new_cindex = cindex + 1
@@ -88,14 +112,22 @@ local function spray_paint(itemstack, user, pointed_thing)
 		if new_cindex > color_modes[meta.mode].index + (color_modes[meta.mode].n - 1) - 1 then
 			new_cindex = color_modes[meta.mode].index - 1
 		end
-		minetest.chat_send_all("---> " .. tostring(orientation) .. " --- " .. tostring(cindex))
 		
--- 		minetest.swap_node(pointed_thing.under, {name = target.name, param2 = (cindex + 1)*8 + orientation})
-		minetest.swap_node(pointed_thing.under, {name = target.name, param2 = new_cindex*8 + orientation})
+		minetest.swap_node(pointed_thing.under, {
+									name = target.name, 
+									param2 = new_cindex*8 + orientation
+									})
+		
+		if not technic.creative_mode then
+			meta.charge = meta.charge - spray_painter_cpa
+			technic.set_RE_wear(itemstack, meta.charge, spray_painter_max_charge)
+			itemstack:set_metadata(minetest.serialize(meta))
+		end
 		
 		return itemstack
 	end
 	
+	-- otherwise, spray some paint anew
 	
 	target = minetest.get_node_or_nil(pointed_thing.above)
 		
@@ -103,64 +135,16 @@ local function spray_paint(itemstack, user, pointed_thing)
 		return itemstack
 	end
 
-	local meta = minetest.deserialize(itemstack:get_metadata())
-	if not meta or not meta.charge or
-			meta.charge < spray_painter_charge_per_application then
-		return
-	end
+	local diff = vector.subtract(pointed_thing.under, pointed_thing.above)
+	local wdr = minetest.dir_to_wallmounted(diff)
+	minetest.swap_node(pointed_thing.above, {
+								name = "technic:paint_layer", 
+								param2 = (color_modes[meta.mode].index - 1) * 8 + wdr
+								})
 
-	local name = user:get_player_name()
-	if minetest.is_protected(pointed_thing.under, name) then
-		minetest.record_protection_violation(pointed_thing.under, name)
-		return
-	end
-	
-	
-	
-	minetest.chat_send_all("below: " .. minetest.serialize(pointed_thing.under))
-	minetest.chat_send_all("above: " .. minetest.serialize(pointed_thing.above))
--- 	minetest.swap_node(pointed_thing.above, {name = "default:dirt"})
--- 	minetest.swap_node(pointed_thing.under, {name = "default:cobble"})
-	local rrr = vector.subtract(pointed_thing.under, pointed_thing.above)
-	minetest.chat_send_all(minetest.serialize(rrr))
-	local xxx = minetest.dir_to_wallmounted(rrr)
-	minetest.chat_send_all(minetest.serialize(xxx))
--- 	local t = {x = pointed_thing.above.x, y = pointed_thing.above.y, z = pointed_thing.above.z}
--- 	minetest.chat_send_all("--->" .. minetest.serialize(t))	
--- 	minetest.place_node(t, {name = "technic:paint_layer", param2 = xxx})
-	minetest.swap_node(pointed_thing.above, {name = "technic:paint_layer", param2 = (color_modes[meta.mode].index - 1) * 8 + xxx})
-
--- 	minetest.rotate_node(ItemStack({name = "technic:paint_layer"}), user, pointed_thing)
-	
--- 	local player_pos = user:getpos()
--- 	local player_name = user:get_player_name()
--- 	local dir = user:get_look_dir()
--- 
--- 	local start_pos = vector.new(player_pos)
--- 	-- Adjust to head height
--- 	start_pos.y = start_pos.y + 1.6
--- 	local last_air = {}
--- 	for pos in technic.trace_node_ray(start_pos, dir, 5) do
--- 		local node = minetest.get_node_or_nil(pos)
--- 		minetest.chat_send_all(minetest.serialize(pos) .. node.name)
--- 		if not node then
--- 			break
--- 		end
--- 		if node.name == "air" then
--- 			last_air.x = pos.x
--- 			last_air.y = pos.y
--- 			last_air.z = pos.z
--- 		else
--- 			minetest.chat_send_all("---------> " .. minetest.serialize(last_air))
--- 			minetest.place_node(last_air, {name = "default:dirt"})
--- 			break
--- 		end
--- 		minetest.chat_send_all(minetest.serialize(last_air))
--- 		
--- 	end
-	
 	if not technic.creative_mode then
-		technic.set_RE_wear(itemstack, meta.charge - spray_painter_charge_per_application, spray_painter_max_charge)
+		meta.charge = meta.charge - spray_painter_cpa
+		technic.set_RE_wear(itemstack, meta.charge, spray_painter_max_charge)
 		itemstack:set_metadata(minetest.serialize(meta))
 	end
 	return itemstack
@@ -199,8 +183,8 @@ local trigger = minetest.get_modpath("mesecons_button") and "mesecons_button:but
 minetest.register_craft({
 	output = 'technic:spray_painter',
 	recipe = {
-		{'default:stick', 'default:stick', trigger},
-		{'technic:motor', 'default:stick', 'technic:battery'},
-		{'technic:stainless_steel_ingot', 'default:stick', 'default:stick'},
+		{'pipeworks:tube_1', 'technic:stainless_steel_ingot', 'technic:battery'},
+		{'', 'vessels:steel_bottle', trigger},
+		{'dye:red', 'dye:green', 'dye:blue'},
 	}
 })
