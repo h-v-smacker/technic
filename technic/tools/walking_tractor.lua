@@ -57,6 +57,9 @@ local ripe_for_harvest = {
 	-- also doubles as a snow-plough
 	"default:snowblock",
 	"stairs:slab_snowblock",
+	-- mushrooms
+	"flowers:mushroom_red",
+	"flowers:mushroom_brown",
 }
 
 local compatible_soils = {
