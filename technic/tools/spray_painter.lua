@@ -90,9 +90,10 @@ local function spray_paint(itemstack, user, pointed_thing)
 	})
 	
 	-- player needs to own both the wall and its surface
-	if minetest.is_protected(pointed_thing.under, user:get_player_name()) or 
-		minetest.is_protected(pointed_thing.above, user:get_player_name()) then
--- 		minetest.record_protection_violation(pointed_thing.under, name)
+	local pname = user:get_player_name()
+	if minetest.is_protected(pointed_thing.under, pname) or 
+		minetest.is_protected(pointed_thing.above, pname) then
+		minetest.record_protection_violation(pointed_thing.under, pname)
 		return itemstack
 	end
 	
