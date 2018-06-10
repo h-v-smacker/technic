@@ -20,6 +20,8 @@ dofile(path.."/lawn_trimmer.lua")
 dofile(path.."/walking_tractor.lua")
 dofile(path.."/planter.lua")
 
+dofile(path.."/spray_painter.lua")
+
 if minetest.get_modpath("screwdriver") then
 	-- compatibility alias
 	minetest.register_alias("technic:screwdriver", "screwdriver:screwdriver")
