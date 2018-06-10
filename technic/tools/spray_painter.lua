@@ -85,7 +85,7 @@ local function spray_paint(itemstack, user, pointed_thing)
 	end
 	
 	minetest.sound_play("technic_spray_painter", {
-		pos = pos,
+		pos = user:get_pos(),
 		gain = 0.4,
 	})
 	
