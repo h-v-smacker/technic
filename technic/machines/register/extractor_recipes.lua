@@ -64,6 +64,11 @@ if minetest.get_modpath("dye") then
 		table.insert(dye_recipes, {"ethereal:crystalgrass", "dye:blue 4"})
 	end
 	
+	if minetest.get_modpath("ethereal") and minetest.get_modpath("flowers") then
+		-- Mushroom biome convertion serum
+		table.insert(dye_recipes, {"flowers:mushroom_red 3", "technic:antishroom"})
+	end
+	
 	if minetest.get_modpath("bakedclay") then
 		table.insert(dye_recipes, {"bakedclay:delphinium", "dye:cyan 6"})
 		table.insert(dye_recipes, {"bakedclay:thistle", "dye:magenta 6"})

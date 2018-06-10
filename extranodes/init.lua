@@ -11,6 +11,10 @@ dofile(path.."/extratubes.lua")
 dofile(path.."/extramesecons.lua")
 dofile(path.."/lox.lua")
 
+if minetest.get_modpath("ethereal") and minetest.get_modpath("flowers") then
+	dofile(path.."/antishroom.lua")
+end
+
 if minetest.get_modpath("bakedclay") then
 	-- bring back them sticks
 	minetest.register_craft( {
