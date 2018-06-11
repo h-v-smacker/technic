@@ -33,7 +33,7 @@ minetest.register_node ("technic:paint_layer", {
 			wall_side = {-0.5, -0.5, -0.5, -0.49, 0.5, 0.5},
                 },
 	drop = "",
-	groups = {attached_node = 1, dig_immediate = 2, not_in_creative_inventory = 1},
+	groups = {attached_node = 1, dig_immediate = 2, not_in_creative_inventory = 1, not_blocking_trains = 1},
 	paramtype = "light",
 	paramtype2 = "colorwallmounted",
 	palette = "technic_paint_palette.png",

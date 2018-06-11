@@ -18,14 +18,14 @@ minetest.register_craftitem(":technic:antishroom",{
 		if target and target.name == "ethereal:mushroom_dirt" then
 		
 			local start_pos = {
-				x = pos.x - 10,
-				z = pos.z - 10,
+				x = pos.x - 16,
+				z = pos.z - 16,
 				y = pos.y - 5 
 			} 
 			
 			local end_pos = {
-				x = pos.x + 10,
-				z = pos.z + 10,
+				x = pos.x + 16,
+				z = pos.z + 16,
 				y = pos.y + 15
 			} 
 
