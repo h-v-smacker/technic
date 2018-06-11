@@ -187,7 +187,7 @@ minetest.register_abm({
 
 			meta:set_int("processing", 0)
                                                      
-			meta:set_string("infotext", S("%s is unpowered"):format(machine_name))
+			meta:set_string("infotext", S("%s is unpowered\nMust be placed next to a mesecon water turbine\nThe turbine must be active"):format(machine_name))
 			technic.swap_node(pos, "technic:water_powered_grinder_unpowered")
 			meta:set_string("formspec", formspec)
 		end
