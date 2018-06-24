@@ -39,8 +39,26 @@ minetest.register_node ("technic:paint_layer", {
 	palette = "technic_paint_palette.png",
 })
 
+minetest.register_node ("technic:fluorescent_paint_layer", {
+	description = S("Fluorescent Paint"),
+	drawtype = "nodebox",
+	tiles = {"technic_paint.png"},
+	node_box = {
+			type = "wallmounted",
+			wall_bottom = {-0.5, -0.5, -0.5, 0.5, -0.49, 0.5},
+			wall_top = {-0.5, 0.49, -0.5, 0.5, 0.5, 0.5},
+			wall_side = {-0.5, -0.5, -0.5, -0.49, 0.5, 0.5},
+                },
+	drop = "",
+	groups = {attached_node = 1, dig_immediate = 2, not_in_creative_inventory = 1, not_blocking_trains = 1},
+	light_source = 5,
+	paramtype = "light",
+	paramtype2 = "colorwallmounted",
+	palette = "technic_paint_palette.png",
+})
 
-local function spray_painter_setmode(user, itemstack, meta)
+
+local function spray_painter_setmode(user, itemstack, meta, f)
 	local player_name = user:get_player_name()
 	
 	if not meta then
@@ -54,14 +72,19 @@ local function spray_painter_setmode(user, itemstack, meta)
 	
 	meta.mode = meta.mode % 9 + 1
 	
+	local tool = "technic:spray_painter"
+	if f then
+		tool = "technic:fluorescent_spray_painter"
+	end
+	
 	minetest.chat_send_player(player_name, 
 		S("Spray Painter: %s"):format(color_modes[meta.mode].name))
-	itemstack:set_name("technic:spray_painter_" .. meta.mode);
+	itemstack:set_name(tool .. "_" .. meta.mode);
 	itemstack:set_metadata(minetest.serialize(meta))
 	return itemstack
 end
 
-local function spray_paint(itemstack, user, pointed_thing)
+local function spray_paint(itemstack, user, pointed_thing, ptype)
 	
 	local meta = minetest.deserialize(itemstack:get_metadata())
 	local keys = user:get_player_control()
@@ -72,7 +95,7 @@ local function spray_paint(itemstack, user, pointed_thing)
 	end
 	
 	if not meta or not meta.mode or keys.sneak then
-		return spray_painter_setmode(user, itemstack, meta)
+		return spray_painter_setmode(user, itemstack, meta, ptype)
 	end
 	
 	if not meta or not meta.charge or meta.charge < spray_painter_cpa then
@@ -97,11 +120,17 @@ local function spray_paint(itemstack, user, pointed_thing)
 		return itemstack
 	end
 	
+	local paint_name = "technic:paint_layer"
+	if ptype then
+		paint_name = "technic:fluorescent_paint_layer"
+	end
+	
 	local target = minetest.get_node_or_nil(pointed_thing.under) 
 	
+
 	-- if the tool is pointed at a layer of paint -> cycling colors
 	
-	if target and target.name == "technic:paint_layer" then
+	if target and target.name == paint_name then
 	
 		local p2 = target.param2
 		local orientation = p2 % 8
@@ -139,7 +168,7 @@ local function spray_paint(itemstack, user, pointed_thing)
 	local diff = vector.subtract(pointed_thing.under, pointed_thing.above)
 	local wdr = minetest.dir_to_wallmounted(diff)
 	minetest.swap_node(pointed_thing.above, {
-								name = "technic:paint_layer", 
+								name = paint_name, 
 								param2 = (color_modes[meta.mode].index - 1) * 8 + wdr
 								})
 
@@ -159,7 +188,10 @@ minetest.register_tool("technic:spray_painter", {
 	stack_max = 1,
 	wear_represents = "technic_RE_charge",
 	on_refill = technic.refill_RE_charge,
-	on_use = spray_paint,
+	on_use = function(itemstack, user, pointed_thing)
+		spray_paint(itemstack, user, pointed_thing, false)
+		return itemstack
+	end,
 })
 
 
@@ -172,7 +204,10 @@ for i = 1, 9 do
 		wear_represents = "technic_RE_charge",
 		on_refill = technic.refill_RE_charge,
 		groups = {not_in_creative_inventory = 1},
-		on_use = spray_paint,
+		on_use = function(itemstack, user, pointed_thing)
+			spray_paint(itemstack, user, pointed_thing, false)
+			return itemstack
+		end,
 	})
 end
 
@@ -186,6 +221,53 @@ minetest.register_craft({
 	recipe = {
 		{'pipeworks:tube_1', 'technic:stainless_steel_ingot', 'technic:battery'},
 		{'', 'vessels:steel_bottle', trigger},
+		{'dye:red', 'dye:green', 'dye:blue'},
+	}
+})
+
+
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+technic.register_power_tool("technic:fluorescent_spray_painter", spray_painter_max_charge)
+minetest.register_tool("technic:fluorescent_spray_painter", {
+	description = S("Fluorescent Spray Painter"),
+	inventory_image = "technic_spray_painter_fluorescent.png",
+	stack_max = 1,
+	wear_represents = "technic_RE_charge",
+	on_refill = technic.refill_RE_charge,
+	on_use = function(itemstack, user, pointed_thing)
+		spray_paint(itemstack, user, pointed_thing, true)
+		return itemstack
+	end,
+})
+
+
+for i = 1, 9 do
+	technic.register_power_tool("technic:fluorescent_spray_painter_" .. i, spray_painter_max_charge)
+	minetest.register_tool("technic:fluorescent_spray_painter_" .. i, {
+		description = S("Fluorescent Spray Painter: %s"):format(color_modes[i].name),
+		inventory_image = "technic_spray_painter_fluorescent.png^technic_tool_mode" .. i .. ".png",
+		wield_image = "technic_spray_painter.png",
+		wear_represents = "technic_RE_charge",
+		on_refill = technic.refill_RE_charge,
+		groups = {not_in_creative_inventory = 1},
+		on_use = function(itemstack, user, pointed_thing)
+			spray_paint(itemstack, user, pointed_thing, true)
+			return itemstack
+		end,
+	})
+end
+
+
+-- Provide a crafting recipe
+local trigger = minetest.get_modpath("mesecons_button") and "mesecons_button:button_off" 
+	or "default:mese_crystal_fragment"
+
+minetest.register_craft({
+	output = 'technic:fluorescent_spray_painter',
+	recipe = {
+		{'pipeworks:tube_1', 'technic:stainless_steel_ingot', 'technic:battery'},
+		{'technic:uranium_ingot', 'vessels:steel_bottle', trigger},
 		{'dye:red', 'dye:green', 'dye:blue'},
 	}
 })

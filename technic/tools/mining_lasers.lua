@@ -53,6 +53,8 @@ local no_destroy = {
 	["air"] = true,
 	["default:lava_source"] = true,
 	["default:lava_flowing"] = true,
+	["digtron:loaded_crate"] = true,
+	["digtron:loaded_locked_crate"] = true,
 }
 local function laser_shoot(player, range, particle_texture, sound)
 	local player_pos = player:getpos()
