@@ -39,15 +39,20 @@ local function screwdriver_handler(itemstack, user, pointed_thing, mode)
 		return
 	end
 
+	-- exclude doors from rotatable options (causes a crash)
+	if node.name == "doors:hidden" or string.find(node.name, "^doors:door_") then
+		return
+	end
+	
 	-- contrary to the default screwdriver, do not check for can_dig, to allow rotating machines with CLU's in them
 	-- this is consistent with the previous sonic screwdriver
-
+	
 	local meta1 = minetest.deserialize(itemstack:get_metadata())
 	if not meta1 or not meta1.charge or meta1.charge < 100 then
 		return
 	end
 
-	minetest.sound_play("technic_sonic_screwdriver", {pos = pos, gain = 0.3, max_hear_distance = 10})
+	minetest.sound_play("technic_sonic_screwdriver", {pos = pos, gain = 0.1, max_hear_distance = 10})
 
 	-- Set param2
 	local rotationPart = node.param2 % 32 -- get first 4 bits
