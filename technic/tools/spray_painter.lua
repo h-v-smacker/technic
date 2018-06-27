@@ -247,7 +247,7 @@ for i = 1, 9 do
 	minetest.register_tool("technic:fluorescent_spray_painter_" .. i, {
 		description = S("Fluorescent Spray Painter: %s"):format(color_modes[i].name),
 		inventory_image = "technic_spray_painter_fluorescent.png^technic_tool_mode" .. i .. ".png",
-		wield_image = "technic_spray_painter.png",
+		wield_image = "technic_spray_painter_fluorescent.png",
 		wear_represents = "technic_RE_charge",
 		on_refill = technic.refill_RE_charge,
 		groups = {not_in_creative_inventory = 1},

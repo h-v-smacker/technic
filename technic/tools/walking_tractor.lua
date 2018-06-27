@@ -29,6 +29,7 @@ local walking_tractor_mode_text = {
 local ripe_for_harvest = {
 	"farming:barley_7",
 	"farming:beanpole_5",
+	"farming:beetroot_5",
 	"farming:blueberry_4",
 	"farming:carrot_8",
 	"farming:chili_8",
@@ -51,7 +52,6 @@ local ripe_for_harvest = {
 	"farming:rhubarb_3",
 	"farming:tomato_8",
 	"farming:wheat_8",
-	"farming:beetroot_5",
 	"ethereal:onion_5",
 	"ethereal:strawberry_8",
 	-- also doubles as a snow-plough
