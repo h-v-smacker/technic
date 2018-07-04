@@ -11,6 +11,8 @@ technic.creative_mode = minetest.settings:get_bool("creative_mode")
 local modpath = minetest.get_modpath("technic")
 technic.modpath = modpath
 
+-- there should be a way to distinguish this fork from others
+technic.vendorstring = "linuxforks"
 
 -- Boilerplate to support intllib
 if rawget(_G, "intllib") then

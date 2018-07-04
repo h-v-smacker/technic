@@ -589,7 +589,7 @@ minetest.register_tool("technic:chainsaw_mini", {
 	stack_max = 1,
 	wear_represents = "technic_RE_charge",
 	on_refill = technic.refill_RE_charge,
-	groups = {not_in_creative_inventory = 1},
+-- 	groups = {not_in_creative_inventory = 1},
 	on_use = function(itemstack, user, pointed_thing)
 			use_chainsaw(itemstack, user, pointed_thing, nil)
 			return(itemstack)
