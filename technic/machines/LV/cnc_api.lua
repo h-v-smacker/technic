@@ -192,6 +192,11 @@ technic.cnc.programs = {
 		desc  = S("One Curved Edge LR Block")
 	},
 	
+	{ suffix  = "technic_cnc_twocurvededge_lr",
+		model = "technic_two_curved_edge_lr.obj",
+		desc  = S("Two Curved Edges LR Block")
+	},
+	
 	-- slope
 
 
