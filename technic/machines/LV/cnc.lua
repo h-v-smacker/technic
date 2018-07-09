@@ -102,14 +102,15 @@ local cnc_formspec =
 	"image_button[4,2.5;1,1;technic_cnc_opposedcurvededge.png;opposedcurvededge; ]"..
 	"image_button[5,2.5;1,1;technic_cnc_block_fluted.png;block_fluted; ]"..
 	"image_button[6,2.5;1,1;technic_cnc_cylinder_fluted.png;cylinder_fluted; ]"..
-	"image_button[7,2.5;1,1;technic_cnc_arch216.png;arch216; ]"..
-	"image_button[8,2.5;1,1;technic_cnc_arch216_flange.png;arch216_flange; ]"..
-	"image_button[9,2.5;1,1;technic_cnc_diagonal_truss.png;diagonal_truss; ]"..
-	"image_button[10,2.5;1,1;technic_cnc_diagonal_truss_cross.png;diagonal_truss_cross; ]"..
+	"image_button[7,2.5;1,1;technic_cnc_diagonal_truss.png;diagonal_truss; ]"..
+	"image_button[8,2.5;1,1;technic_cnc_diagonal_truss_cross.png;diagonal_truss_cross; ]"..
+	"image_button[9,2.5;1,1;technic_cnc_arch216.png;arch216; ]"..
+	"image_button[10,2.5;1,1;technic_cnc_arch216_flange.png;arch216_flange; ]"..
 	
-	"image_button[7,3.5;1,1;technic_cnc_twocurvededge_lr.png;twocurvededge_lr; ]"..
-	"image_button[8,3.5;1,1;technic_cnc_45_beam_216.png;d45_beam_216; ]"..
-	"image_button[9,3.5;1,1;technic_cnc_45_slope_216.png;d45_slope_216; ]"..
+	
+-- 	"image_button[7,3.5;1,1;technic_cnc_45_beam_216.png;d45_beam_216; ]"..
+	"image_button[8,3.5;1,1;technic_cnc_45_slope_216.png;d45_slope_216; ]"..
+	"image_button[9,3.5;1,1;technic_cnc_twocurvededge_lr.png;twocurvededge_lr; ]"..
 	"image_button[10,3.5;1,1;technic_cnc_onecurvededge_lr.png;onecurvededge_lr; ]"..
 
 	"label[0,3.5;"..S("Slim Elements half / normal height:").."]"..

@@ -197,20 +197,6 @@ technic.cnc.programs = {
 		desc  = S("Two Curved Edges LR Block")
 	},
 	
-	-- slope
-
-
-	{ suffix  = "technic_cnc_d45_slope_216",
-		model = "technic_45_slope_216.obj",
-		desc  = S("2/16 45° Slope")
-	},
-	
-	
-	{ suffix  = "technic_cnc_d45_beam_216",
-		model = "technic_45_beam_216.obj",
-		desc  = S("2/16 45° Beam")
-	},
-	
 	-- 4/16 Diagonal truss
 	
 	{ suffix  = "technic_cnc_diagonal_truss",
@@ -280,6 +266,29 @@ technic.cnc.programs = {
 			}
 		}
 	},
+	
+	-- 2/16 slope panel
+
+
+	{ suffix  = "technic_cnc_d45_slope_216",
+		model = "technic_45_slope_216.obj",
+		desc  = S("2/16 45° Slope"),
+		cbox  = {
+			type = "fixed",
+			fixed = {
+				{0.25, -0.5, -0.5, 0.5, -0.25, 0.5},
+				{0, -0.25, -0.5, 0.25, 0, 0.5},
+				{-0.25, 0, -0.5, 0, 0.25, 0.5},
+				{-0.5, 0.25, -0.5, -0.25, 0.5, 0.5},
+			}
+		}
+	},
+	
+	
+-- 	{ suffix  = "technic_cnc_d45_beam_216",
+-- 		model = "technic_45_beam_216.obj",
+-- 		desc  = S("2/16 45° Beam")
+-- 	},
 	
 	-- 2/16 Arch
 	
