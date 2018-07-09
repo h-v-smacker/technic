@@ -55,6 +55,9 @@ local onesize_products = {
 	beam216_cross_column     = 1,
 	diagonal_truss           = 6,
 	diagonal_truss_cross     = 4,
+	onecurvededge_lr         = 1,
+	d45_slope_216            = 1,
+	d45_beam_216             = 4
 }
 local twosize_products = {
 	element_straight         = 4,
@@ -102,6 +105,10 @@ local cnc_formspec =
 	"image_button[8,2.5;1,1;technic_cnc_arch216_flange.png;arch216_flange; ]"..
 	"image_button[9,2.5;1,1;technic_cnc_diagonal_truss.png;diagonal_truss; ]"..
 	"image_button[10,2.5;1,1;technic_cnc_diagonal_truss_cross.png;diagonal_truss_cross; ]"..
+	
+	"image_button[8,3.5;1,1;technic_cnc_45_beam_216.png;d45_beam_216; ]"..
+	"image_button[9,3.5;1,1;technic_cnc_45_slope_216.png;d45_slope_216; ]"..
+	"image_button[10,3.5;1,1;technic_cnc_onecurvededge_lr.png;onecurvededge_lr; ]"..
 
 	"label[0,3.5;"..S("Slim Elements half / normal height:").."]"..
 

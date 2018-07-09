@@ -185,6 +185,27 @@ technic.cnc.programs = {
 		desc  = S("Opposed Curved Edges Block")
 	},
 	
+	-- large radius
+
+	{ suffix  = "technic_cnc_onecurvededge_lr",
+		model = "technic_one_curved_edge_lr.obj",
+		desc  = S("One Curved Edge LR Block")
+	},
+	
+	-- slope
+
+
+	{ suffix  = "technic_cnc_d45_slope_216",
+		model = "technic_45_slope_216.obj",
+		desc  = S("2/16 45° Slope")
+	},
+	
+	
+	{ suffix  = "technic_cnc_d45_beam_216",
+		model = "technic_45_beam_216.obj",
+		desc  = S("2/16 45° Beam")
+	},
+	
 	-- 4/16 Diagonal truss
 	
 	{ suffix  = "technic_cnc_diagonal_truss",
