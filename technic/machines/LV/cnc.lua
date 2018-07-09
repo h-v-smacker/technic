@@ -56,9 +56,9 @@ local onesize_products = {
 	diagonal_truss           = 6,
 	diagonal_truss_cross     = 4,
 	onecurvededge_lr         = 1,
-	d45_slope_216            = 1,
-	d45_beam_216             = 4,
 	twocurvededge_lr         = 1,
+	d45_slope_216            = 1,
+-- 	d45_beam_216             = 4,
 }
 local twosize_products = {
 	element_straight         = 4,
