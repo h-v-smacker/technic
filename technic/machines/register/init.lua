@@ -20,6 +20,7 @@ dofile(path.."/grinder_recipes.lua")
 dofile(path.."/extractor_recipes.lua")
 dofile(path.."/compressor_recipes.lua")
 dofile(path.."/centrifuge_recipes.lua")
+dofile(path.."/thresher_recipes.lua")
 
 -- Multi-Machine Recipes
 dofile(path.."/grindings.lua")
@@ -31,3 +32,5 @@ dofile(path.."/grinder.lua")
 dofile(path.."/extractor.lua")
 dofile(path.."/compressor.lua")
 dofile(path.."/centrifuge.lua")
+
+dofile(path.."/thresher.lua")
