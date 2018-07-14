@@ -1,9 +1,9 @@
 minetest.register_craft({
 	output = "technic:mv_thresher",
 	recipe = {
-		{"technic:motor",          "technic:copper_plate",   "technic:diamond_drill_head"},
-		{"default:copper_ingot",   "technic:machine_casing", "default:copper_ingot"      },
-		{"pipeworks:one_way_tube", "technic:mv_cable",       "pipeworks:mese_filter"     },
+		{'technic:stainless_steel_ingot', 'technic:motor',          'technic:stainless_steel_ingot'},
+		{'pipeworks:tube_1',              'technic:machine_casing', 'pipeworks:tube_1'},
+		{'technic:stainless_steel_ingot', 'technic:mv_cable',       'technic:stainless_steel_ingot'},
 	}
 })
 
