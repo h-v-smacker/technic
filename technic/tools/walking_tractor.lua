@@ -60,6 +60,8 @@ local ripe_for_harvest = {
 	-- mushrooms
 	"flowers:mushroom_red",
 	"flowers:mushroom_brown",
+	-- agave
+	"wine:blue_agave",
 }
 
 local compatible_soils = {
