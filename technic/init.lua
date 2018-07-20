@@ -12,7 +12,7 @@ local modpath = minetest.get_modpath("technic")
 technic.modpath = modpath
 
 -- there should be a way to distinguish this fork from others
-technic.vendorstring = "linuxforks"
+technic.mod = "linuxforks"
 
 -- Boilerplate to support intllib
 if rawget(_G, "intllib") then

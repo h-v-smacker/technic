@@ -35,6 +35,7 @@ minetest.register_node(":technic:fall_dampener_50", {
                "technic_fall_dampener_side.png"},
 	groups = {crumbly = 3, fall_damage_add_percent = -50},
 	sounds = default.node_sound_dirt_defaults(),
+	paramtype = "light",
 	paramtype2 = "facedir",
 })
 
@@ -49,6 +50,7 @@ minetest.register_node(":technic:fall_dampener_100", {
                "technic_fall_dampener_side.png"},
 	groups = {crumbly = 3, fall_damage_add_percent = -100},
 	sounds = default.node_sound_dirt_defaults(),
+	paramtype = "light",
 	paramtype2 = "facedir",
 })
 
@@ -63,6 +65,7 @@ minetest.register_node(":technic:trampoline", {
 		"technic_trampoline_side.png"},
 	groups = {crumbly = 3, bouncy = 100, fall_damage_add_percent = -100},
 	sounds = {footstep = {name = "trampoline_boing", gain = 1.0}},
+	paramtype = "light",
 	paramtype2 = "facedir",
 })
 

@@ -318,6 +318,15 @@ if minetest.get_modpath("ethereal") then
                 {snappy=2, choppy=2, oddly_breakable_by_hand=2, not_in_creative_inventory=1},
                 {"bamboo_floor.png"},
                 S("Bamboo"))
+	
+	-- Shaped hedge bush for gardens and parks
+	-------------------------------------------
+	
+	technic.cnc.register_all("ethereal:bush",
+		{snappy=3, flamable=2, not_in_creative_inventory=1},
+		{"ethereal_bush.png"},
+		S("Bush"))
+	
 end
 
 
