@@ -10,6 +10,7 @@ dofile(path.."/trampoline.lua")
 dofile(path.."/extratubes.lua")
 dofile(path.."/extramesecons.lua")
 dofile(path.."/lox.lua")
+dofile(path.."/plastic_block.lua")
 
 if minetest.get_modpath("ethereal") and minetest.get_modpath("flowers") then
 	dofile(path.."/antishroom.lua")

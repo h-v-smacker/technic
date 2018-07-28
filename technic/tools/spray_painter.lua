@@ -127,6 +127,36 @@ local function spray_paint(itemstack, user, pointed_thing, ptype)
 	
 	local target = minetest.get_node_or_nil(pointed_thing.under) 
 	
+	-- if pointing at plastic blocks
+	
+	if target and minetest.get_item_group(target.name, "paintable_plastic_block") > 0 then
+		
+		local p2 = target.param2
+		local orientation = p2 % 8
+		local cindex = (p2 - orientation) / 8
+		local new_cindex = cindex + 1
+		if new_cindex < color_modes[meta.mode].index - 1 then
+			new_cindex = color_modes[meta.mode].index - 1
+		end
+		if new_cindex > color_modes[meta.mode].index + (color_modes[meta.mode].n - 1) - 1 then
+			new_cindex = color_modes[meta.mode].index - 1
+		end
+		
+		minetest.swap_node(pointed_thing.under, {
+									name = target.name, 
+									param2 = new_cindex*8 + orientation
+									})
+		
+		if not technic.creative_mode then
+			meta.charge = meta.charge - spray_painter_cpa
+			technic.set_RE_wear(itemstack, meta.charge, spray_painter_max_charge)
+			itemstack:set_metadata(minetest.serialize(meta))
+		end
+		
+		
+		return itemstack
+	end
+	
 
 	-- if the tool is pointed at a layer of paint -> cycling colors
 	
