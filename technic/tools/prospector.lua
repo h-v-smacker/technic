@@ -1,6 +1,7 @@
 local S = technic.getter
 
 technic.register_power_tool("technic:prospector", 650000)
+technic.register_power_tool("technic:prospector_mk2", 650000)
 
 local function get_metadata(toolstack)
 	local m = minetest.deserialize(toolstack:get_metadata())
@@ -9,6 +10,7 @@ local function get_metadata(toolstack)
 	if not m.target then m.target = "" end
 	if not m.look_depth then m.look_depth = 7 end
 	if not m.look_radius then m.look_radius = 1 end
+	if not m.scan_radius then m.scan_radius = 1 end
 	return m
 end
 
@@ -96,33 +98,182 @@ minetest.register_tool("technic:prospector", {
 	end, 
 })
 
+
+
+local function remove_waypoints(user, w)
+	
+	for i,p in ipairs(w) do
+		user:hud_remove(p)
+	end
+	
+end
+
+
+minetest.register_tool("technic:prospector_mk2", {
+	description = S("Prospector Mk2"),
+	inventory_image = "technic_prospector_mk2.png",
+	wear_represents = "technic_RE_charge",
+	on_refill = technic.refill_RE_charge,
+	on_use = function(toolstack, user, pointed_thing)
+		if not user or not user:is_player() or user.is_fake_player then return end
+		if pointed_thing.type ~= "node" then return end
+		local toolmeta = get_metadata(toolstack)
+		local look_diameter = toolmeta.look_radius * 2 + 1
+		local charge_to_take = math.pow(toolmeta.scan_radius * 7, 3)
+		if toolmeta.charge < charge_to_take then return end
+		if toolmeta.target == "" then
+			minetest.chat_send_player(user:get_player_name(), "Right-click to set target block type")
+			return
+		end
+		if not technic.creative_mode then
+			toolmeta.charge = toolmeta.charge - charge_to_take
+			toolstack:set_metadata(minetest.serialize(toolmeta))
+			technic.set_RE_wear(toolstack, toolmeta.charge, technic.power_tools[toolstack:get_name()])
+		end
+		local start_pos = pointed_thing.under
+		
+		local min_pos = {x = start_pos.x - toolmeta.scan_radius * 7, y = start_pos.y - toolmeta.scan_radius * 7,  z = start_pos.z - toolmeta.scan_radius * 7 }
+		
+		local max_pos = {x = start_pos.x + toolmeta.scan_radius * 7, y = start_pos.y + toolmeta.scan_radius * 7,  z = start_pos.z + toolmeta.scan_radius * 7 }
+		
+		local results = minetest.find_nodes_in_area(min_pos, max_pos, toolmeta.target)
+		
+		local waypoints = {}
+		local found = false
+				
+		if #results > math.pow(toolmeta.scan_radius * 7, 3) * 0.25 then
+		
+			minetest.chat_send_player(user:get_player_name(), minetest.registered_nodes[toolmeta.target].description.." is literally everywhere within the scanned region")
+			
+		else
+		
+			for _,p in ipairs(results) do
+			
+				if math.random() >= 0.02 then
+					found = true
+					local idx = user:hud_add({
+						hud_elem_type = "waypoint",
+						name = "",
+						text = "",
+						number = 0xFF0000,
+						world_pos = p
+					})
+					table.insert(waypoints, idx)
+			
+				end
+			
+			end
+			
+			if found then
+				minetest.after(7, remove_waypoints, user, waypoints)
+			end
+			
+			minetest.chat_send_player(user:get_player_name(), minetest.registered_nodes[toolmeta.target].description.." is "..(found and "present" or "absent").." within ".. toolmeta.scan_radius * 7 .." meters radius")
+		end
+		
+		minetest.sound_play("technic_prospector_"..(found and "hit" or "miss"), { pos = vector.add(user:getpos(), { x = 0, y = 1, z = 0 }), gain = 1.0, max_hear_distance = 10 })
+		
+		return toolstack
+	end,
+	on_place = function(toolstack, user, pointed_thing)
+		if not user or not user:is_player() or user.is_fake_player then return end
+		local toolmeta = get_metadata(toolstack)
+		local pointed
+		if pointed_thing.type == "node" then
+			local pname = minetest.get_node(pointed_thing.under).name
+			local pdef = minetest.registered_nodes[pname]
+			if pdef and (pdef.groups.not_in_creative_inventory or 0) == 0 and pname ~= toolmeta.target then
+				pointed = pname
+			end
+		end
+		local scan_radius = toolmeta.scan_radius * 7
+		minetest.show_formspec(user:get_player_name(), "technic:prospector_control_mk2",
+			"size[7,8.5]"..
+			"item_image[0,0;1,1;"..toolstack:get_name().."]"..
+			"label[1,0;"..minetest.formspec_escape(toolstack:get_definition().description).."]"..
+			(toolmeta.target ~= "" and
+				"label[0,1.5;Current target:]"..
+				"label[0,2;"..minetest.formspec_escape(minetest.registered_nodes[toolmeta.target].description).."]"..
+				"item_image[0,2.5;1,1;"..toolmeta.target.."]" or
+				"label[0,1.5;No target set]")..
+			(pointed and
+				"label[3.5,1.5;May set new target:]"..
+				"label[3.5,2;"..minetest.formspec_escape(minetest.registered_nodes[pointed].description).."]"..
+				"item_image[3.5,2.5;1,1;"..pointed.."]"..
+				"button_exit[3.5,3.65;2,0.5;target_"..pointed..";Set target]" or
+				"label[3.5,1.5;No new target available]")..
+			"label[0,4.5;Scan radius:]"..
+			"label[0,5;".. scan_radius .."]"..
+			"label[3.5,4.5;Set scan radius:]"..
+			"button_exit[3.5,5.15;1,0.5;scan_radius_1;7]"..
+			"button_exit[4.5,5.15;1,0.5;scan_radius_2;14]"..
+			"button_exit[5.5,5.15;1,0.5;scan_radius_3;21]"..
+			"label[0,7.5;Accuracy:]"..
+			"label[0,8;98%]")
+		return
+	end, 
+})
+
+
+
 minetest.register_on_player_receive_fields(function(user, formname, fields)
-        if formname ~= "technic:prospector_control" then return false end
+	if formname ~= "technic:prospector_control" and formname ~= "technic:prospector_control_mk2" then return false end
 	if not user or not user:is_player() or user.is_fake_player then return end
 	local toolstack = user:get_wielded_item()
-	if toolstack:get_name() ~= "technic:prospector" then return true end
-	local toolmeta = get_metadata(toolstack)
-	for field, value in pairs(fields) do
-		if field:sub(1, 7) == "target_" then
-			toolmeta.target = field:sub(8)
+                                          
+	if formname == "technic:prospector_control" and toolstack:get_name() == "technic:prospector" then
+
+		local toolmeta = get_metadata(toolstack)
+		for field, value in pairs(fields) do
+			if field:sub(1, 7) == "target_" then
+				toolmeta.target = field:sub(8)
+			end
+			if field:sub(1, 12) == "look_radius_" then
+				toolmeta.look_radius = field:sub(13)
+			end
+			if field:sub(1, 11) == "look_depth_" then
+				toolmeta.look_depth = field:sub(12)
+			end
 		end
-		if field:sub(1, 12) == "look_radius_" then
-			toolmeta.look_radius = field:sub(13)
-		end
-		if field:sub(1, 11) == "look_depth_" then
-			toolmeta.look_depth = field:sub(12)
-		end
+		toolstack:set_metadata(minetest.serialize(toolmeta))
+		user:set_wielded_item(toolstack)
+		return true
 	end
-	toolstack:set_metadata(minetest.serialize(toolmeta))
-	user:set_wielded_item(toolstack)
+                                          
+	if formname == "technic:prospector_control_mk2" and toolstack:get_name() == "technic:prospector_mk2" then
+		
+		local toolmeta = get_metadata(toolstack)
+		for field, value in pairs(fields) do
+			if field:sub(1, 7) == "target_" then
+				toolmeta.target = field:sub(8)
+			end
+			if field:sub(1, 12) == "scan_radius_" then
+				toolmeta.scan_radius = field:sub(13)
+			end
+		end
+		toolstack:set_metadata(minetest.serialize(toolmeta))
+		user:set_wielded_item(toolstack)
+		return true
+	end
+                                          
 	return true
+                                          
 end)
  
 minetest.register_craft({
 	output = "technic:prospector",
 	recipe = {
-		{"moreores:pick_silver", "moreores:mithril_block", "pipeworks:teleport_tube_1"},
+		{"moreores:pick_silver", "default:goldblock", "pipeworks:teleport_tube_1"},
 		{"technic:brass_ingot", "technic:control_logic_unit", "technic:brass_ingot"},
+		{"", "technic:red_energy_crystal", ""},
+	}
+})
+
+minetest.register_craft({
+	output = "technic:prospector_mk2",
+	recipe = {
+		{"moreores:pick_mithril", "moreores:mithril_block", "pipeworks:teleport_tube_1"},
+		{"technic:brass_ingot", "technic:control_logic_unit_adv", "technic:brass_ingot"},
 		{"", "technic:blue_energy_crystal", ""},
 	}
 })
