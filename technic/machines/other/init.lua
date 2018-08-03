@@ -16,5 +16,7 @@ end
 -- Coal-powered machines
 dofile(path.."/coal_alloy_furnace.lua")
 dofile(path.."/coal_furnace.lua")
+dofile(path.."/solar_furnace.lua")
+
 
 dofile(path.."/anchor.lua")

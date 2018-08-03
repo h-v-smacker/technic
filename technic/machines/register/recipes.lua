@@ -67,6 +67,9 @@ end
 
 function technic.get_recipe(typename, items)
 	if typename == "cooking" then -- Already builtin in Minetest, so use that
+		if not items then
+			return nil
+		end
 		local result, new_input = minetest.get_craft_result({
 			method = "cooking",
 			width = 1,
