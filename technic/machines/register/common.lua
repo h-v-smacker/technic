@@ -130,11 +130,13 @@ function technic.handle_machine_pipeworks(pos, tube_upgrade, send_function)
 	local x_velocity = 0
 	local z_velocity = 0
 
-	-- Output is on the left side of the furnace
-	if node.param2 == 3 then pos1.z = pos1.z - 1  z_velocity = -1 end
+	-- The machines shall always eject items to the right side
+	-- This will be easy to remember, since the destination inventory is always on the right as well
+	if node.param2 == 3 then pos1.z = pos1.z - 1  z_velocity =  1 end
 	if node.param2 == 2 then pos1.x = pos1.x - 1  x_velocity = -1 end
-	if node.param2 == 1 then pos1.z = pos1.z + 1  z_velocity =  1 end
+	if node.param2 == 1 then pos1.z = pos1.z + 1  z_velocity = -1 end
 	if node.param2 == 0 then pos1.x = pos1.x + 1  x_velocity =  1 end
+
 
 	local output_tube_connected = false
 	local node1 = minetest.get_node(pos1) 

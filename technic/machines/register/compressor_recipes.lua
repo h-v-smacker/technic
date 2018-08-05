@@ -12,7 +12,9 @@ local recipes = {
 	{"default:snowblock",          "default:ice"},
 	{"default:sand 2",             "default:sandstone"},
 	{"default:silver_sand 2",      "default:silver_sandstone"},
-	{"default:desert_sand",        "default:desert_stone"},
+--	{"default:desert_sand",        "default:desert_stone"},
+--	for consistency, any sand should be compressed into respective sandstone type
+	{"default:desert_sand 2",      "default:desert_sandstone"},
 	{"technic:mixed_metal_ingot",  "technic:composite_plate"},
 	{"default:copper_ingot 5",     "technic:copper_plate"},
 	{"technic:coal_dust 4",        "technic:graphite"},
@@ -23,6 +25,10 @@ local recipes = {
 
 
 if minetest.get_modpath("ethereal") then
+	
+	-- substitute for old recipe chain
+	-- instead of 5 dry dirt -> 1 desert sand -> compressing -> desert_stone
+	table.insert(recipes, {"ethereal:dry_dirt 5", "default:desert_stone"})
 	
 	-- compressing most copious leaves into more compact fuel
 	-- this conversion is based on the burn time (1 vs. 10) + some overhead

@@ -55,6 +55,7 @@ local ripe_for_harvest = {
 	"ethereal:onion_5",
 	"ethereal:strawberry_8",
 	-- also doubles as a snow-plough
+	"default:snow",
 	"default:snowblock",
 	"stairs:slab_snowblock",
 	-- mushrooms

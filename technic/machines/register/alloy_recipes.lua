@@ -14,10 +14,10 @@ end
 local recipes = {
 	{"technic:copper_dust 3",         "technic:tin_dust",           "technic:bronze_dust 4"},
 	{"default:copper_ingot 3",        "moreores:tin_ingot",         "default:bronze_ingot 4"},
-	{"technic:wrought_iron_dust",     "technic:coal_dust",          "technic:carbon_steel_dust", 3},
-	{"technic:wrought_iron_ingot",    "technic:coal_dust",          "technic:carbon_steel_ingot", 3},
-	{"technic:carbon_steel_dust",     "technic:coal_dust",          "technic:cast_iron_dust", 3},
-	{"technic:carbon_steel_ingot",    "technic:coal_dust",          "technic:cast_iron_ingot", 3},
+	{"technic:wrought_iron_dust",     "technic:coal_dust",          "technic:carbon_steel_dust",        3},
+	{"technic:wrought_iron_ingot",    "technic:coal_dust",          "technic:carbon_steel_ingot",       3},
+	{"technic:carbon_steel_dust",     "technic:coal_dust",          "technic:cast_iron_dust",           3},
+	{"technic:carbon_steel_ingot",    "technic:coal_dust",          "technic:cast_iron_ingot",          3},
 	{"technic:carbon_steel_dust 3",   "technic:chromium_dust",      "technic:stainless_steel_dust 4"},
 	{"technic:carbon_steel_ingot 3",  "technic:chromium_ingot",     "technic:stainless_steel_ingot 4"},
 	{"technic:copper_dust 2",         "technic:zinc_dust",          "technic:brass_dust 3"},
@@ -27,16 +27,19 @@ local recipes = {
 	-- from https://en.wikipedia.org/wiki/Carbon_black
 	-- The highest volume use of carbon black is as a reinforcing filler in rubber products, especially tires.
 	-- "[Compounding a] pure gum vulcanizate … with 50% of its weight of carbon black improves its tensile strength and wear resistance …" 
-	{"technic:raw_latex 4",           "technic:coal_dust 2",        "technic:rubber 6", 2},
-	{"technic:raw_latex 3",           "technic:sulfur_dust 1",      "technic:latex_foam", 2},
+	{"technic:raw_latex 4",           "technic:coal_dust 2",        "technic:rubber 6",                  2},
+	{"technic:raw_latex 3",           "technic:sulfur_dust 1",      "technic:latex_foam",                2},
+	-- straightforward way to get red stone
+	{"default:stone",                 "dye:red",                    "default:desert_stone",              2},
+
 }
 
 if minetest.get_modpath("ethereal") then
 	table.insert(recipes, {"ethereal:crystal_spike", "ethereal:fire_dust 2", "default:mese_crystal 2"})
 	if not minetest.get_modpath("bakedclay") then
-		table.insert(recipes, {"default:clay", "dye:red", "bakedclay:red"})
-		table.insert(recipes, {"default:clay", "dye:orange", "bakedclay:orange"})
-		table.insert(recipes, {"default:clay", "dye:grey", "bakedclay:grey"})
+		table.insert(recipes, {"default:clay", "dye:red",    "bakedclay:red",    3})
+		table.insert(recipes, {"default:clay", "dye:orange", "bakedclay:orange", 3})
+		table.insert(recipes, {"default:clay", "dye:grey",   "bakedclay:grey",   3})
 	end
 	if minetest.get_modpath("bonemeal") then
 		table.insert(recipes, {"default:sand", "bonemeal:mulch", "ethereal:sandy 2"})
