@@ -58,6 +58,19 @@ minetest.register_node ("technic:fluorescent_paint_layer", {
 })
 
 
+if minetest.get_modpath("ehlphabet") then
+	minetest.register_node(":ehlphabet:block_color", {
+		description = S("Ehlphabet Block (colored)"),
+		tiles = {"ehlphabet_000.png"},
+		groups = {cracky = 3, not_in_creative_inventory = 1},
+		drop = "ehlphabet:block",
+		paramtype = "light",
+		paramtype2 = "colorwallmounted",
+		palette = "technic_paint_palette.png",
+})
+
+end
+
 local function spray_painter_setmode(user, itemstack, meta, f)
 	local player_name = user:get_player_name()
 	
@@ -130,6 +143,42 @@ local function spray_paint(itemstack, user, pointed_thing, ptype)
 	-- if pointing at plastic blocks
 	
 	if target and minetest.get_item_group(target.name, "paintable_plastic_block") > 0 then
+		
+		local p2 = target.param2
+		local orientation = p2 % 8
+		local cindex = (p2 - orientation) / 8
+		local new_cindex = cindex + 1
+		if new_cindex < color_modes[meta.mode].index - 1 then
+			new_cindex = color_modes[meta.mode].index - 1
+		end
+		if new_cindex > color_modes[meta.mode].index + (color_modes[meta.mode].n - 1) - 1 then
+			new_cindex = color_modes[meta.mode].index - 1
+		end
+		
+		minetest.swap_node(pointed_thing.under, {
+									name = target.name, 
+									param2 = new_cindex*8 + orientation
+									})
+		
+		if not technic.creative_mode then
+			meta.charge = meta.charge - spray_painter_cpa
+			technic.set_RE_wear(itemstack, meta.charge, spray_painter_max_charge)
+			itemstack:set_metadata(minetest.serialize(meta))
+		end
+		
+		
+		return itemstack
+	end
+	
+	
+	-- if pointing at ehlphabet block (regular or colored)
+	
+	if target and (target.name == "ehlphabet:block" or target.name == "ehlphabet:block_color") then
+		
+		if target.name == "ehlphabet:block" then
+			minetest.swap_node(pointed_thing.under, { name = "ehlphabet:block_color" })
+			target = minetest.get_node_or_nil(pointed_thing.under) 
+		end
 		
 		local p2 = target.param2
 		local orientation = p2 % 8
