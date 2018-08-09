@@ -140,45 +140,36 @@ local function spray_paint(itemstack, user, pointed_thing, ptype)
 	
 	local target = minetest.get_node_or_nil(pointed_thing.under) 
 	
-	-- if pointing at plastic blocks
+	local paintable = false
 	
-	if target and minetest.get_item_group(target.name, "paintable_plastic_block") > 0 then
+	-- target-specific code
+	if target then
+	
+		-- if pointing at ehlphabet block (regular or colored)
+		if (target.name == "ehlphabet:block" or target.name == "ehlphabet:block_color") then
 		
-		local p2 = target.param2
-		local orientation = p2 % 8
-		local cindex = (p2 - orientation) / 8
-		local new_cindex = cindex + 1
-		if new_cindex < color_modes[meta.mode].index - 1 then
-			new_cindex = color_modes[meta.mode].index - 1
+			if target.name == "ehlphabet:block" then
+				minetest.swap_node(pointed_thing.under, { name = "ehlphabet:block_color" })
+				target = minetest.get_node_or_nil(pointed_thing.under) 
+			end
+			
+			paintable = true
+			
+		-- if pointing at plastic blocks
+		elseif minetest.get_item_group(target.name, "paintable_plastic_block") > 0 then
+			
+			paintable = true
+		
+		-- if the tool is pointed at a layer of paint -> cycling colors
+		elseif target.name == paint_name then	
+			
+			paintable = true
+			
 		end
-		if new_cindex > color_modes[meta.mode].index + (color_modes[meta.mode].n - 1) - 1 then
-			new_cindex = color_modes[meta.mode].index - 1
-		end
 		
-		minetest.swap_node(pointed_thing.under, {
-									name = target.name, 
-									param2 = new_cindex*8 + orientation
-									})
-		
-		if not technic.creative_mode then
-			meta.charge = meta.charge - spray_painter_cpa
-			technic.set_RE_wear(itemstack, meta.charge, spray_painter_max_charge)
-			itemstack:set_metadata(minetest.serialize(meta))
-		end
-		
-		
-		return itemstack
 	end
-	
-	
-	-- if pointing at ehlphabet block (regular or colored)
-	
-	if target and (target.name == "ehlphabet:block" or target.name == "ehlphabet:block_color") then
-		
-		if target.name == "ehlphabet:block" then
-			minetest.swap_node(pointed_thing.under, { name = "ehlphabet:block_color" })
-			target = minetest.get_node_or_nil(pointed_thing.under) 
-		end
+			
+	if paintable then
 		
 		local p2 = target.param2
 		local orientation = p2 % 8
@@ -202,36 +193,6 @@ local function spray_paint(itemstack, user, pointed_thing, ptype)
 			itemstack:set_metadata(minetest.serialize(meta))
 		end
 		
-		
-		return itemstack
-	end
-	
-
-	-- if the tool is pointed at a layer of paint -> cycling colors
-	
-	if target and target.name == paint_name then
-	
-		local p2 = target.param2
-		local orientation = p2 % 8
-		local cindex = (p2 - orientation) / 8
-		local new_cindex = cindex + 1
-		if new_cindex < color_modes[meta.mode].index - 1 then
-			new_cindex = color_modes[meta.mode].index - 1
-		end
-		if new_cindex > color_modes[meta.mode].index + (color_modes[meta.mode].n - 1) - 1 then
-			new_cindex = color_modes[meta.mode].index - 1
-		end
-		
-		minetest.swap_node(pointed_thing.under, {
-									name = target.name, 
-									param2 = new_cindex*8 + orientation
-									})
-		
-		if not technic.creative_mode then
-			meta.charge = meta.charge - spray_painter_cpa
-			technic.set_RE_wear(itemstack, meta.charge, spray_painter_max_charge)
-			itemstack:set_metadata(minetest.serialize(meta))
-		end
 		
 		return itemstack
 	end
