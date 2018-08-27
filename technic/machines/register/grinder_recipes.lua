@@ -3,6 +3,7 @@ local S = technic.getter
 
 technic.register_recipe_type("grinding", { description = S("Grinding") })
 
+
 function technic.register_grinder_recipe(data)
 	data.time = data.time or 3
 	technic.register_recipe("grinding", data)
@@ -36,8 +37,12 @@ local recipes = {
 	-- Other
 	{"default:cobble",          "default:gravel"},
 	{"default:gravel",          "default:sand"},
-	{"default:sandstone",       "default:sand 2"}, -- reverse recipe can be found in the compressor
-	{"technic:stone_dust",      "default:silver_sand"}
+	{"technic:stone_dust",      "default:silver_sand"},
+	
+	-- sands: reverse recipes can be found in the compressor
+	{"default:sandstone",       "default:sand 2"}, 
+	{"default:silver_sandstone","default:silver_sand 2"},
+	{"default:desert_sandstone","default:desert_sand 2"},
 }
 
 if minetest.get_modpath("ethereal") then
@@ -60,15 +65,6 @@ if minetest.get_modpath("moreblocks") then
       })
 end
 
-
--- defuse the sandstone -> 4 sand recipe to avoid infinite sand bugs (also consult the inverse compressor recipe)
--- this snippet, when executed, also corrupts some dye+wool combinations. A remedial
--- workaround is included in extractor recipes, since it's where we work with dyes.
-minetest.clear_craft({
-	recipe = {
-		{"default:sandstone"}
-	}
-})
 
 if minetest.get_modpath("farming") then
 	table.insert(recipes, {"farming:seed_wheat",   "farming:flour 1"})

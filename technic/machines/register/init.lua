@@ -10,6 +10,9 @@ dofile(path.."/battery_box.lua")
 dofile(path.."/solar_array.lua")
 dofile(path.."/generator.lua")
 
+-- Defusing recipes to avoid weird loops and multiplication
+dofile(path.."/recipe_defusing.lua")
+
 -- API for machines
 dofile(path.."/recipes.lua")
 dofile(path.."/machine_base.lua")
