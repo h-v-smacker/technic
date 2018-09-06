@@ -115,9 +115,10 @@ minetest.register_node(":technic:fbomb", {
 	},
 	groups = {dig_immediate = 2, falling_node = 1},
 	sounds = default.node_sound_defaults(),
+	drop = "technic:fbomb",
 	on_punch = function(pos, node, player, pointed_thing)
 		minetest.remove_node(pos)
-		minetest.place_node(pos, {name="technic:fbombact"})
+		minetest.set_node(pos, {name="technic:fbombact"})
 		local nm =  minetest.get_meta(pos)
 		nm:set_string("player", player:get_player_name())
 	end

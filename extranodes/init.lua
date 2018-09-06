@@ -28,6 +28,7 @@ end
 -- register procedurally-generated arcs
 if minetest.get_modpath("pkarcs") then
 	pkarcs.register_node("technic:marble")
+	pkarcs.register_node("technic:marble_bricks")
 	pkarcs.register_node("technic:granite")
 end
 
