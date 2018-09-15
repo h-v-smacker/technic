@@ -482,7 +482,18 @@ technic.cnc.programs_disable = {
 	["default:dirt"] = {"technic_cnc_oblate_spheroid", "technic_cnc_slope_upsdown", "technic_cnc_edge",
 	                    "technic_cnc_inner_edge", "technic_cnc_slope_edge_upsdown",
 	                    "technic_cnc_slope_inner_edge_upsdown", "technic_cnc_stick",
-	                    "technic_cnc_cylinder_horizontal"}
+	                    "technic_cnc_cylinder_horizontal"},
+
+}
+
+-- Allow enabling only few select programs
+technic.cnc.programs_enable = {
+	
+	["default:glass"] = {"technic_cnc_d45_slope_216", "technic_cnc_arch216"},
+	["default:obsidian_glass"] = {"technic_cnc_d45_slope_216", "technic_cnc_arch216"},
+	["moreblocks:clean_glass"] = {"technic_cnc_d45_slope_216", "technic_cnc_arch216"},
+	["moreblocks:coal_glass"] = {"technic_cnc_d45_slope_216", "technic_cnc_arch216"},
+	["moreblocks:iron_glass"] = {"technic_cnc_d45_slope_216", "technic_cnc_arch216"}
 }
 
 -- Generic function for registering all the different node types
@@ -533,6 +544,16 @@ function technic.cnc.register_all(recipeitem, groups, images, description)
 				end
 			end
 		end
+		
+		if technic.cnc.programs_enable[recipeitem] ~= nil then
+			do_register = false
+			for __, enable in ipairs(technic.cnc.programs_enable[recipeitem]) do
+				if enable == data.suffix then
+					do_register = true
+				end
+			end
+		end
+		
 		-- Create the node if it passes the test
 		if do_register then
 			technic.cnc.register_program(recipeitem, data.suffix, data.model,

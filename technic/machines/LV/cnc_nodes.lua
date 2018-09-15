@@ -15,6 +15,11 @@ technic.cnc.register_all("default:glass",
                 {"default_glass.png"},
                 S("Glass"))
 
+technic.cnc.register_all("default:obsidian_glass",
+                {snappy=2,choppy=2,oddly_breakable_by_hand=3,not_in_creative_inventory=1},
+                {"default_obsidian_glass.png"},
+                S("Obsidian Glass"))
+
 -- WOOD
 -------
 technic.cnc.register_all("default:wood",
@@ -327,6 +332,27 @@ if minetest.get_modpath("ethereal") then
 		{"ethereal_bush.png"},
 		S("Bush"))
 	
+	-- if baked clay isn't added and barebones ethereal is used
+	
+	if not minetest.get_modpath("bakedclay") then
+		-- Clay
+		------------
+		technic.cnc.register_all("bakedclay:red",
+				{cracky=3, not_in_creative_inventory=1},
+				{"baked_clay_red.png"},
+				S("Red Clay"))
+		
+		technic.cnc.register_all("bakedclay:orange",
+				{cracky=3, not_in_creative_inventory=1},
+				{"baked_clay_orange.png"},
+				S("Orange Clay"))
+		
+		technic.cnc.register_all("bakedclay:grey",
+				{cracky=3, not_in_creative_inventory=1},
+				{"baked_clay_grey.png"},
+				S("Grey Clay"))
+	end
+	
 end
 
 
@@ -372,25 +398,24 @@ if minetest.get_modpath("moreblocks") then
 			{"moreblocks_copperpatina.png"},
 			S("Copper Patina"))
 	
-	if not minetest.get_modpath("bakedclay") then
-		-- Clay
-		------------
-		technic.cnc.register_all("bakedclay:red",
-				{cracky=3, not_in_creative_inventory=1},
-				{"baked_clay_red.png"},
-				S("Red Clay"))
-		
-		technic.cnc.register_all("bakedclay:orange",
-				{cracky=3, not_in_creative_inventory=1},
-				{"baked_clay_orange.png"},
-				S("Orange Clay"))
-		
-		technic.cnc.register_all("bakedclay:grey",
-				{cracky=3, not_in_creative_inventory=1},
-				{"baked_clay_grey.png"},
-				S("Grey Clay"))
-	end
+	-- Glass types
+	------------
 	
+	technic.cnc.register_all("moreblocks:clean_glass",
+                {snappy=2,choppy=2,oddly_breakable_by_hand=3,not_in_creative_inventory=1},
+                {"moreblocks_clean_glass.png"},
+                S("Clean Glass"))
+	
+	technic.cnc.register_all("moreblocks:coal_glass",
+                {snappy=2,choppy=2,oddly_breakable_by_hand=3,not_in_creative_inventory=1},
+                {"moreblocks_coal_glass.png"},
+                S("Coal Glass"))
+	
+	technic.cnc.register_all("moreblocks:iron_glass",
+                {snappy=2,choppy=2,oddly_breakable_by_hand=3,not_in_creative_inventory=1},
+                {"moreblocks_iron_glass.png"},
+                S("Iron Glass"))
+
 end
 
 if minetest.get_modpath("pathv7") then
