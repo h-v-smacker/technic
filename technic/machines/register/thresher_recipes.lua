@@ -42,6 +42,24 @@ if minetest.get_modpath("farming") then
 	end
 end
 
+if minetest.get_modpath("farming") and farming.mod and farming.mod == "redo" then
+	-- farming redo uses recipes unfriendly with respect to automation. E.g. using the cutting board.
+	-- in the end, it's hard to automate a farm, since crops have to be processed individually.
+	-- here, we use the thresher to provide a universal device to deal with those
+	table.insert(recipes, { input = "farming:pumpkin_8", 
+		                        output = {"farming:pumpkin_slice 5"} })
+-- 	table.insert(recipes, { input = "farming:pumpkin", 
+-- 		                        output = {"farming:pumpkin_slice 5"} })
+	table.insert(recipes, { input = "farming:melon_8", 
+		                        output = {"farming:melon_slice 5"} })
+	table.insert(recipes, { input = "farming:pineapple", 
+		                        output = {"farming:pineapple_ring 6", "farming:pineapple_top"} })
+	table.insert(recipes, { input = "farming:garlic", 
+		                        output = {"farming:garlic_clove 10"} })
+	table.insert(recipes, { input = "farming:pepper", 
+		                        output = {"farming:peppercorn 2"} })
+end
+
 -- using thresher as a sorting machine for grass seeds
 table.insert(recipes, { input = "default:grass_1 99", 
                         output = {"default:dry_grass_1 80", "default:dry_shrub 7", "default:junglegrass 12"}, 
