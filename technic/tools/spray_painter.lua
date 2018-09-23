@@ -67,7 +67,18 @@ if minetest.get_modpath("ehlphabet") then
 		paramtype = "light",
 		paramtype2 = "colorwallmounted",
 		palette = "technic_paint_palette.png",
-})
+	})
+	
+	minetest.register_node(":ehlphabet:block_color_fluorescent", {
+		description = S("Ehlphabet Block (colored)"),
+		tiles = {"ehlphabet_000.png"},
+		groups = {cracky = 3, not_in_creative_inventory = 1},
+		light_source = 7,
+		drop = "ehlphabet:block",
+		paramtype = "light",
+		paramtype2 = "colorwallmounted",
+		palette = "technic_paint_palette.png",
+	})
 
 end
 
@@ -146,10 +157,14 @@ local function spray_paint(itemstack, user, pointed_thing, ptype)
 	if target then
 	
 		-- if pointing at ehlphabet block (regular or colored)
-		if (target.name == "ehlphabet:block" or target.name == "ehlphabet:block_color") then
+		if (target.name == "ehlphabet:block" or target.name == "ehlphabet:block_color" or target.name == "ehlphabet:block_color_fluorescent") then
 		
 			if target.name == "ehlphabet:block" then
-				minetest.swap_node(pointed_thing.under, { name = "ehlphabet:block_color" })
+				if not ptype then
+					minetest.swap_node(pointed_thing.under, { name = "ehlphabet:block_color" })
+				else
+					minetest.swap_node(pointed_thing.under, { name = "ehlphabet:block_color_fluorescent" })
+				end
 				target = minetest.get_node_or_nil(pointed_thing.under) 
 			end
 			
