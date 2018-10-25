@@ -433,6 +433,14 @@ if minetest.get_modpath("maple") then
                 S("Maple"))
 end
 
+if minetest.get_modpath("extranodes") then
+	technic.cnc.register_all("technic:plastic_clean",
+                {dig_immediate = 2, not_in_creative_inventory=1},
+                {"technic_plastic_clean.png"},
+                S("Plastic Clean"))
+end
+
+
 
 if minetest.get_modpath("bakedclay") then
 	
