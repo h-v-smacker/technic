@@ -73,14 +73,14 @@ minetest.register_craft({
 })
 minetest.register_craft({
 	type = "shapeless",
-	output = 'technic:constructor_mk2_off 1',
+	output = 'technic:constructor_mk2_off 2',
 	recipe = {'technic:constructor_mk1_off', 'technic:constructor_mk1_off'},
 
 })
 
 minetest.register_craft({
 	type = "shapeless",
-	output = 'technic:constructor_mk3_off 1',
+	output = 'technic:constructor_mk3_off 2',
 	recipe = {'technic:constructor_mk2_off', 'technic:constructor_mk2_off'},
 
 })

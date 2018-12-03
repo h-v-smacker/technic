@@ -112,3 +112,21 @@ minetest.register_craft({
 		{'technic:zinc_ingot', 'technic:stainless_steel_ingot', 'technic:zinc_ingot'},
 	}
 })
+
+technic.register_can({
+	can_name = "technic:freshwater_can",
+	can_description = S("Freshwater Can"),
+	can_inventory_image = "technic_freshwater_can.png",
+	can_capacity = 16,
+	liquid_source_name = "default:river_water_source",
+	liquid_flowing_name = "default:river_water_flowing",
+})
+
+minetest.register_craft({
+	output = 'technic:freshwater_can 1',
+	recipe = {
+		{'default:tin_ingot', 'technic:rubber',    'default:tin_ingot'},
+		{'default:tin_ingot', '',                  'default:tin_ingot'},
+		{'default:tin_ingot', 'default:tin_ingot', 'default:tin_ingot'},
+	}
+})
