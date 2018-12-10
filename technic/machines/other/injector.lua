@@ -110,6 +110,8 @@ minetest.register_node("technic:injector", {
 		inv:set_size("main", 8*2)
 		meta:set_string("mode","single items")
 		set_injector_formspec(meta)
+		local timer = minetest.get_node_timer(pos)
+		timer:start(1)
 	end,
 	can_dig = function(pos,player)
 		local meta = minetest.get_meta(pos);
@@ -128,6 +130,14 @@ minetest.register_node("technic:injector", {
 		end
 		set_injector_formspec(meta)
 	end,
+	on_timer = function(pos)
+		local pos1 = vector.add(pos, vector.new(0, -1, 0))
+		local node1 = minetest.get_node(pos1) 
+		if minetest.get_item_group(node1.name, "tubedevice") > 0 then
+			inject_items(pos)
+		end
+		return true
+	end,
 	allow_metadata_inventory_put = technic.machine_inventory_put,
 	allow_metadata_inventory_take = technic.machine_inventory_take,
 	allow_metadata_inventory_move = technic.machine_inventory_move,
@@ -135,17 +145,27 @@ minetest.register_node("technic:injector", {
 	after_dig_node = pipeworks.after_dig
 })
 
-minetest.register_abm({
-	label = "Machines: run injector",
+-- minetest.register_abm({
+-- 	label = "Machines: run injector",
+-- 	nodenames = {"technic:injector"},
+-- 	interval = 1,
+-- 	chance = 1,
+-- 	action = function(pos, node, active_object_count, active_object_count_wider)
+-- 		local pos1 = vector.add(pos, vector.new(0, -1, 0))
+-- 		local node1 = minetest.get_node(pos1) 
+-- 		if minetest.get_item_group(node1.name, "tubedevice") > 0 then
+-- 			inject_items(pos)
+-- 		end
+-- 	end,
+-- })
+
+-- LBMs to start timers on existing, ABM-driven nodes
+minetest.register_lbm({
+	name = "technic:sc_injector_timer_init",
 	nodenames = {"technic:injector"},
-	interval = 1,
-	chance = 1,
-	action = function(pos, node, active_object_count, active_object_count_wider)
-		local pos1 = vector.add(pos, vector.new(0, -1, 0))
-		local node1 = minetest.get_node(pos1) 
-		if minetest.get_item_group(node1.name, "tubedevice") > 0 then
-			inject_items(pos)
-		end
+	run_at_every_load = false,
+	action = function(pos)
+		local t = minetest.get_node_timer(pos)
+		t:start(1)
 	end,
 })
-
