@@ -16,7 +16,7 @@ if minetest.get_modpath("dye") then
 	local dye_recipes = {
 		{"technic:coal_dust",                 "dye:black 2"},
 		{"default:grass_1",                   "dye:green 1"},
-		{"default:dry_shrub",                 "dye:brown 1"},
+-- 		{"default:dry_shrub",                 "dye:brown 6"},
 		{"default:junglegrass",               "dye:green 2"},
 		{"default:cactus",                    "dye:green 4"},
 		{"flowers:geranium",                  "dye:blue 4"},
@@ -74,6 +74,9 @@ if minetest.get_modpath("dye") then
 		table.insert(dye_recipes, {"bakedclay:thistle", "dye:magenta 6"})
 		table.insert(dye_recipes, {"bakedclay:lazarus", "dye:pink 6"})
 		table.insert(dye_recipes, {"bakedclay:mannagrass", "dye:dark_green 6"})
+		table.insert(dye_recipes, {"default:dry_shrub", "dye:brown 6"})
+	else
+		table.insert(dye_recipes, {"default:dry_shrub", "dye:brown 1"})
 	end
 
 	if minetest.get_modpath("wine") then

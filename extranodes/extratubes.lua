@@ -37,7 +37,7 @@ if minetest.get_modpath("pipeworks") then
 					local opdir = vector.multiply(dir, -1)
 					return vector.equals(dir, direction) or vector.equals(opdir, direction)
 				end,
-			priority = 60 -- Higher than normal tubes, but lower than one-way tubes
+			priority = 50 -- same as normal tubes
 		},
 		after_place_node = pipeworks.after_place,
 		after_dig_node = pipeworks.after_dig,
