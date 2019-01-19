@@ -92,6 +92,14 @@ if minetest.get_modpath("farming") then
       table.insert(recipes, {"farming:corn",   "technic:cornmeal 2"})
 	-- end of dhausmig's addition
 	end
+	
+	if farming.mod and farming.mod == "redo" then
+		table.insert(recipes, {"farming:seed_oat",   "farming:flour 1"})
+		table.insert(recipes, {"farming:seed_rye",   "farming:flour 1"})
+		table.insert(recipes, {"farming:rice",       "farming:rice_flour 1"})
+		table.insert(recipes, {"farming:seed_rice",  "farming:rice_flour 1"})
+	end
+	
 end
 
 if minetest.get_modpath("moreores") then

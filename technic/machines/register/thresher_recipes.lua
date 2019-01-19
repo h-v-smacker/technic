@@ -38,7 +38,7 @@ if minetest.get_modpath("farming") then
 		table.insert(recipes, { input = "farming:wheat 4", 
 		                        output = {"farming:seed_wheat 3", "default:dry_shrub 1"} })
 		table.insert(recipes, { input = "farming:barley 4", 
-		                        output = { "farming:seed_barley 3", "default:dry_shrub 1"} })
+		                        output = {"farming:seed_barley 3", "default:dry_shrub 1"} })
 	end
 end
 
@@ -58,6 +58,21 @@ if minetest.get_modpath("farming") and farming.mod and farming.mod == "redo" the
 		                        output = {"farming:garlic_clove 10"} })
 	table.insert(recipes, { input = "farming:pepper", 
 		                        output = {"farming:peppercorn 2"} })
+	
+	if minetest.get_modpath("cottages") then
+		-- work as a mechanized threshing floor from cottages
+		table.insert(recipes, { input = "farming:oat", 
+		                        output = {"farming:seed_oat", "cottages:straw_mat"} })
+		table.insert(recipes, { input = "farming:rye", 
+		                        output = {"farming:seed_rye", "cottages:straw_mat"} })
+	else
+		-- work in a less fancy and less efficient manner
+		table.insert(recipes, { input = "farming:oat 4", 
+		                        output = {"farming:seed_oat 3", "default:dry_shrub 1"} })
+		table.insert(recipes, { input = "farming:rye 4", 
+		                        output = {"farming:seed_rye 3", "default:dry_shrub 1"} })
+	end
+	
 end
 
 -- using thresher as a sorting machine for grass seeds
