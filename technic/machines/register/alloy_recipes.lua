@@ -35,7 +35,8 @@ local recipes = {
 }
 
 if minetest.get_modpath("ethereal") then
-	table.insert(recipes, {"ethereal:crystal_spike", "ethereal:fire_dust 2", "default:mese_crystal 2"})
+	table.insert(recipes, {"ethereal:crystal_spike", "ethereal:fire_dust",   "default:mese_crystal 2"})
+	table.insert(recipes, {"ethereal:crystal_spike", "default:mese_crystal", "ethereal:crystal_ingot"})
 	if not minetest.get_modpath("bakedclay") then
 		table.insert(recipes, {"default:clay", "dye:red",    "bakedclay:red",    3})
 		table.insert(recipes, {"default:clay", "dye:orange", "bakedclay:orange", 3})
