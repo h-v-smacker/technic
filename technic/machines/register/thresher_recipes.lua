@@ -4,6 +4,7 @@ local S = technic.getter
 
 technic.register_recipe_type("threshing", {
 	description = S("Threshing"),
+	icon = "technic_recipe_icon_threshing.png", 
 	output_size = 2,
 })
 

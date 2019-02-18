@@ -51,7 +51,7 @@ local grinding_recipes = {
 -- group-based recipes appear to be not working
 -- 	{"Common Tree",	"group:tree",	 			"group:wood",		default_extract },
 	{"Tree",		"default:tree",	 			"default:wood",		default_extract },
-	{"Acacia",		"default:acacia_tree",	 		"default:acacia_wood",	default_extract },             
+-- 	{"Acacia",		"default:acacia_tree",	 		"default:acacia_wood",	default_extract },             
 	{"Aspen",		"default:aspen_tree",	 		"default:aspen_wood",	default_extract },
 	{"Jungletree",	"default:jungletree",	 		"default:junglewood",	default_extract },
 	{"Pine",		"default:pine_tree",	 		"default:pine_wood",	default_extract },             
@@ -60,12 +60,16 @@ local grinding_recipes = {
 }
 
 		                                       
-for _, data in pairs(grinding_recipes) do
-	register_tree_grinding(unpack(data))
-end
+
 
 if moretrees and dye then
 	-- https://en.wikipedia.org/wiki/Catechu ancient brown dye from the wood of acacia trees
 	register_tree_grinding("Acacia", "moretrees:acacia_trunk", "moretrees:acacia_planks", "dye:brown 8")
+else
+	table.insert(grinding_recipes, {"Acacia", "default:acacia_tree", "default:acacia_wood", default_extract})
+end
+		                                       
+for _, data in pairs(grinding_recipes) do
+	register_tree_grinding(unpack(data))
 end
 

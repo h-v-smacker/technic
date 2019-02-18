@@ -1,20 +1,34 @@
 local have_ui = minetest.get_modpath("unified_inventory")
 
 technic.recipes = { cooking = { input_size = 1, output_size = 1 } }
+
 function technic.register_recipe_type(typename, origdata)
 	local data = {}
 	for k, v in pairs(origdata) do data[k] = v end
 	data.input_size = data.input_size or 1
 	data.output_size = data.output_size or 1
-	if have_ui and unified_inventory.register_craft_type and data.output_size == 1 then
-		unified_inventory.register_craft_type(typename, {
+	if have_ui and unified_inventory.register_craft_type then
+		local ctable = {
 			description = data.description,
 			width = data.input_size,
 			height = 1,
-		})
+		}
+		if data.output_size > 1 then
+			ctable.icon = data.icon or "technic_recipe_icon_empty.png"
+			ctable.icon = ctable.icon .. "^technic_recipe_icon_plus.png"
+		else
+			ctable.icon = data.icon or "technic_recipe_icon_empty.png"
+		end
+		
+-- 		if data.output_size > 1 then
+-- 			-- do something maybe?
+-- 		end
+		
+		unified_inventory.register_craft_type(typename, ctable)
 	end
 	data.recipes = {}
 	technic.recipes[typename] = data
+	minetest.log("error", "Technic recipe type registered: " .. typename)
 end
 
 local function get_recipe_index(items)
@@ -59,6 +73,21 @@ local function register_recipe(typename, data)
 			width = 0,
 		})
 	end
+	
+	if unified_inventory and technic.recipes[typename].output_size > 1 then
+		local short_output = data.output[1]
+		unified_inventory.register_craft({
+			type = typename,
+			output = short_output,
+			items = data.input,
+			width = 0,
+		})
+	end
+	
+	if typename == "ifreezing" then
+		minetest.log("error", "Technic recipe registered: " .. typename)
+	end
+	
 end
 
 function technic.register_recipe(typename, data)

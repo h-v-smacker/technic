@@ -1,7 +1,9 @@
 
 local S = technic.getter
 
-technic.register_recipe_type("grinding", { description = S("Grinding") })
+technic.register_recipe_type("grinding", { 
+	description = S("Grinding"),
+	icon = "technic_recipe_icon_grinding.png", })
 
 
 function technic.register_grinder_recipe(data)
