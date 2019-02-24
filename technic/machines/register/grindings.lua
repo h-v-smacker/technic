@@ -59,9 +59,6 @@ local grinding_recipes = {
 	{"Rubber Tree",	"moretrees:rubber_tree_trunk_empty",rubber_tree_planks,	"technic:raw_latex"}
 }
 
-		                                       
-
-
 if moretrees and dye then
 	-- https://en.wikipedia.org/wiki/Catechu ancient brown dye from the wood of acacia trees
 	register_tree_grinding("Acacia", "moretrees:acacia_trunk", "moretrees:acacia_planks", "dye:brown 8")

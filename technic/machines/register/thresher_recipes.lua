@@ -34,6 +34,8 @@ if minetest.get_modpath("farming") then
 		                        output = {"farming:seed_wheat", "cottages:straw_mat"} })
 		table.insert(recipes, { input = "farming:barley", 
 		                        output = {"farming:seed_barley", "cottages:straw_mat"} })
+-- 		table.insert(recipes, { input = "farming:corn", 
+-- 		                        output = {"farming:corn", "cottages:hay_mat"} })
 	else
 		-- work in a less fancy and less efficient manner
 		table.insert(recipes, { input = "farming:wheat 4", 
@@ -76,10 +78,17 @@ if minetest.get_modpath("farming") and farming.mod and farming.mod == "redo" the
 	
 end
 
--- using thresher as a sorting machine for grass seeds
-table.insert(recipes, { input = "default:grass_1 99", 
+-- using thresher as a sorting machine for grass
+if minetest.get_modpath("cottages") and cottages.mod and cottages.mod == "linuxforks" then
+	table.insert(recipes, { input = "default:grass_1 99", 
+                        output = {"default:dry_grass_1 30", "cottages:hay_mat 50", "default:dry_shrub 7", "default:junglegrass 12"}, 
+                        time = 16 })
+else
+	table.insert(recipes, { input = "default:grass_1 99", 
                         output = {"default:dry_grass_1 80", "default:dry_shrub 7", "default:junglegrass 12"}, 
                         time = 16 })
+
+end
 
 if minetest.get_modpath("ethereal") then
 	table.insert(recipes, { input = "default:junglegrass 99", 
