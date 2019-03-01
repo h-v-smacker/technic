@@ -27,7 +27,9 @@ if minetest.get_modpath("farming") then
 	
 	table.insert(recipes, { input = "farming:hemp_leaf", 
 	                        output = {"farming:hemp_fibre"}})
-	
+	table.insert(recipes, { input = "farming:seed_hemp 3", 
+	                        output = {"farming:hemp_fibre"}})
+
 	if minetest.get_modpath("cottages") and cottages.mod and cottages.mod == "linuxforks" then
 		-- work as a mechanized threshing floor from cottages
 		table.insert(recipes, { input = "farming:wheat", 

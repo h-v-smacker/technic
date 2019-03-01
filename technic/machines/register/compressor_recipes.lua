@@ -49,6 +49,7 @@ if minetest.get_modpath("ethereal") then
 	table.insert(recipes, {"ethereal:birch_leaves 15", "ethereal:charcoal_lump 1"})
 	table.insert(recipes, {"ethereal:bamboo_leaves 15", "ethereal:charcoal_lump 1"})
 	table.insert(recipes, {"ethereal:orange_leaves 15", "ethereal:charcoal_lump 1"})
+	table.insert(recipes, {"ethereal:sakura_leaves 15", "ethereal:charcoal_lump 1"})
 	
 	if minetest.get_modpath("technic_worldgen") or minetest.get_modpath("moretrees") then
 		table.insert(recipes, {"moretrees:rubber_tree_leaves 15", "ethereal:charcoal_lump 1"})

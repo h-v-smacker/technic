@@ -28,7 +28,6 @@ function technic.register_recipe_type(typename, origdata)
 	end
 	data.recipes = {}
 	technic.recipes[typename] = data
-	minetest.log("error", "Technic recipe type registered: " .. typename)
 end
 
 local function get_recipe_index(items)
@@ -82,10 +81,6 @@ local function register_recipe(typename, data)
 			items = data.input,
 			width = 0,
 		})
-	end
-	
-	if typename == "ifreezing" then
-		minetest.log("error", "Technic recipe registered: " .. typename)
 	end
 	
 end
