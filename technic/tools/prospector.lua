@@ -16,7 +16,7 @@ end
 
 minetest.register_tool("technic:prospector", {
 	description = S("Prospector"),
-	groups = {technic_can = 1, technic_tool = 1, technic_powertool = 1},
+	groups = {technic_tool = 1, technic_powertool = 1},
 	inventory_image = "technic_prospector.png",
 	wear_represents = "technic_RE_charge",
 	on_refill = technic.refill_RE_charge,
@@ -112,7 +112,7 @@ end
 
 minetest.register_tool("technic:prospector_mk2", {
 	description = S("Prospector Mk2"),
-	groups = {technic_can = 1, technic_tool = 1, technic_powertool = 1},
+	groups = {technic_tool = 1, technic_powertool = 1},
 	inventory_image = "technic_prospector_mk2.png",
 	wear_represents = "technic_RE_charge",
 	on_refill = technic.refill_RE_charge,

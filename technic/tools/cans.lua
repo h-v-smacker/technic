@@ -39,7 +39,20 @@ technic.cans = {
 			{'default:tin_ingot', '',                  'default:tin_ingot'},
 			{'default:tin_ingot', 'default:tin_ingot', 'default:tin_ingot'},
 		}
-	}
+	},
+	["technic:water_jumbo_can"] = {
+		can_name = "technic:water_jumbo_can",
+		can_description = S("Jumbo Water Can"),
+		can_inventory_image = "technic_water_can_jumbo.png",
+		can_capacity = 32,
+		liquid_source_name = "default:water_source",
+		liquid_flowing_name = "default:water_flowing",
+		recipe = {
+			{'default:tin_ingot', 'technic:rubber',    'default:tin_ingot'},
+			{'technic:carbon_plate', 'technic:carbon_plate', 'technic:carbon_plate'},
+			{'default:tin_ingot', 'technic:carbon_plate', 'default:tin_ingot'},
+		}
+	},
 }
 
 

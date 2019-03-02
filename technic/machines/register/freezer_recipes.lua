@@ -16,6 +16,7 @@ local recipes = {
 	{"bucket:bucket_lava",        {"default:obsidian 2", "bucket:bucket_empty"}, 1},
 	{"default:dirt",              {"default:dirt_with_snow"},                    2},
 	{"technic:water_can",         {"default:ice 3"}                               },
+	{"technic:water_jumbo_can",   {"default:ice 3"}                               },
 	{"technic:freshwater_can",    {"default:ice 3"}                               },
 	{"technic:lava_can",          {"default:obsidian 3"}                          },
 }

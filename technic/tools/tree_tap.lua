@@ -5,7 +5,7 @@ local mesecons_materials = minetest.get_modpath("mesecons_materials")
 minetest.register_tool("technic:treetap", {
 	description = S("Tree Tap"),
 	inventory_image = "technic_tree_tap.png",
-	groups = {technic_can = 1, technic_tool = 1},
+	groups = {technic_tool = 1},
 	on_use = function(itemstack, user, pointed_thing)
 		if pointed_thing.type ~= "node" then
 			return

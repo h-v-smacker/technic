@@ -236,7 +236,7 @@ end
 technic.register_power_tool("technic:walking_tractor", walking_tractor_max_charge)
 minetest.register_tool("technic:walking_tractor", {
 	description = S("Walking Tractor"),
-	groups = {technic_can = 1, technic_tool = 1, technic_powertool = 1},
+	groups = {technic_tool = 1, technic_powertool = 1},
 	inventory_image = "technic_walking_tractor.png",
 	stack_max = 1,
 	wear_represents = "technic_RE_charge",
@@ -249,7 +249,7 @@ for i = 1, 6 do
 	technic.register_power_tool("technic:walking_tractor_" .. i, walking_tractor_max_charge)
 	minetest.register_tool("technic:walking_tractor_" .. i, {
 		description = S("Walking Tractor Mode %d"):format(i),
-		groups = {technic_can = 1, technic_tool = 1, technic_powertool = 1},
+		groups = {technic_tool = 1, technic_powertool = 1},
 		inventory_image = "technic_walking_tractor.png^technic_tool_mode" .. i .. ".png",
 		wield_image = "technic_walking_tractor.png",
 		wear_represents = "technic_RE_charge",

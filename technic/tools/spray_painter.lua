@@ -239,7 +239,7 @@ end
 technic.register_power_tool("technic:spray_painter", spray_painter_max_charge)
 minetest.register_tool("technic:spray_painter", {
 	description = S("Spray Painter"),
-	groups = {technic_can = 1, technic_tool = 1, technic_powertool = 1},
+	groups = {technic_tool = 1, technic_powertool = 1},
 	inventory_image = "technic_spray_painter.png",
 	stack_max = 1,
 	wear_represents = "technic_RE_charge",
@@ -255,7 +255,7 @@ for i = 1, 9 do
 	technic.register_power_tool("technic:spray_painter_" .. i, spray_painter_max_charge)
 	minetest.register_tool("technic:spray_painter_" .. i, {
 		description = S("Spray Painter: %s"):format(color_modes[i].name),
-		groups = {technic_can = 1, technic_tool = 1, technic_powertool = 1},
+		groups = {technic_tool = 1, technic_powertool = 1},
 		inventory_image = "technic_spray_painter.png^technic_tool_mode" .. i .. ".png",
 		wield_image = "technic_spray_painter.png",
 		wear_represents = "technic_RE_charge",
@@ -288,7 +288,7 @@ minetest.register_craft({
 technic.register_power_tool("technic:fluorescent_spray_painter", spray_painter_max_charge)
 minetest.register_tool("technic:fluorescent_spray_painter", {
 	description = S("Fluorescent Spray Painter"),
-	groups = {technic_can = 1, technic_tool = 1, technic_powertool = 1},
+	groups = {technic_tool = 1, technic_powertool = 1},
 	inventory_image = "technic_spray_painter_fluorescent.png",
 	stack_max = 1,
 	wear_represents = "technic_RE_charge",
@@ -304,7 +304,7 @@ for i = 1, 9 do
 	technic.register_power_tool("technic:fluorescent_spray_painter_" .. i, spray_painter_max_charge)
 	minetest.register_tool("technic:fluorescent_spray_painter_" .. i, {
 		description = S("Fluorescent Spray Painter: %s"):format(color_modes[i].name),
-		groups = {technic_can = 1, technic_tool = 1, technic_powertool = 1},
+		groups = {technic_tool = 1, technic_powertool = 1},
 		inventory_image = "technic_spray_painter_fluorescent.png^technic_tool_mode" .. i .. ".png",
 		wield_image = "technic_spray_painter_fluorescent.png",
 		wear_represents = "technic_RE_charge",

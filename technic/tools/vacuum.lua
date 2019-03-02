@@ -9,7 +9,7 @@ technic.register_power_tool("technic:vacuum", vacuum_max_charge)
 
 minetest.register_tool("technic:vacuum", {
 	description = S("Vacuum Cleaner"),
-	groups = {technic_can = 1, technic_tool = 1, technic_powertool = 1},
+	groups = {technic_tool = 1, technic_powertool = 1},
 	inventory_image = "technic_vacuum.png",
 	stack_max = 1,
 	wear_represents = "technic_RE_charge",
