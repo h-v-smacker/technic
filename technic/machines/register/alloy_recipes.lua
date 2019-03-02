@@ -32,7 +32,6 @@ local recipes = {
 	{"technic:raw_latex 3",           "technic:sulfur_dust 1",      "technic:latex_foam",                2},
 	-- straightforward way to get red stone
 	{"default:stone",                 "dye:red",                    "default:desert_stone",              2},
-
 }
 
 if minetest.get_modpath("ethereal") then

@@ -54,6 +54,7 @@ local function register_recipe(typename, data)
 	end
 	
 	local recipe = {time = data.time, input = {}, output = data.output}
+	
 	local index = get_recipe_index(data.input)
 	if not index then
 		print("[Technic] ignored registration of garbage recipe!")
@@ -64,6 +65,7 @@ local function register_recipe(typename, data)
 	end
 	
 	technic.recipes[typename].recipes[index] = recipe
+	
 	if unified_inventory and technic.recipes[typename].output_size == 1 then
 		unified_inventory.register_craft({
 			type = typename,
@@ -114,18 +116,56 @@ function technic.get_recipe(typename, items)
 	end
 	local recipe = technic.recipes[typename].recipes[index]
 	if recipe then
+		
 		local new_input = {}
+		local extra_output = {}
 		for i, stack in ipairs(items) do
-			if stack:get_count() < recipe.input[stack:get_name()] then
-				return nil
+			
+			-- Check if a can is used. If so, with each iteration its contents are depleted,
+			-- and when it runs dry, an empty can is added to the recipe's output.
+			if technic.cans[stack:get_name()] then
+				local level = technic.manage_can_state(stack)
+				if level < 1 then
+					return nil
+				else
+					if level > 1 then
+						new_input[i] = technic.manage_can_state(ItemStack(stack), -1)
+					else
+						empty_can = technic.manage_can_state(ItemStack(stack), -1)
+						table.insert(extra_output, empty_can)
+					end
+				end
 			else
-				new_input[i] = ItemStack(stack)
-				new_input[i]:take_item(recipe.input[stack:get_name()])
+				if stack:get_count() < recipe.input[stack:get_name()] then
+					return nil
+				else
+					new_input[i] = ItemStack(stack)
+					new_input[i]:take_item(recipe.input[stack:get_name()])
+				end
 			end
 		end
+		
+		-- A necessary hack to avoid reusing the original table
+		if extra_output then
+			local ro = {}
+			if type(recipe.output) == "string" then
+				table.insert(ro, recipe.output)
+			else
+				for _,o in ipairs(recipe.output) do
+					table.insert(ro, o)
+				end
+			end
+			for _,o in ipairs(extra_output) do
+				table.insert(ro, o)
+			end
+			return {time = recipe.time,
+				  new_input = new_input,
+				  output = ro}
+		end
+		
 		return {time = recipe.time,
-		        new_input = new_input,
-		        output = recipe.output}
+			  new_input = new_input,
+			  output = recipe.output}
 	else
 		return nil
 	end

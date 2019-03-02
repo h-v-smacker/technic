@@ -1,5 +1,48 @@
 local S = technic.getter
 
+technic.cans = {
+	["technic:water_can"] = {
+		can_name = "technic:water_can",
+		can_description = S("Water Can"),
+		can_inventory_image = "technic_water_can.png",
+		can_capacity = 16,
+		liquid_source_name = "default:water_source",
+		liquid_flowing_name = "default:water_flowing",
+		recipe = {
+			{'technic:zinc_ingot', 'technic:rubber','technic:zinc_ingot'},
+			{'technic:carbon_steel_ingot', '', 'technic:carbon_steel_ingot'},
+			{'technic:zinc_ingot', 'technic:carbon_steel_ingot', 'technic:zinc_ingot'},
+		}
+	},
+	["technic:lava_can"] = {
+		can_name = "technic:lava_can",
+		can_description = S("Lava Can"),
+		can_inventory_image = "technic_lava_can.png",
+		can_capacity = 8,
+		liquid_source_name = "default:lava_source",
+		liquid_flowing_name = "default:lava_flowing",
+		recipe = {
+			{'technic:zinc_ingot', 'technic:stainless_steel_ingot','technic:zinc_ingot'},
+			{'technic:stainless_steel_ingot', '', 'technic:stainless_steel_ingot'},
+			{'technic:zinc_ingot', 'technic:stainless_steel_ingot', 'technic:zinc_ingot'},
+		}
+	},
+	["technic:freshwater_can"] = {
+		can_name = "technic:freshwater_can",
+		can_description = S("Freshwater Can"),
+		can_inventory_image = "technic_freshwater_can.png",
+		can_capacity = 16,
+		liquid_source_name = "default:river_water_source",
+		liquid_flowing_name = "default:river_water_flowing",
+		recipe = {
+			{'default:tin_ingot', 'technic:rubber',    'default:tin_ingot'},
+			{'default:tin_ingot', '',                  'default:tin_ingot'},
+			{'default:tin_ingot', 'default:tin_ingot', 'default:tin_ingot'},
+		}
+	}
+}
+
+
 local function set_can_wear(itemstack, level, max_level)
 	local temp
 	if level == 0 then
@@ -18,6 +61,39 @@ local function get_can_level(itemstack)
 	else
 		return tonumber(itemstack:get_metadata())
 	end
+end
+
+-- General-purpose function to manage cans externally (e.g. in recipes)
+technic.manage_can_state = function(itemstack, change)
+
+	if not technic.cans[itemstack:get_name()] then
+		return nil
+	end
+
+	local capacity = technic.cans[itemstack:get_name()].can_capacity
+	if not capacity then
+		return nil
+	end
+	
+	local current_capacity = tonumber(itemstack:get_metadata())
+	
+	if not change then
+		return current_capacity
+	end
+	
+	current_capacity = current_capacity + change
+	if current_capacity > capacity then
+		current_capacity = capacity
+	elseif current_capacity < 0 then
+		current_capacity = 0
+	end
+	
+	itemstack:set_metadata(tostring(current_capacity))
+	
+	set_can_wear(itemstack, current_capacity, capacity)
+	
+	return itemstack
+	
 end
 
 function technic.register_can(d)
@@ -77,56 +153,21 @@ function technic.register_can(d)
 	})
 end
 
-technic.register_can({
-	can_name = "technic:water_can",
-	can_description = S("Water Can"),
-	can_inventory_image = "technic_water_can.png",
-	can_capacity = 16,
-	liquid_source_name = "default:water_source",
-	liquid_flowing_name = "default:water_flowing",
-})
+-- Registration of cans
+for can, def in pairs(technic.cans) do
+	
+	technic.register_can({
+		can_name = def.can_name,
+		can_description = def.can_description,
+		can_inventory_image = def.can_inventory_image,
+		can_capacity = def.can_capacity,
+		liquid_source_name = def.liquid_source_name,
+		liquid_flowing_name = def.liquid_flowing_name
+	})
 
-minetest.register_craft({
-	output = 'technic:water_can 1',
-	recipe = {
-		{'technic:zinc_ingot', 'technic:rubber','technic:zinc_ingot'},
-		{'technic:carbon_steel_ingot', '', 'technic:carbon_steel_ingot'},
-		{'technic:zinc_ingot', 'technic:carbon_steel_ingot', 'technic:zinc_ingot'},
-	}
-})
+	minetest.register_craft({
+		output = can,
+		recipe = def.recipe
+	})
 
-technic.register_can({
-	can_name = "technic:lava_can",
-	can_description = S("Lava Can"),
-	can_inventory_image = "technic_lava_can.png",
-	can_capacity = 8,
-	liquid_source_name = "default:lava_source",
-	liquid_flowing_name = "default:lava_flowing",
-})
-
-minetest.register_craft({
-	output = 'technic:lava_can 1',
-	recipe = {
-		{'technic:zinc_ingot', 'technic:stainless_steel_ingot','technic:zinc_ingot'},
-		{'technic:stainless_steel_ingot', '', 'technic:stainless_steel_ingot'},
-		{'technic:zinc_ingot', 'technic:stainless_steel_ingot', 'technic:zinc_ingot'},
-	}
-})
-
-technic.register_can({
-	can_name = "technic:freshwater_can",
-	can_description = S("Freshwater Can"),
-	can_inventory_image = "technic_freshwater_can.png",
-	can_capacity = 16,
-	liquid_source_name = "default:river_water_source",
-	liquid_flowing_name = "default:river_water_flowing",
-})
-
-minetest.register_craft({
-	output = 'technic:freshwater_can 1',
-	recipe = {
-		{'default:tin_ingot', 'technic:rubber',    'default:tin_ingot'},
-		{'default:tin_ingot', '',                  'default:tin_ingot'},
-		{'default:tin_ingot', 'default:tin_ingot', 'default:tin_ingot'},
-	}
-})
+end
