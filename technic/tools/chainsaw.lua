@@ -566,6 +566,7 @@ minetest.register_tool("technic:chainsaw", {
 	description = S("Chainsaw"),
 	inventory_image = "technic_chainsaw.png",
 	stack_max = 1,
+	groups = {technic_can = 1, technic_tool = 1, technic_powertool = 1},
 	wear_represents = "technic_RE_charge",
 	on_refill = technic.refill_RE_charge,
 	on_use = function(itemstack, user, pointed_thing)
@@ -578,6 +579,7 @@ minetest.register_tool("technic:chainsaw_mk2", {
 	description = S("Chainsaw Mk2"),
 	inventory_image = "technic_chainsaw_mk2.png",
 	stack_max = 1,
+	groups = {technic_can = 1, technic_tool = 1, technic_powertool = 1},
 	wear_represents = "technic_RE_charge",
 	on_refill = technic.refill_RE_charge,
 	on_use = function(itemstack, user, pointed_thing)
@@ -590,6 +592,7 @@ minetest.register_tool("technic:chainsaw_mini", {
 	description = S("Chainsaw Mini"),
 	inventory_image = "technic_chainsaw_mini.png",
 	stack_max = 1,
+	groups = {technic_can = 1, technic_tool = 1, technic_powertool = 1},
 	wear_represents = "technic_RE_charge",
 	on_refill = technic.refill_RE_charge,
 -- 	groups = {not_in_creative_inventory = 1},

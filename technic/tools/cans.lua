@@ -9,7 +9,7 @@ technic.cans = {
 		liquid_source_name = "default:water_source",
 		liquid_flowing_name = "default:water_flowing",
 		recipe = {
-			{'technic:zinc_ingot', 'technic:rubber','technic:zinc_ingot'},
+			{'technic:zinc_ingot', 'technic:rubber', 'technic:zinc_ingot'},
 			{'technic:carbon_steel_ingot', '', 'technic:carbon_steel_ingot'},
 			{'technic:zinc_ingot', 'technic:carbon_steel_ingot', 'technic:zinc_ingot'},
 		}
@@ -22,7 +22,7 @@ technic.cans = {
 		liquid_source_name = "default:lava_source",
 		liquid_flowing_name = "default:lava_flowing",
 		recipe = {
-			{'technic:zinc_ingot', 'technic:stainless_steel_ingot','technic:zinc_ingot'},
+			{'technic:zinc_ingot', 'technic:stainless_steel_ingot', 'technic:zinc_ingot'},
 			{'technic:stainless_steel_ingot', '', 'technic:stainless_steel_ingot'},
 			{'technic:zinc_ingot', 'technic:stainless_steel_ingot', 'technic:zinc_ingot'},
 		}
@@ -105,6 +105,7 @@ function technic.register_can(d)
 		stack_max = 1,
 		wear_represents = "content_level",
 		liquids_pointable = true,
+		groups = {technic_can = 1, technic_tool = 1},
 		on_use = function(itemstack, user, pointed_thing)
 			if pointed_thing.type ~= "node" then return end
 			local node = minetest.get_node(pointed_thing.under)

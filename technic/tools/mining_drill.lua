@@ -336,6 +336,7 @@ technic.register_power_tool("technic:mining_drill", max_charge[1])
 
 minetest.register_tool("technic:mining_drill", {
 	description = S("Mining Drill Mk%d"):format(1),
+	groups = {technic_can = 1, technic_tool = 1, technic_powertool = 1},
 	inventory_image = "technic_mining_drill.png",
 	stack_max = 1,
 	wear_represents = "technic_RE_charge",
@@ -364,6 +365,7 @@ minetest.register_tool("technic:mining_drill", {
 
 minetest.register_tool("technic:mining_drill_mk2", {
 	description = S("Mining Drill Mk%d"):format(2),
+	groups = {technic_can = 1, technic_tool = 1, technic_powertool = 1},
 	inventory_image = "technic_mining_drill_mk2.png",
 	wear_represents = "technic_RE_charge",
 	on_refill = technic.refill_RE_charge,
@@ -379,6 +381,7 @@ for i = 1, 4 do
 	technic.register_power_tool("technic:mining_drill_mk2_"..i, max_charge[2])
 	minetest.register_tool("technic:mining_drill_mk2_"..i, {
 		description = S("Mining Drill Mk%d Mode %d"):format(2, i),
+		groups = {technic_can = 1, technic_tool = 1, technic_powertool = 1},
 		inventory_image = "technic_mining_drill_mk2.png^technic_tool_mode"..i..".png",
 		wield_image = "technic_mining_drill_mk2.png",
 		wear_represents = "technic_RE_charge",
@@ -393,6 +396,7 @@ end
 
 minetest.register_tool("technic:mining_drill_mk3", {
 	description = S("Mining Drill Mk%d"):format(3),
+	groups = {technic_can = 1, technic_tool = 1, technic_powertool = 1},
 	inventory_image = "technic_mining_drill_mk3.png",
 	wear_represents = "technic_RE_charge",
 	on_refill = technic.refill_RE_charge,
@@ -408,6 +412,7 @@ for i=1,5,1 do
 	technic.register_power_tool("technic:mining_drill_mk3_"..i, max_charge[3])
 	minetest.register_tool("technic:mining_drill_mk3_"..i, {
 		description = S("Mining Drill Mk%d Mode %d"):format(3, i),
+		groups = {technic_can = 1, technic_tool = 1, technic_powertool = 1},
 		inventory_image = "technic_mining_drill_mk3.png^technic_tool_mode"..i..".png",
 		wield_image = "technic_mining_drill_mk3.png",
 		wear_represents = "technic_RE_charge",

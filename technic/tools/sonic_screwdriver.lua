@@ -80,6 +80,7 @@ end
 
 minetest.register_tool("technic:sonic_screwdriver", {
 	description = S("Sonic Screwdriver (left-click rotates face, right-click rotates axis)"),
+	groups = {technic_can = 1, technic_tool = 1, technic_powertool = 1},
 	inventory_image = "technic_sonic_screwdriver.png",
 	wear_represents = "technic_RE_charge",
 	on_refill = technic.refill_RE_charge,
