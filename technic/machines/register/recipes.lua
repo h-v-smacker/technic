@@ -109,11 +109,13 @@ function technic.get_recipe(typename, items)
 			        output = result.item}
 		end
 	end
+	
 	local index = get_recipe_index(items)
 	if not index then
 		print("[Technic] ignored registration of garbage recipe!")
 		return
 	end
+	
 	local recipe = technic.recipes[typename].recipes[index]
 	if recipe then
 		

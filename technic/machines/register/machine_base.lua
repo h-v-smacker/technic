@@ -94,6 +94,12 @@ function technic.register_base_machine(data)
 		end
 		while true do
 			local result = technic.get_recipe(typename, inv:get_list("src"))
+			
+			-- If type is cooking, also try technic-specific alias, "heating":
+			if not result and typename == "cooking" then
+				result = technic.get_recipe("heating", inv:get_list("src"))
+			end
+			
 			if not result then
 				technic.swap_node(pos, machine_node)
 				meta:set_string("infotext", S("%s Idle"):format(machine_desc_tier))
