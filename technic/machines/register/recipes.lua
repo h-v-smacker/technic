@@ -148,7 +148,7 @@ function technic.get_recipe(typename, items)
 		end
 		
 		-- A necessary hack to avoid reusing the original table
-		if extra_output then
+		if #extra_output > 0 then
 			local ro = {}
 			if type(recipe.output) == "string" then
 				table.insert(ro, recipe.output)
@@ -164,7 +164,7 @@ function technic.get_recipe(typename, items)
 				  new_input = new_input,
 				  output = ro}
 		end
-		
+		-- regular output
 		return {time = recipe.time,
 			  new_input = new_input,
 			  output = recipe.output}

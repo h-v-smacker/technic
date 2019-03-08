@@ -69,15 +69,15 @@ local function run_water_grinder(pos, elapsed)
 				meta:set_string("infotext", S("%s is active"):format(machine_name).." ("..percent.."%)")
 				meta:set_string("formspec",
 								"size[8,9]"..
-									"label[0,0;"..machine_name.."]"..
-									"image[2,2;1,1;technic_power_meter_bg.png^[lowpart:" .. percent .. ":technic_power_meter_fg.png]"..
-									"list[current_name;src;2,1;1,1;]"..
-									"list[current_name;dst;5,1;2,2;]"..
-									"list[current_player;main;0,5;8,4;]"..
-									"listring[current_name;dst]"..
-									"listring[current_player;main]"..
-									"listring[current_name;src]"..
-									"listring[current_player;main]")
+								"label[0,0;"..machine_name.."]"..
+								"image[2,2;1,1;technic_power_meter_bg.png^[lowpart:" .. percent .. ":technic_power_meter_fg.png]"..
+								"list[current_name;src;2,1;1,1;]"..
+								"list[current_name;dst;5,1;2,2;]"..
+								"list[current_player;main;0,5;8,4;]"..
+								"listring[current_name;dst]"..
+								"listring[current_player;main]"..
+								"listring[current_name;src]"..
+								"listring[current_player;main]")
 				
 				local result_stack = ItemStack(result.output)
 				if inv:room_for_item("dst", result_stack) then
