@@ -11,7 +11,7 @@ local freezing_rules = {
 	["default:lava_source"] = "default:obsidian",
 	["default:lava_flowing"] = "default:stone",
 	["fire:basic_flame"] = "air",
-	["default:dirt"] = "default:dirt_with_snow",
+-- 	["default:dirt"] = "default:dirt_with_snow",
 	["ethereal:fiery_dirt"] = "default:dirt_with_snow",
 	["ethereal:mushroom_dirt"] = "default:dirt_with_snow",
 }
