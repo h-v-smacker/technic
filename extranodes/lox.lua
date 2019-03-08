@@ -14,6 +14,8 @@ local freezing_rules = {
 -- 	["default:dirt"] = "default:dirt_with_snow",
 	["ethereal:fiery_dirt"] = "default:dirt_with_snow",
 	["ethereal:mushroom_dirt"] = "default:dirt_with_snow",
+	["ethereal:quicksand"] = "default:sand",
+	["ethereal:quicksand2"] = "default:sand",
 }
 
 local function freeze(user, pos, radius)
