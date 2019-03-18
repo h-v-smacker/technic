@@ -246,7 +246,7 @@ minetest.register_node("technic:water_extractor_active", {
 	         "technic_water_extractor_side.png", "technic_water_extractor_side.png",
 	         "technic_water_extractor_back.png", "technic_water_extractor_front_active.png"},
 	paramtype2 = "facedir",
-	light_source = 8,
+	light_source = 5,
 	drop = "technic:water_extractor",
 	groups = {cracky=2, not_in_creative_inventory=1},
 	legacy_facedir_simple = true,

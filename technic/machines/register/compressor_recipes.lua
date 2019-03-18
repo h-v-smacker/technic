@@ -63,9 +63,6 @@ if minetest.get_modpath("pathv7") then
 end
 	
 
--- liquid oxygen
-table.insert(recipes, {"vessels:steel_bottle", "technic:lox"})
-
 
 for _, data in pairs(recipes) do
 	technic.register_compressor_recipe({input = {data[1]}, output = data[2]})

@@ -19,6 +19,7 @@ local recipes = {
 	{"technic:water_jumbo_can",   {"default:ice 3"}                               },
 	{"technic:freshwater_can",    {"default:ice 3"}                               },
 	{"technic:lava_can",          {"default:obsidian 3"}                          },
+	{"vessels:steel_bottle",      {"technic:lox"},                               7},
 }
 
 for _, data in pairs(recipes) do
