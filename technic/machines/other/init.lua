@@ -17,6 +17,6 @@ end
 dofile(path.."/coal_alloy_furnace.lua")
 dofile(path.."/coal_furnace.lua")
 dofile(path.."/solar_furnace.lua")
-
+dofile(path.."/water_extractor.lua")
 
 dofile(path.."/anchor.lua")

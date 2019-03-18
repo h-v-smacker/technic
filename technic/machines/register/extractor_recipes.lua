@@ -72,10 +72,10 @@ if minetest.get_modpath("dye") then
 	end
 	
 	if minetest.get_modpath("bakedclay") then
-		table.insert(dye_recipes, {"bakedclay:delphinium", "dye:cyan 6"})
-		table.insert(dye_recipes, {"bakedclay:thistle", "dye:magenta 6"})
-		table.insert(dye_recipes, {"bakedclay:lazarus", "dye:pink 6"})
-		table.insert(dye_recipes, {"bakedclay:mannagrass", "dye:dark_green 6"})
+		table.insert(dye_recipes, {"bakedclay:delphinium", "dye:cyan 4"})
+		table.insert(dye_recipes, {"bakedclay:thistle", "dye:magenta 4"})
+		table.insert(dye_recipes, {"bakedclay:lazarus", "dye:pink 4"})
+		table.insert(dye_recipes, {"bakedclay:mannagrass", "dye:dark_green 4"})
 		table.insert(dye_recipes, {"default:dry_shrub", "dye:brown 6"})
 	else
 		table.insert(dye_recipes, {"default:dry_shrub", "dye:brown 1"})
@@ -96,8 +96,17 @@ if minetest.get_modpath("dye") then
 	end
 
 	-- overwrite the existing crafting recipes
+	-- it appears impossible to use clear_craft by recipe, and using it by output could 
+	-- elimiate completely unrelated recipes
 	local dyes = {"white", "red", "yellow", "blue", "violet", "orange"}
+	if minetest.get_modpath("bakedclay") then
+		table.insert(dyes, "cyan")
+		table.insert(dyes, "magenta")
+		table.insert(dyes, "pink")
+		table.insert(dyes, "dark_green")
+	end
 	for _, color in ipairs(dyes) do
+		
 		minetest.register_craft({
 		        type = "shapeless",
 		        output = "dye:"..color.." 1",
@@ -105,7 +114,7 @@ if minetest.get_modpath("dye") then
 		})
 
 	end
-	
+
 	
 	minetest.register_craft({
 		type = "shapeless",

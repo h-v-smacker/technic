@@ -71,6 +71,7 @@ local function run_water_grinder(pos, elapsed)
 								"size[8,9]"..
 								"label[0,0;"..machine_name.."]"..
 								"image[2,2;1,1;technic_power_meter_bg.png^[lowpart:" .. percent .. ":technic_power_meter_fg.png]"..
+								"list[current_name;fuel;2,3;1,1;]"..
 								"list[current_name;src;2,1;1,1;]"..
 								"list[current_name;dst;5,1;2,2;]"..
 								"list[current_player;main;0,5;8,4;]"..
