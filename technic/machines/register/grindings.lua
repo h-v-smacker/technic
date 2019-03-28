@@ -49,14 +49,14 @@ local default_extract = dye and "dye:brown 2"
 
 local grinding_recipes = {
 -- group-based recipes appear to be not working
--- 	{"Common Tree",	"group:tree",	 			"group:wood",		default_extract },
-	{"Tree",		"default:tree",	 			"default:wood",		default_extract },
--- 	{"Acacia",		"default:acacia_tree",	 		"default:acacia_wood",	default_extract },             
-	{"Aspen",		"default:aspen_tree",	 		"default:aspen_wood",	default_extract },
-	{"Jungletree",	"default:jungletree",	 		"default:junglewood",	default_extract },
-	{"Pine",		"default:pine_tree",	 		"default:pine_wood",	default_extract },             
-	{"Rubber Tree",	"moretrees:rubber_tree_trunk",	rubber_tree_planks,	"technic:raw_latex"},
-	{"Rubber Tree",	"moretrees:rubber_tree_trunk_empty",rubber_tree_planks,	"technic:raw_latex"}
+--	{"Common Tree", "group:tree",                        "group:wood",          default_extract },
+	{"Tree",        "default:tree",                      "default:wood",        default_extract },
+--	{"Acacia",      "default:acacia_tree",               "default:acacia_wood", default_extract },             
+	{"Aspen",       "default:aspen_tree",                "default:aspen_wood",  default_extract },
+	{"Jungletree",  "default:jungletree",                "default:junglewood",  default_extract },
+	{"Pine",        "default:pine_tree",                 "default:pine_wood",   default_extract },             
+	{"Rubber Tree", "moretrees:rubber_tree_trunk",       rubber_tree_planks,    "technic:raw_latex"},
+	{"Rubber Tree", "moretrees:rubber_tree_trunk_empty", nil,                   "technic:raw_latex"}
 }
 
 if moretrees and dye then

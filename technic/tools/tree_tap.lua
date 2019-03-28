@@ -75,3 +75,21 @@ minetest.register_abm({
 	end
 })
 
+
+if minetest.get_modpath("unified_inventory") and unified_inventory.register_craft_type then
+	
+	unified_inventory.register_craft_type("treetapping", {
+		description = S("Tree Tapping"),
+		width = 1,
+		height = 1,
+		icon = "technic_tree_tap.png"
+	})
+	
+	unified_inventory.register_craft({
+		type = "treetapping",
+		output = "technic:raw_latex",
+		items = {"moretrees:rubber_tree_trunk"},
+		width = 0
+	})
+end
+	
