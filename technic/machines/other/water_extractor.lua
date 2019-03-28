@@ -183,7 +183,6 @@ minetest.register_node("technic:water_extractor", {
 		type = "fixed",
 		fixed = {
 			{-1/2, -1/2, -1/2, 1/2, 1/2, 1/2},
-
 		},
 	},
 	tiles = {"technic_water_extractor_top.png",  "technic_water_extractor_bottom.png",
@@ -222,7 +221,7 @@ minetest.register_node("technic:water_extractor", {
 minetest.register_node("technic:water_extractor_active", {
 	description = machine_name,
 	drawtype = "nodebox",
-		node_box = {
+	node_box = {
 		type = "fixed",
 		fixed = {
 			{-3/32, 14/32, -1/2, 3/32, 15/32, 1/2},

@@ -25,6 +25,7 @@ dofile(path.."/compressor_recipes.lua")
 dofile(path.."/centrifuge_recipes.lua")
 dofile(path.."/thresher_recipes.lua")
 dofile(path.."/freezer_recipes.lua")
+dofile(path.."/sawmill_recipes.lua")
 dofile(path.."/electric_furnace_recipes.lua")
 
 -- Multi-Machine Recipes
@@ -40,3 +41,4 @@ dofile(path.."/centrifuge.lua")
 
 dofile(path.."/thresher.lua")
 dofile(path.."/freezer.lua")
+dofile(path.."/sawmill.lua")

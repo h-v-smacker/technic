@@ -150,15 +150,38 @@ function technic.register_base_machine(data)
 	if ltier == "lv" then
 		tentry = ""
 	end
+
+	data.tiles = data.tiles or {}
+	-- data.tiles can redefine suffixes used for textures
+	data.tiles[1] = data.tiles[1] or "_top"
+	data.tiles[2] = data.tiles[2] or "_bottom"
+	data.tiles[3] = data.tiles[3] or "_side"
+	data.tiles[4] = data.tiles[4] or "_side"
+	data.tiles[5] = data.tiles[5] or "_side"
+	data.tiles[6] = data.tiles[6] or "_front"
+	
 	minetest.register_node("technic:"..ltier.."_"..machine_name, {
 		description = machine_desc:format(tier),
+		drawtype = "nodebox",
+		node_box = data.node_box or {
+			type = "fixed",
+			fixed = {
+				{-1/2, -1/2, -1/2, 1/2, 1/2, 1/2}
+			},
+		},
+		selection_box = data.selection_box or {
+			type = "fixed",
+			fixed = {
+				{-1/2, -1/2, -1/2, 1/2, 1/2, 1/2},
+			},
+		},
 		tiles = {
-			"technic_"..ltier.."_"..machine_name.."_top.png"..tentry, 
-			"technic_"..ltier.."_"..machine_name.."_bottom.png"..tentry,
-			"technic_"..ltier.."_"..machine_name.."_side.png"..tentry,
-			"technic_"..ltier.."_"..machine_name.."_side.png"..tentry,
-			"technic_"..ltier.."_"..machine_name.."_side.png"..tentry,
-			"technic_"..ltier.."_"..machine_name.."_front.png"
+			"technic_"..ltier.."_"..machine_name..data.tiles[1]..".png"..tentry, 
+			"technic_"..ltier.."_"..machine_name..data.tiles[2]..".png"..tentry,
+			"technic_"..ltier.."_"..machine_name..data.tiles[3]..".png"..tentry,
+			"technic_"..ltier.."_"..machine_name..data.tiles[4]..".png"..tentry,
+			"technic_"..ltier.."_"..machine_name..data.tiles[5]..".png"..tentry,
+			"technic_"..ltier.."_"..machine_name..data.tiles[6]..".png"
 		},
 		paramtype2 = "facedir",
 		groups = groups,
@@ -222,13 +245,26 @@ function technic.register_base_machine(data)
 
 	minetest.register_node("technic:"..ltier.."_"..machine_name.."_active",{
 		description = machine_desc:format(tier),
+		drawtype = "nodebox",
+		node_box = data.node_box or {
+			type = "fixed",
+			fixed = {
+				{-1/2, -1/2, -1/2, 1/2, 1/2, 1/2}
+			},
+		},
+		selection_box = data.selection_box or {
+			type = "fixed",
+			fixed = {
+				{-1/2, -1/2, -1/2, 1/2, 1/2, 1/2},
+			},
+		},
 		tiles = {
-			"technic_"..ltier.."_"..machine_name.."_top.png"..tentry,
-			"technic_"..ltier.."_"..machine_name.."_bottom.png"..tentry,
-			"technic_"..ltier.."_"..machine_name.."_side.png"..tentry,
-			"technic_"..ltier.."_"..machine_name.."_side.png"..tentry,
-			"technic_"..ltier.."_"..machine_name.."_side.png"..tentry,
-			"technic_"..ltier.."_"..machine_name.."_front_active.png"
+			"technic_"..ltier.."_"..machine_name..data.tiles[1]..".png"..tentry, 
+			"technic_"..ltier.."_"..machine_name..data.tiles[2]..".png"..tentry,
+			"technic_"..ltier.."_"..machine_name..data.tiles[3]..".png"..tentry,
+			"technic_"..ltier.."_"..machine_name..data.tiles[4]..".png"..tentry,
+			"technic_"..ltier.."_"..machine_name..data.tiles[5]..".png"..tentry,
+			"technic_"..ltier.."_"..machine_name..data.tiles[6].."_active.png"
 		},
 		paramtype2 = "facedir",
 		drop = "technic:"..ltier.."_"..machine_name,

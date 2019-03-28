@@ -25,6 +25,7 @@ function technic.register_recipe_type(typename, origdata)
 -- 		end
 		
 		unified_inventory.register_craft_type(typename, ctable)
+				
 	end
 	data.recipes = {}
 	technic.recipes[typename] = data

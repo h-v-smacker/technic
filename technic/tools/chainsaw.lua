@@ -53,6 +53,7 @@ if minetest.get_modpath("moretrees") then
 	timber_nodenames["moretrees:spruce_trunk"]                     = true
 	timber_nodenames["moretrees:willow_trunk"]                     = true
 	timber_nodenames["moretrees:jungletree_trunk"]                 = true
+	timber_nodenames["moretrees:poplar_trunk"]                     = true
 
 	if chainsaw_leaves then
 		timber_nodenames["moretrees:acacia_leaves"]            = true
@@ -77,6 +78,7 @@ if minetest.get_modpath("moretrees") then
 		timber_nodenames["moretrees:pine_cone"]                = true
 		timber_nodenames["moretrees:fir_cone"]                 = true
 		timber_nodenames["moretrees:apple_blossoms"]           = true
+		timber_nodenames["moretrees:poplar_leaves"]            = true
 	end
 end
 
@@ -132,8 +134,8 @@ if minetest.get_modpath("ethereal") then
 	timber_nodenames["ethereal:banana_trunk"]          = true
 	timber_nodenames["ethereal:bamboo"]                = true
 	timber_nodenames["ethereal:mushroom_trunk"]        = true
-	timber_nodenames["ethereal:scorched_tree"]         = true
 	timber_nodenames["ethereal:sakura_trunk"]	         = true
+	timber_nodenames["ethereal:scorched_tree"]         = true
 		
 	if chainsaw_leaves then
 		timber_nodenames["ethereal:willow_twig"]        = true
