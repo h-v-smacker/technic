@@ -316,6 +316,12 @@ if minetest.get_modpath("ethereal") then
                 {snappy=2, choppy=2, oddly_breakable_by_hand=2, not_in_creative_inventory=1},
                 {"redwood_wood.png"},
                 S("Redwood"))
+
+	technic.cnc.register_all("ethereal:sakura_wood",
+                {snappy=2, choppy=2, oddly_breakable_by_hand=2, not_in_creative_inventory=1},
+                {"ethereal_sakura_wood.png"},
+                S("Sakura"))
+
 	
 	-- Glorious bamboo
 	-------------------
