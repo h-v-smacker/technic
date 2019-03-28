@@ -183,6 +183,7 @@ function technic.register_base_machine(data)
 			"technic_"..ltier.."_"..machine_name..data.tiles[5]..".png"..tentry,
 			"technic_"..ltier.."_"..machine_name..data.tiles[6]..".png"
 		},
+		paramtype = "light",
 		paramtype2 = "facedir",
 		groups = groups,
 		tube = data.tube and tube or nil,
@@ -266,6 +267,7 @@ function technic.register_base_machine(data)
 			"technic_"..ltier.."_"..machine_name..data.tiles[5]..".png"..tentry,
 			"technic_"..ltier.."_"..machine_name..data.tiles[6].."_active.png"
 		},
+		paramtype = "light",
 		paramtype2 = "facedir",
 		drop = "technic:"..ltier.."_"..machine_name,
 		groups = active_groups,
