@@ -66,6 +66,12 @@ local ripe_for_harvest = {
 	"flowers:mushroom_brown",
 	-- agave
 	"wine:blue_agave",
+	-- additions in farming undo
+	"farming:artichoke_5",
+	"farming:blackberry_4",
+	"farming:lettuce_5",
+	"farming:oregano_5",
+	"farming:parsley_3",
 }
 
 local compatible_soils = {
