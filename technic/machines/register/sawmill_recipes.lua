@@ -46,6 +46,8 @@ if minetest.get_modpath("ethereal") then
 -- 	table.insert(recipes, {"ethereal:mushroom_trunk", "???"})
 	table.insert(recipes, {"ethereal:sakura_trunk", "ethereal:sakura_wood 8"})
 -- 	table.insert(recipes, {"ethereal:scorched_tree", "???"})
+	-- extras
+	table.insert(recipes, {"ethereal:olive_trunk", "ethereal:olive_wood 8"})
 end
 
 if minetest.get_modpath("maple") then

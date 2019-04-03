@@ -136,6 +136,8 @@ if minetest.get_modpath("ethereal") then
 	timber_nodenames["ethereal:mushroom_trunk"]        = true
 	timber_nodenames["ethereal:sakura_trunk"]	         = true
 	timber_nodenames["ethereal:scorched_tree"]         = true
+	-- some extras
+	timber_nodenames["ethereal:olive_trunk"]         = true
 		
 	if chainsaw_leaves then
 		timber_nodenames["ethereal:willow_twig"]        = true
@@ -158,6 +160,11 @@ if minetest.get_modpath("ethereal") then
 		timber_nodenames["ethereal:golden_apple"]  = true
 		-- extra
 		timber_nodenames["ethereal:vine"]  = true
+		-- some extras
+		timber_nodenames["ethereal:olive_leaves"]  = true
+		timber_nodenames["ethereal:olive"]         = true
+		timber_nodenames["ethereal:lemon_leaves"]  = true
+		timber_nodenames["ethereal:lemon"]         = true
 	end
 end
 
