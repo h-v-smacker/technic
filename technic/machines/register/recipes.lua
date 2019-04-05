@@ -128,7 +128,7 @@ function technic.get_recipe(typename, items)
 			-- and when it runs dry, an empty can is added to the recipe's output.
 			if technic.cans[stack:get_name()] then
 				local level = technic.manage_can_state(stack)
-				if level < 1 then
+				if not level or level < 1 then
 					return nil
 				else
 					if level > 1 then
