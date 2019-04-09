@@ -47,7 +47,7 @@ if minetest.get_modpath("farming") then
 	end
 end
 
-if minetest.get_modpath("farming") and farming.mod and farming.mod == "redo" then
+if minetest.get_modpath("farming") and farming.mod and (farming.mod == "redo" or farming.mod == "undo") then
 	-- farming redo uses recipes unfriendly with respect to automation. E.g. using the cutting board.
 	-- in the end, it's hard to automate a farm, since crops have to be processed individually.
 	-- here, we use the thresher to provide a universal device to deal with those

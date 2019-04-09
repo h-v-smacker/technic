@@ -95,7 +95,7 @@ if minetest.get_modpath("farming") then
 	-- end of dhausmig's addition
 	end
 	
-	if farming.mod and farming.mod == "redo" then
+	if farming.mod and (farming.mod == "redo" or farming.mod == "undo") then
 		table.insert(recipes, {"farming:seed_oat",   "farming:flour 1"})
 		table.insert(recipes, {"farming:seed_rye",   "farming:flour 1"})
 		table.insert(recipes, {"farming:rice",       "farming:rice_flour 1"})

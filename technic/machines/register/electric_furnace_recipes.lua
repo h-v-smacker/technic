@@ -18,7 +18,7 @@ end
 
 local recipes = {}
 
-if minetest.get_modpath("farming") and farming.mod and farming.mod == "redo" then
+if minetest.get_modpath("farming") and farming.mod and (farming.mod == "redo" or farming.mod == "undo") then
 	table.insert(recipes, {"technic:water_can", {"farming:salt"}, 7})
 	table.insert(recipes, {"technic:water_jumbo_can", {"farming:salt"}, 7})
 end
