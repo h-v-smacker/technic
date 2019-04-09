@@ -1,7 +1,7 @@
 
 local S = technic.getter
 
-technic.register_recipe_type("grinding", { 
+technic.register_recipe_type("grinding", {
 	description = S("Grinding"),
 	icon = "technic_recipe_icon_grinding.png", })
 
@@ -35,14 +35,14 @@ local recipes = {
 	{"doors:door_steel",           "technic:wrought_iron_dust 6"},
 	{"default:sign_wall_steel",    "technic:wrought_iron_dust 2"},
 	{"default:sign_wall_wood",     "technic:sawdust 8"},
-	
+
 	-- Other
 	{"default:cobble",          "default:gravel"},
 	{"default:gravel",          "default:sand"},
 	{"technic:stone_dust",      "default:silver_sand"},
-	
+
 	-- sands: reverse recipes can be found in the compressor
-	{"default:sandstone",       "default:sand 2"}, 
+	{"default:sandstone",       "default:sand 2"},
 	{"default:silver_sandstone","default:silver_sand 2"},
 	{"default:desert_sandstone","default:desert_sand 2"},
 }
@@ -71,7 +71,7 @@ end
 if minetest.get_modpath("farming") then
 	table.insert(recipes, {"farming:seed_wheat",   "farming:flour 1"})
 	table.insert(recipes, {"farming:seed_barley",   "farming:flour 1"})
-	
+
 	-- added by dhausmig
 	if minetest.registered_items["farming:corn"] ~= nil then
 		minetest.register_craftitem("technic:cornmeal", {
@@ -82,26 +82,31 @@ if minetest.get_modpath("farming") then
 			description = S("Cornbread"),
 			inventory_image = "technic_cornbread.png",
 			on_use = minetest.item_eat(8),
-      })
+		})
 
-      minetest.register_craft({
-		type = "cooking",
-		cooktime = 10,
-		output = "technic:cornbread",
-		recipe = "technic:cornmeal"
-      })
+		minetest.register_craft({
+			type = "cooking",
+			cooktime = 10,
+			output = "technic:cornbread",
+			recipe = "technic:cornmeal"
+		})
 
-      table.insert(recipes, {"farming:corn",   "technic:cornmeal 2"})
+		table.insert(recipes, {"farming:corn",   "technic:cornmeal 2"})
 	-- end of dhausmig's addition
 	end
-	
+
 	if farming.mod and farming.mod == "redo" then
 		table.insert(recipes, {"farming:seed_oat",   "farming:flour 1"})
 		table.insert(recipes, {"farming:seed_rye",   "farming:flour 1"})
 		table.insert(recipes, {"farming:rice",       "farming:rice_flour 1"})
 		table.insert(recipes, {"farming:seed_rice",  "farming:rice_flour 1"})
+	elseif farming.mod and farming.mod == "undo" then
+		table.insert(recipes, {"farming:seed_oat",   "farming:flour 1"})
+		table.insert(recipes, {"farming:seed_rye",   "farming:flour 1"})
+		table.insert(recipes, {"farming:rice",       "farming:rice_flour 1"})
+		table.insert(recipes, {"farming:seed_rice",  "farming:rice_flour 1"})
 	end
-	
+
 end
 
 if minetest.get_modpath("moreores") then

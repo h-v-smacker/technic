@@ -4,7 +4,7 @@ local S = technic.getter
 
 technic.register_recipe_type("threshing", {
 	description = S("Threshing"),
-	icon = "technic_recipe_icon_threshing.png", 
+	icon = "technic_recipe_icon_threshing.png",
 	output_size = 2,
 })
 
@@ -18,31 +18,31 @@ local recipes = {
 
 if minetest.get_modpath("bushes_classic") then
 	for _, berry in ipairs({ "blackberry", "blueberry", "gooseberry", "raspberry", "strawberry" }) do
-		table.insert(recipes, { input = "bushes:"..berry.."_bush", 
+		table.insert(recipes, { input = "bushes:"..berry.."_bush",
 		                        output = {"default:stick 20", "bushes:"..berry.." 4" }})
 	end
 end
 
 if minetest.get_modpath("farming") then
-	
-	table.insert(recipes, { input = "farming:hemp_leaf", 
+
+	table.insert(recipes, { input = "farming:hemp_leaf",
 	                        output = {"farming:hemp_fibre"}})
-	table.insert(recipes, { input = "farming:seed_hemp 3", 
+	table.insert(recipes, { input = "farming:seed_hemp 3",
 	                        output = {"farming:hemp_fibre"}})
 
 	if minetest.get_modpath("cottages") and cottages.mod and cottages.mod == "linuxforks" then
 		-- work as a mechanized threshing floor from cottages
-		table.insert(recipes, { input = "farming:wheat", 
+		table.insert(recipes, { input = "farming:wheat",
 		                        output = {"farming:seed_wheat", "cottages:straw_mat"} })
-		table.insert(recipes, { input = "farming:barley", 
+		table.insert(recipes, { input = "farming:barley",
 		                        output = {"farming:seed_barley", "cottages:straw_mat"} })
--- 		table.insert(recipes, { input = "farming:corn", 
+-- 		table.insert(recipes, { input = "farming:corn",
 -- 		                        output = {"farming:corn", "cottages:hay_mat"} })
 	else
 		-- work in a less fancy and less efficient manner
-		table.insert(recipes, { input = "farming:wheat 4", 
+		table.insert(recipes, { input = "farming:wheat 4",
 		                        output = {"farming:seed_wheat 3", "default:dry_shrub 1"} })
-		table.insert(recipes, { input = "farming:barley 4", 
+		table.insert(recipes, { input = "farming:barley 4",
 		                        output = {"farming:seed_barley 3", "default:dry_shrub 1"} })
 	end
 end
@@ -51,53 +51,86 @@ if minetest.get_modpath("farming") and farming.mod and farming.mod == "redo" the
 	-- farming redo uses recipes unfriendly with respect to automation. E.g. using the cutting board.
 	-- in the end, it's hard to automate a farm, since crops have to be processed individually.
 	-- here, we use the thresher to provide a universal device to deal with those
-	table.insert(recipes, { input = "farming:pumpkin_8", 
+	table.insert(recipes, { input = "farming:pumpkin_8",
 		                        output = {"farming:pumpkin_slice 5"} })
--- 	table.insert(recipes, { input = "farming:pumpkin", 
+-- 	table.insert(recipes, { input = "farming:pumpkin",
 -- 		                        output = {"farming:pumpkin_slice 5"} })
-	table.insert(recipes, { input = "farming:melon_8", 
+	table.insert(recipes, { input = "farming:melon_8",
 		                        output = {"farming:melon_slice 5"} })
-	table.insert(recipes, { input = "farming:pineapple", 
+	table.insert(recipes, { input = "farming:pineapple",
 		                        output = {"farming:pineapple_ring 6", "farming:pineapple_top"} })
-	table.insert(recipes, { input = "farming:garlic", 
+	table.insert(recipes, { input = "farming:garlic",
 		                        output = {"farming:garlic_clove 10"} })
-	table.insert(recipes, { input = "farming:pepper", 
+	table.insert(recipes, { input = "farming:pepper",
 		                        output = {"farming:peppercorn 2"} })
-	
+
 	if minetest.get_modpath("cottages") and cottages.mod and cottages.mod == "linuxforks" then
 		-- work as a mechanized threshing floor from cottages
-		table.insert(recipes, { input = "farming:oat", 
+		table.insert(recipes, { input = "farming:oat",
 		                        output = {"farming:seed_oat", "cottages:straw_mat"} })
-		table.insert(recipes, { input = "farming:rye", 
+		table.insert(recipes, { input = "farming:rye",
 		                        output = {"farming:seed_rye", "cottages:straw_mat"} })
 	else
 		-- work in a less fancy and less efficient manner
-		table.insert(recipes, { input = "farming:oat 4", 
+		table.insert(recipes, { input = "farming:oat 4",
 		                        output = {"farming:seed_oat 3", "default:dry_shrub 1"} })
-		table.insert(recipes, { input = "farming:rye 4", 
+		table.insert(recipes, { input = "farming:rye 4",
 		                        output = {"farming:seed_rye 3", "default:dry_shrub 1"} })
 	end
-	
+
+end
+
+if minetest.get_modpath("farming") and farming.mod and farming.mod == "undo" then
+	-- farming undo uses recipes unfriendly with respect to automation. E.g. using the cutting board.
+	-- in the end, it's hard to automate a farm, since crops have to be processed individually.
+	-- here, we use the thresher to provide a universal device to deal with those
+	table.insert(recipes, { input = "farming:pumpkin_8",
+		                        output = {"farming:pumpkin_slice 5"} })
+-- 	table.insert(recipes, { input = "farming:pumpkin",
+-- 		                        output = {"farming:pumpkin_slice 5"} })
+	table.insert(recipes, { input = "farming:melon_8",
+		                        output = {"farming:melon_slice 5"} })
+	table.insert(recipes, { input = "farming:pineapple",
+		                        output = {"farming:pineapple_ring 6", "farming:pineapple_top"} })
+	table.insert(recipes, { input = "farming:garlic",
+		                        output = {"farming:garlic_clove 10"} })
+	table.insert(recipes, { input = "farming:pepper",
+		                        output = {"farming:peppercorn 2"} })
+
+	if minetest.get_modpath("cottages") and cottages.mod and cottages.mod == "linuxforks" then
+		-- work as a mechanized threshing floor from cottages
+		table.insert(recipes, { input = "farming:oat",
+		                        output = {"farming:seed_oat", "cottages:straw_mat"} })
+		table.insert(recipes, { input = "farming:rye",
+		                        output = {"farming:seed_rye", "cottages:straw_mat"} })
+	else
+		-- work in a less fancy and less efficient manner
+		table.insert(recipes, { input = "farming:oat 4",
+		                        output = {"farming:seed_oat 3", "default:dry_shrub 1"} })
+		table.insert(recipes, { input = "farming:rye 4",
+		                        output = {"farming:seed_rye 3", "default:dry_shrub 1"} })
+	end
+
 end
 
 -- using thresher as a sorting machine for grass
 if minetest.get_modpath("cottages") and cottages.mod and cottages.mod == "linuxforks" then
-	table.insert(recipes, { input = "default:grass_1 99", 
-                        output = {"default:dry_grass_1 30", "cottages:hay_mat 50", "default:dry_shrub 7", "default:junglegrass 12"}, 
+	table.insert(recipes, { input = "default:grass_1 99",
+                        output = {"default:dry_grass_1 30", "cottages:hay_mat 50", "default:dry_shrub 7", "default:junglegrass 12"},
                         time = 16 })
 else
-	table.insert(recipes, { input = "default:grass_1 99", 
-                        output = {"default:dry_grass_1 80", "default:dry_shrub 7", "default:junglegrass 12"}, 
+	table.insert(recipes, { input = "default:grass_1 99",
+                        output = {"default:dry_grass_1 80", "default:dry_shrub 7", "default:junglegrass 12"},
                         time = 16 })
 
 end
 
 if minetest.get_modpath("ethereal") then
-	table.insert(recipes, { input = "default:junglegrass 99", 
-	                        output = {"ethereal:dry_shrub 10", "ethereal:crystalgrass 5", "ethereal:snowygrass 5" }, 
+	table.insert(recipes, { input = "default:junglegrass 99",
+	                        output = {"ethereal:dry_shrub 10", "ethereal:crystalgrass 5", "ethereal:snowygrass 5" },
 	                        time = 16 })
-	table.insert(recipes, { input = "default:dry_grass_1 99", 
-	                        output = {"ethereal:fern 5"}, 
+	table.insert(recipes, { input = "default:dry_grass_1 99",
+	                        output = {"ethereal:fern 5"},
 	                        time = 16 })
 end
 
