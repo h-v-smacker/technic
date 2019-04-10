@@ -359,6 +359,14 @@ if minetest.get_modpath("ethereal") then
 				S("Grey Clay"))
 	end
 	
+	-- undo-specific items
+	if ethereal.mod and ethereal.mod == "undo" then
+		technic.cnc.register_all("ethereal:olive_wood",
+			{snappy=2, choppy=2, oddly_breakable_by_hand=2, not_in_creative_inventory=1},
+			{"olive_wood.png"},
+			S("Olive Wood"))
+	end
+	
 end
 
 
