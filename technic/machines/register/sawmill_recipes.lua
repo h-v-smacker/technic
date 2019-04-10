@@ -18,6 +18,11 @@ local recipes = {
 	{"default:pine_tree",   "default:pine_wood 8"}
 }
 
+if minetest.get_modpath("technic_worldgen") or minetest.get_modpath("moretrees") then
+	table.insert(recipes, {"moretrees:rubber_tree_trunk", "moretrees:rubber_tree_planks 8"})
+	table.insert(recipes, {"moretrees:rubber_tree_trunk_empty", "moretrees:rubber_tree_planks 8"})
+end
+
 if minetest.get_modpath("moretrees") then
 	table.insert(recipes, {"moretrees:acacia_trunk", "moretrees:acacia_planks 8"})
 	table.insert(recipes, {"moretrees:apple_tree_trunk", "moretrees:apple_tree_planks 8"})

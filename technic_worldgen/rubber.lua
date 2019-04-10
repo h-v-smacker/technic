@@ -58,6 +58,32 @@ minetest.register_node(":moretrees:rubber_tree_leaves", {
 	sounds = default.node_sound_leaves_defaults(),
 })
 
+minetest.register_node(":moretrees:rubber_tree_planks", {
+        description = S("Rubber Tree Planks"),
+        tiles = {"technic_rubber_tree_wood.png"},
+        is_ground_content = false,
+        groups = {snappy = 1, wood = 1, choppy = 2, oddly_breakable_by_hand = 2, flammable = 3},
+        sounds = default.node_sound_wood_defaults(),
+})
+
+minetest.register_craft({
+	output = "moretrees:rubber_tree_planks 4",
+	recipe = {{"moretrees:rubber_tree_trunk"}}
+})
+
+minetest.register_craft({
+	output = "moretrees:rubber_tree_planks 4",
+	recipe = {{"moretrees:rubber_tree_trunk_empty"}}
+})
+
+if minetest.get_modpath("moreblocks") then
+	stairsplus:register_all("moretrees", "rubber_tree_planks", "moretrees:rubber_tree_planks", {
+		description=S("Rubber Tree Planks"),
+		groups={snappy = 1, choppy = 2, oddly_breakable_by_hand = 2, not_in_creative_inventory = 1},
+		tiles={"technic_rubber_tree_wood.png"},
+	})
+end
+
 technic.rubber_tree_model={
 	axiom = "FFFFA",
 	rules_a = "[&FFBFA]////[&BFFFA]////[&FBFFA]",
