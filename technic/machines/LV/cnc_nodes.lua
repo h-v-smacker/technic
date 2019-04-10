@@ -432,6 +432,13 @@ if minetest.get_modpath("moreblocks") then
 
 end
 
+if minetest.get_modpath("technic_worldgen") then
+	technic.cnc.register_all("moretrees:rubber_tree_planks",
+                {snappy=2, choppy=2, oddly_breakable_by_hand=2, not_in_creative_inventory=1},
+                {"technic_rubber_tree_wood.png"},
+                S("Rubber Tree Planks"))
+end
+
 if minetest.get_modpath("pathv7") then
 	-- jungle wood already exists (and hence the CNC'd parts would be identical)
 	technic.cnc.register_all("pathv7:bridgewood",
