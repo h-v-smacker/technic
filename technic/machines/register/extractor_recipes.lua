@@ -27,9 +27,12 @@ if minetest.get_modpath("dye") then
 		{"flowers:tulip",                     "dye:orange 4"},
 		{"flowers:rose",                      "dye:red 4"},
 		{"flowers:viola",                     "dye:violet 4"},
-		{"bushes:blackberry",                 unifieddyes and "unifieddyes:magenta_s50 4" or "dye:violet 4"},
-		{"bushes:blueberry",                  unifieddyes and "unifieddyes:magenta_s50 4" or "dye:magenta 4"},
 	}
+	
+	if minetest.get_modpath("bushes") then
+		table.insert(dye_recipes, {"bushes:blackberry", unifieddyes and "unifieddyes:magenta_s50 4" or "dye:violet 4"})
+		table.insert(dye_recipes, {"bushes:blueberry", unifieddyes and "unifieddyes:magenta_s50 4" or "dye:magenta 4"})
+	end
 
 	if (minetest.get_modpath("hunger") or minetest.get_modpath("hbhunger"))  and minetest.get_modpath("ethereal") then
 		table.insert(dye_recipes, {"ethereal:willow_twig 12", "technic:aspirin_pill"})
@@ -53,6 +56,11 @@ if minetest.get_modpath("dye") then
 		table.insert(dye_recipes, {"farming:onion", "dye:yellow 4"})
 		table.insert(dye_recipes, {"farming:blueberries", "dye:blue 4"})
 		table.insert(dye_recipes, {"farming:raspberries", "dye:red 4"})
+		
+		if farming.mod and farming.mod == "undo" then
+			table.insert(dye_recipes, {"farming:blackberry", "dye:violet 4"})
+		end
+		
 	end
 	
 	if minetest.get_modpath("ethereal") then
