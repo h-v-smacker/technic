@@ -461,7 +461,12 @@ if minetest.get_modpath("extranodes") then
                 S("Plastic Clean"))
 end
 
-
+if minetest.get_modpath("farming") and farming.mod and (farming.mod == "redo" or farming.mod == "undo") then
+	technic.cnc.register_all("farming:hemp_block",
+                {snappy = 1, oddly_breakable_by_hand = 1, flammable = 2, not_in_creative_inventory=1},
+                {"farming_hemp_block.png"},
+                S("Hemp Block"))
+end
 
 if minetest.get_modpath("bakedclay") then
 	

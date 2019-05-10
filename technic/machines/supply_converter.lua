@@ -38,6 +38,11 @@ local function set_supply_converter_formspec(meta)
 end
 
 local supply_converter_receive_fields = function(pos, formname, fields, sender)
+
+	if minetest.is_protected(pos, sender:get_player_name()) then
+		return
+	end
+
 	local meta = minetest.get_meta(pos)
 	local power = nil
 	if fields.power then

@@ -60,6 +60,11 @@ local function set_quarry_demand(meta)
 end
 
 local function quarry_receive_fields(pos, formname, fields, sender)
+	
+	if minetest.is_protected(pos, sender:get_player_name()) then
+		return
+	end
+	
 	local meta = minetest.get_meta(pos)
 	if fields.size and string.find(fields.size, "^[0-9]+$") then
 		local size = tonumber(fields.size)

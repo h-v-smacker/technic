@@ -49,7 +49,7 @@ local function planter_setmode(user, itemstack, meta)
 end
 
 
--- Perform the trimming action
+-- Perform the planting action
 local function work_on_soil(itemstack, user, pointed_thing)
 	
 	local meta = minetest.deserialize(itemstack:get_metadata())
@@ -144,9 +144,13 @@ local function work_on_soil(itemstack, user, pointed_thing)
 			}
 		end
 		
+		local before = minetest.get_node(work_pos.above).name
 
 		local k = (minetest.registered_items[meta.selected] or {on_place=minetest.item_place}).on_place(ItemStack({name=meta.selected, count=1}), user, work_pos)
-		if k then
+		
+		local after = minetest.get_node(work_pos.above).name
+				
+		if k and before ~= after then
 			c = c + 1
 		end
 		

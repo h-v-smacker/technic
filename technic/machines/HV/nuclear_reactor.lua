@@ -415,7 +415,7 @@ minetest.register_node("technic:hv_nuclear_reactor_core", {
 		meta:set_string("formspec", make_reactor_formspec(meta))
 		if digiline_remote_path then
 			meta:set_string("remote_channel",
-					"nucelear_reactor"..minetest.pos_to_string(pos))
+					"nuclear_reactor"..minetest.pos_to_string(pos))
 		end
 		local inv = meta:get_inventory()
 		inv:set_size("src", 6)
