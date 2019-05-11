@@ -45,7 +45,7 @@ local ripe_for_harvest = {
 	"farming:onion_5",
 	"farming:oat_8",
 	"farming:pea_5",
-	"farming:pepper_5",
+-- 	"farming:pepper_5",
 	"farming:pineapple_8",
 	"farming:potato_4",
 	"farming:pumpkin_8",
@@ -73,6 +73,13 @@ local ripe_for_harvest = {
 	"farming:oregano_5",
 	"farming:parsley_3",
 }
+
+if minetest.get_modpath("farming") and farming.mod and (farming.mod == "redo") then
+	table.insert(ripe_for_harvest, "farming:pepper_5")
+end
+if minetest.get_modpath("farming") and farming.mod and (farming.mod == "undo") then
+	table.insert(ripe_for_harvest, "farming:pepper_7")
+end
 
 local compatible_soils = {
 	"group:soil", 
