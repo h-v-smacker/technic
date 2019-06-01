@@ -56,15 +56,24 @@ if minetest.get_modpath("bonemeal") then
 	table.insert(recipes, {"bonemeal:bone", "bonemeal:bonemeal 8"})
 end
 
-if minetest.get_modpath("moreblocks") then
+if minetest.get_modpath("moreblocks") and moreblocks.mod and moreblocks.mod == "undo" then
 	table.insert(recipes, {"moreblocks:cobble_compressed", "default:gravel 9"})
+	table.insert(recipes, {"moreblocks:cobble_condensed", "default:gravel 81"})
+
 	-- there is no other place to throw in the cooking recipe
 	minetest.register_craft({
 		type = "cooking",
-		cooktime = 5,
+		cooktime = 7,
 		output = "default:stone 9",
 		recipe = "moreblocks:cobble_compressed"
-      })
+	})
+
+	minetest.register_craft({
+                type = "cooking",
+                cooktime = 15,
+                output = "default:stone 81",
+                recipe = "moreblocks:cobble_condensed"
+        })
 end
 
 
