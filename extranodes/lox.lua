@@ -52,8 +52,8 @@ local function freeze(user, pos, radius)
 				if math.random(1,5) == 5 then
 					if minetest.get_node({x = loc.x, y = loc.y+1, z = loc.z}).name == "air" 
 						and minetest.get_node(loc).name ~= "air" 
-						and minetest.get_node(loc).name ~= "stairs:slab_snowblock" then
-						minetest.set_node({x = loc.x, y = loc.y+1, z = loc.z}, {name = "stairs:slab_snowblock"})
+						and minetest.get_node(loc).name ~= "default:snow" then
+						minetest.set_node({x = loc.x, y = loc.y+1, z = loc.z}, {name = "default:snow"})
 					end
 				end
 			end

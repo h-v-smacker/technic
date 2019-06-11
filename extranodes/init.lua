@@ -42,6 +42,7 @@ if minetest.get_modpath("pkarcs") then
 	pkarcs.register_node("technic:marble")
 	pkarcs.register_node("technic:marble_bricks")
 	pkarcs.register_node("technic:granite")
+	pkarcs.register_node("moreblocks:rubber_tree_planks")
 end
 
 if minetest.get_modpath("moreblocks") then
