@@ -27,6 +27,7 @@ if minetest.get_modpath("dye") then
 		{"flowers:tulip",                     "dye:orange 4"},
 		{"flowers:rose",                      "dye:red 4"},
 		{"flowers:viola",                     "dye:violet 4"},
+		{"bones:bones",                       "dye:black 4"},
 	}
 	
 	if minetest.get_modpath("bushes") then
@@ -72,6 +73,7 @@ if minetest.get_modpath("dye") then
 		table.insert(dye_recipes, {"ethereal:fern", "dye:dark_green 4"})
 		table.insert(dye_recipes, {"ethereal:snowygrass", "dye:grey 4"})
 		table.insert(dye_recipes, {"ethereal:crystalgrass", "dye:blue 4"})
+		table.insert(dye_recipes, {"ethereal:mushroom", "dye:white 4"})
 	end
 	
 	if minetest.get_modpath("ethereal") and minetest.get_modpath("flowers") then

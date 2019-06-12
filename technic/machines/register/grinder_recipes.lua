@@ -54,6 +54,7 @@ end
 
 if minetest.get_modpath("bonemeal") then
 	table.insert(recipes, {"bonemeal:bone", "bonemeal:bonemeal 8"})
+	table.insert(recipes, {"bones:bones", "bonemeal:bonemeal 12"})
 end
 
 if minetest.get_modpath("moreblocks") and moreblocks.mod and moreblocks.mod == "undo" then
