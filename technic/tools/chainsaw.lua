@@ -588,7 +588,7 @@ minetest.register_tool("technic:chainsaw_mk2", {
 	description = S("Chainsaw Mk2"),
 	inventory_image = "technic_chainsaw_mk2.png",
 	stack_max = 1,
-	groups = {technic_tool = 1, technic_powertool = 1},
+	groups = {technic_tool = 1, technic_powertool = 1, not_in_creative_inventory = 1},
 	wear_represents = "technic_RE_charge",
 	on_refill = technic.refill_RE_charge,
 	on_use = function(itemstack, user, pointed_thing)
