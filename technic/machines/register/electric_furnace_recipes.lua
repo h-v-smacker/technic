@@ -23,6 +23,10 @@ if minetest.get_modpath("farming") and farming.mod and (farming.mod == "redo" or
 	table.insert(recipes, {"technic:water_jumbo_can", {"farming:salt"}, 7})
 end
 
+if minetest.get_modpath("mobs") and minetest.get_modpath("mobs_animal") then
+	table.insert(recipes, {"mobs:bucket_milk", {"mobs:cheese", "bucket:bucket_empty"}, 5})
+end
+
 for _, data in pairs(recipes) do
 	if data[3] then
 		technic.register_electric_furnace_recipe({input = {data[1]}, output = data[2], time = data[3]})

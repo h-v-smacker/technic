@@ -16,42 +16,14 @@ technic.cnc.programs = {
 		desc  = S("Stick")
 	},
 
-	{ suffix  = "technic_cnc_element_end_double",
-		model = {-0.3, -0.5, -0.3, 0.3, 0.5, 0.5},
-		desc  = S("Element End Double")
-	},
-
-	{ suffix  = "technic_cnc_element_cross_double",
-		model = {
-			{0.3, -0.5, -0.3, 0.5, 0.5, 0.3},
-			{-0.3, -0.5, -0.5, 0.3, 0.5, 0.5},
-			{-0.5, -0.5, -0.3, -0.3, 0.5, 0.3}},
-		desc  = S("Element Cross Double")
-	},
-
-	{ suffix  = "technic_cnc_element_t_double",
-		model = {
-			{-0.3, -0.5, -0.5, 0.3, 0.5, 0.3},
-			{-0.5, -0.5, -0.3, -0.3, 0.5, 0.3},
-			{0.3, -0.5, -0.3, 0.5, 0.5, 0.3}},
-		desc  = S("Element T Double")
-	},
-
-	{ suffix  = "technic_cnc_element_edge_double",
-		model = {
-			{-0.3, -0.5, -0.5, 0.3, 0.5, 0.3},
-			{-0.5, -0.5, -0.3, -0.3, 0.5, 0.3}},
-		desc  = S("Element Edge Double")
-	},
-
-	{ suffix  = "technic_cnc_element_straight_double",
-		model = {-0.3, -0.5, -0.5, 0.3, 0.5, 0.5},
-		desc  = S("Element Straight Double")
-	},
-
 	{ suffix  = "technic_cnc_element_end",
 		model = {-0.3, -0.5, -0.3, 0.3, 0, 0.5},
 		desc  = S("Element End")
+	},
+	
+	{ suffix  = "technic_cnc_element_end_double",
+		model = {-0.3, -0.5, -0.3, 0.3, 0.5, 0.5},
+		desc  = S("Element End Double")
 	},
 
 	{ suffix  = "technic_cnc_element_cross",
@@ -61,6 +33,14 @@ technic.cnc.programs = {
 			{-0.5, -0.5, -0.3, -0.3, 0, 0.3}},
 		desc  = S("Element Cross")
 	},
+	
+	{ suffix  = "technic_cnc_element_cross_double",
+		model = {
+			{0.3, -0.5, -0.3, 0.5, 0.5, 0.3},
+			{-0.3, -0.5, -0.5, 0.3, 0.5, 0.5},
+			{-0.5, -0.5, -0.3, -0.3, 0.5, 0.3}},
+		desc  = S("Element Cross Double")
+	},
 
 	{ suffix  = "technic_cnc_element_t",
 		model = {
@@ -69,6 +49,14 @@ technic.cnc.programs = {
 			{0.3, -0.5, -0.3, 0.5, 0, 0.3}},
 		desc  = S("Element T")
 	},
+	
+	{ suffix  = "technic_cnc_element_t_double",
+		model = {
+			{-0.3, -0.5, -0.5, 0.3, 0.5, 0.3},
+			{-0.5, -0.5, -0.3, -0.3, 0.5, 0.3},
+			{0.3, -0.5, -0.3, 0.5, 0.5, 0.3}},
+		desc  = S("Element T Double")
+	},
 
 	{ suffix  = "technic_cnc_element_edge",
 		model = {
@@ -76,11 +64,24 @@ technic.cnc.programs = {
 			{-0.5, -0.5, -0.3, -0.3, 0, 0.3}},
 		desc  = S("Element Edge")
 	},
+	
+	{ suffix  = "technic_cnc_element_edge_double",
+		model = {
+			{-0.3, -0.5, -0.5, 0.3, 0.5, 0.3},
+			{-0.5, -0.5, -0.3, -0.3, 0.5, 0.3}},
+		desc  = S("Element Edge Double")
+	},
 
 	{ suffix  = "technic_cnc_element_straight",
 		model = {-0.3, -0.5, -0.5, 0.3, 0, 0.5},
 		desc  = S("Element Straight")
 	},
+	
+	{ suffix  = "technic_cnc_element_straight_double",
+		model = {-0.3, -0.5, -0.5, 0.3, 0.5, 0.5},
+		desc  = S("Element Straight Double")
+	},
+
 
 	{ suffix  = "technic_cnc_oblate_spheroid",
 		model = "technic_oblate_spheroid.obj",
