@@ -174,6 +174,16 @@ minetest.register_craft({
 	}
 })
 
+
+minetest.register_craft({
+        output = 'technic:control_logic_unit_adv',
+        recipe = {
+                {'','technic:control_logic_unit',''},
+		{'','default:tin_ingot',''},
+		{'','technic:control_logic_unit',''}
+        }
+})
+
 minetest.register_craft({
 	output = 'technic:mixed_metal_ingot 9',
 	recipe = {
