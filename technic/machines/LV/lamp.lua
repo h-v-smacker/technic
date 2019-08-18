@@ -196,6 +196,7 @@ minetest.register_node("technic:lv_lamp", {
 		local meta = minetest.get_meta(pos)
 		meta:set_string("infotext", S("%s Lamp"):format("LV"))
 	end,
+	drop = "technic:lv_lamp",
 })
 
 
@@ -223,6 +224,7 @@ minetest.register_node("technic:lv_lamp_active", {
 	technic_run = lamp_on,
 	on_destruct = lamp_off,
 	technic_on_disable = lamp_off,
+	drop = "technic:lv_lamp",
 })
 
 minetest.register_craft({
