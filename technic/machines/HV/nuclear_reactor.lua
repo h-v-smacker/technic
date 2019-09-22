@@ -30,14 +30,15 @@ minetest.register_craft({
 	}
 })
 
-local function make_reactor_formspec(meta)
+local function make_reactor_formspec(meta, active)
 	local f = "size[8,9]"..
 	"label[0,0;"..S("Nuclear Reactor Rod Compartment").."]"..
 	"list[current_name;src;2,1;3,2;]"..
 	"list[current_player;main;0,5;8,4;]"..
 	"listring[]"..
-	"button[5.5,1.5;2,1;start;Start]"..
-	"checkbox[5.5,2.5;autostart;automatic Start;"..meta:get_string("autostart").."]"
+	"button[5.5,1;2,1;start;Start]"..
+	"checkbox[5.5,1.5;autostart;automatic Start;"..meta:get_string("autostart").."]"..
+	"button[5.5,2.5;2,1;scram;Scram]"
 	if not digiline_remote_path then
 		return f
 	end
@@ -218,7 +219,11 @@ end
 
 local function start_reactor(pos, meta)
 	if minetest.get_node(pos).name ~= "technic:hv_nuclear_reactor_core" then
-		return {false, "core not found"}
+		if minetest.get_node(pos).name == "technic:hv_nuclear_reactor_core_active" then
+			return {false, "core is active"}
+		else
+			return {false, "core not found"}
+		end
 	end
 	
 	-- Check that the reactor is complete and contaiment vessel is ok
@@ -230,11 +235,20 @@ local function start_reactor(pos, meta)
 	if inv:is_empty("src") then
 		return {false, "reactor has no fuel"}
 	end
+	
 	local src_list = inv:get_list("src")
 	local correct_fuel_count = 0
+	local total_power_output = 0
 	for _, src_stack in pairs(src_list) do
-		if src_stack and src_stack:get_name() == fuel_type then
+		if src_stack and src_stack:get_name() 
+			and minetest.get_item_group(src_stack:get_name(), "reactor_core_load") == 1 then
 			correct_fuel_count = correct_fuel_count + 1
+			
+			local p_out = minetest.get_item_group(src_stack:get_name(), "power_output")
+			if p_out > 0 then
+				total_power_output = total_power_output + p_out
+			end
+			
 		end
 	end
 	
@@ -243,14 +257,48 @@ local function start_reactor(pos, meta)
 		return {false, "not all reactor core channels are loaded: " .. correct_fuel_count .. "/6"}
 	end
 	
+	-- Power output check
+	if total_power_output == 0 then
+		return {false, "no fuel loaded, reactor test passed"}
+	end
+	
+	
+	
+	-- Proper startup
 	meta:set_int("burn_time", 1)
 	technic.swap_node(pos, "technic:hv_nuclear_reactor_core_active")
-	meta:set_int("HV_EU_supply", power_supply)
+	total_power_output = 0
 	for idx, src_stack in pairs(src_list) do
-		src_stack:take_item()
-		inv:set_stack("src", idx, src_stack)
+		local p_out = minetest.get_item_group(src_stack:get_name(), "power_output")
+		if p_out > 0 then
+			src_stack:take_item()
+			inv:set_stack("src", idx, src_stack)
+			total_power_output = total_power_output + p_out
+		end
 	end
+	meta:set_int("power_output", total_power_output)
+	meta:set_int("HV_EU_supply", total_power_output)
 	return {true, "core active"}
+end
+
+
+local function stop_reactor(pos, meta)
+	if minetest.get_node(pos).name ~= "technic:hv_nuclear_reactor_core_active" then
+		return {false, "core not active"}
+	end
+	
+	local clear_handle = minetest.sound_play("technic_hv_nuclear_reactor_siren_clear",
+				{pos=pos, gain=1.5, loop=false, max_hear_distance=48})
+	
+	meta:set_int("HV_EU_supply", 0)
+	meta:set_int("power_output", 0)
+	meta:set_int("burn_time", 0)
+	meta:set_string("infotext", S("%s SCRAMMED"):format(reactor_desc))
+	technic.swap_node(pos, "technic:hv_nuclear_reactor_core")
+	meta:set_int("structure_accumulated_badness", 0)
+	siren_clear(pos, meta)
+	
+	return {true, "core inactive"}
 end
 
 
@@ -284,7 +332,7 @@ local function run(pos, node)
 	local meta = minetest.get_meta(pos)
 	local burn_time = meta:get_int("burn_time") or 0
 	if burn_time >= burn_ticks or burn_time == 0 then
-		if digiline_remote_path and meta:get_int("HV_EU_supply") == power_supply then
+		if digiline_remote_path and meta:get_int("HV_EU_supply") > 0 then
 			digiline_remote.send_to_node(pos, meta:get_string("remote_channel"),
 					"fuel used", 6, true)
 		end
@@ -305,7 +353,7 @@ local function run(pos, node)
 		meta:set_int("burn_time", burn_time)
 		local percent = math.floor(burn_time / burn_ticks * 100)
 		meta:set_string("infotext", reactor_desc.." ("..percent.."%)")
-		meta:set_int("HV_EU_supply", power_supply)
+		meta:set_int("HV_EU_supply", meta:get_int("power_output"))
 	end
 end
 
@@ -329,6 +377,16 @@ local nuclear_reactor_receive_fields = function(pos, formname, fields, sender)
 			minetest.chat_send_player(player_name, "Error: " .. b[2])
 		end
 	end
+	
+	if fields.scram then
+		local b = stop_reactor(pos, meta)
+		if b[1] then
+			minetest.chat_send_player(player_name, "SCRAM: " .. b[2])
+		else
+			minetest.chat_send_player(player_name, "SCRAM FAILED: " .. b[2])
+		end
+	end
+	
 	if fields.autostart then
 		meta:set_string("autostart", fields.autostart)
 		update_formspec = true
@@ -380,7 +438,7 @@ local digiline_remote_def = function(pos, channel, msg)
 		end
 		digiline_remote.send_to_node(pos, channel, {
 			burn_time = meta:get_int("burn_time"),
-			enabled   = meta:get_int("HV_EU_supply") == power_supply,
+			enabled   = meta:get_int("HV_EU_supply") > 0,
 			siren     = meta:get_int("siren") == 1,
 			structure_accumulated_badness = meta:get_int("structure_accumulated_badness"),
 			rods = invtable

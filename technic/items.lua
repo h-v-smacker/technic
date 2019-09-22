@@ -14,6 +14,13 @@ minetest.register_craftitem( "technic:doped_silicon_wafer", {
 minetest.register_craftitem("technic:uranium_fuel", {
 	description = S("Uranium Fuel"),
 	inventory_image = "technic_uranium_fuel.png",
+	groups = {reactor_core_load = 1, power_output = 50000},
+})
+
+minetest.register_craftitem("technic:graphite_rod", {
+	description = S("Graphite Rod"),
+	inventory_image = "technic_graphite_rod.png",
+	groups = {reactor_core_load = 1, power_output = 0},
 })
 
 minetest.register_craftitem( "technic:diamond_drill_head", {

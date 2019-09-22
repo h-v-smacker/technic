@@ -22,6 +22,7 @@ local recipes = {
 	{"technic:coal_dust 4",        "technic:graphite"},
 	{"technic:carbon_cloth",       "technic:carbon_plate"},
 	{"technic:uranium35_ingot 5",  "technic:uranium_fuel"},
+	{"default:coalblock",          "technic:graphite_rod"},
 	{"technic:diamond_seed 25",    "default:diamond"}
 }
 
