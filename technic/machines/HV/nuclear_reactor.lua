@@ -218,11 +218,17 @@ end
 
 local function start_reactor(pos, meta)
 	if minetest.get_node(pos).name ~= "technic:hv_nuclear_reactor_core" then
-		return false
+		return {false, "core not found"}
 	end
+	
+	-- Check that the reactor is complete and contaiment vessel is ok
+	if reactor_structure_badness(pos) ~= 0 then
+		return {false, "containment vessel is defective"}
+	end
+	
 	local inv = meta:get_inventory()
 	if inv:is_empty("src") then
-		return false
+		return {false, "reactor has no fuel"}
 	end
 	local src_list = inv:get_list("src")
 	local correct_fuel_count = 0
@@ -231,10 +237,12 @@ local function start_reactor(pos, meta)
 			correct_fuel_count = correct_fuel_count + 1
 		end
 	end
-	-- Check that the reactor is complete and has the correct fuel
-	if correct_fuel_count ~= 6 or reactor_structure_badness(pos) ~= 0 then
-		return false
+	
+	-- Check that the reactor has the correct fuel
+	if correct_fuel_count ~= 6 then
+		return {false, "not all reactor core channels are loaded: " .. correct_fuel_count .. "/6"}
 	end
+	
 	meta:set_int("burn_time", 1)
 	technic.swap_node(pos, "technic:hv_nuclear_reactor_core_active")
 	meta:set_int("HV_EU_supply", power_supply)
@@ -242,7 +250,7 @@ local function start_reactor(pos, meta)
 		src_stack:take_item()
 		inv:set_stack("src", idx, src_stack)
 	end
-	return true
+	return {true, "core active"}
 end
 
 
@@ -281,7 +289,8 @@ local function run(pos, node)
 					"fuel used", 6, true)
 		end
 		if meta:get_string("autostart") == "true" then
-			if start_reactor(pos, meta) then
+			local b = start_reactor(pos, meta)
+			if b[1] then
 				return
 			end
 		end
@@ -314,10 +323,10 @@ local nuclear_reactor_receive_fields = function(pos, formname, fields, sender)
 	end
 	if fields.start then
 		local b = start_reactor(pos, meta)
-		if b then
-			minetest.chat_send_player(player_name, "Start successful")
+		if b[1] then
+			minetest.chat_send_player(player_name, "Start successful: " .. b[2])
 		else
-			minetest.chat_send_player(player_name, "Error")
+			minetest.chat_send_player(player_name, "Error: " .. b[2])
 		end
 	end
 	if fields.autostart then
@@ -386,10 +395,10 @@ local digiline_remote_def = function(pos, channel, msg)
 		end
 	elseif msg.command == "start" then
 		local b = start_reactor(pos, meta)
-		if b then
-			digiline_remote.send_to_node(pos, channel, "Start successful", 6, true)
+		if b[1] then
+			digiline_remote.send_to_node(pos, channel, "Start successful: ".. b[2], 6, true)
 		else
-			digiline_remote.send_to_node(pos, channel, "Error", 6, true)
+			digiline_remote.send_to_node(pos, channel, "Error: " .. b[2], 6, true)
 		end
 	end
 end
