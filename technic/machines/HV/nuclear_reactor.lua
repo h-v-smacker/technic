@@ -38,7 +38,7 @@ local function make_reactor_formspec(meta, active)
 	"list[current_player;main;0,5;8,4;]"..
 	"listring[]"..
 	"button[5.5,1;2,1;start;Start]"..
-	"checkbox[5.5,1.5;autostart;automatic Start;"..meta:get_string("autostart").."]"..
+	"checkbox[5.5,1.5;autostart;Automatic Start;"..meta:get_string("autostart").."]"..
 	"button[5.5,2.5;2,1;scram;Scram]"
 	if not digiline_remote_path then
 		return f
@@ -361,6 +361,8 @@ minetest.register_lbm({
 	run_at_every_load = false,
 	action = function(pos)
 		local t = minetest.get_node_timer(pos)
+		local meta = minetest.get_meta(pos)
+		meta:set_string("formspec", make_reactor_formspec(meta))
 		if not t:is_started() then
 			meta:set_int("power_output", power_supply)
 			t:start(1)
