@@ -11,6 +11,7 @@ intact the reactor will melt down!
 
 local burn_ticks = 7 * 24 * 60 * 60  -- Seconds
 local power_supply = 100000  -- EUs
+local meltdown_check_interval = 4
 local fuel_type = "technic:uranium_fuel"  -- The reactor burns this
 local digiline_meltdown = technic.config:get_bool("enable_nuclear_reactor_digiline_selfdestruct")
 local digiline_remote_path = minetest.get_modpath("digiline_remote")
@@ -262,8 +263,6 @@ local function start_reactor(pos, meta)
 		return {false, "no fuel loaded, reactor test passed"}
 	end
 	
-	
-	
 	-- Proper startup
 	meta:set_int("burn_time", 1)
 	technic.swap_node(pos, "technic:hv_nuclear_reactor_core_active")
@@ -278,6 +277,7 @@ local function start_reactor(pos, meta)
 	end
 	meta:set_int("power_output", total_power_output)
 	meta:set_int("HV_EU_supply", total_power_output)
+	minetest.get_node_timer(pos):start(1)
 	return {true, "core active"}
 end
 
@@ -302,31 +302,71 @@ local function stop_reactor(pos, meta)
 end
 
 
-minetest.register_abm({
-	label = "Machines: reactor melt-down check",
-	nodenames = {"technic:hv_nuclear_reactor_core_active"},
-	interval = 4,
-	chance = 1,
-	action = function (pos, node)
-		local meta = minetest.get_meta(pos)
-		local badness = reactor_structure_badness(pos)
-		local accum_badness = meta:get_int("structure_accumulated_badness")
-		if badness == 0 then
-			if accum_badness ~= 0 then
-				meta:set_int("structure_accumulated_badness", math.max(accum_badness - 4, 0))
-				siren_clear(pos, meta)
-			end
+-- minetest.register_abm({
+-- 	label = "Machines: reactor melt-down check",
+-- 	nodenames = {"technic:hv_nuclear_reactor_core_active"},
+-- 	interval = 4,
+-- 	chance = 1,
+-- 	action = function (pos, node)
+-- 		local meta = minetest.get_meta(pos)
+-- 		local badness = reactor_structure_badness(pos)
+-- 		local accum_badness = meta:get_int("structure_accumulated_badness")
+-- 		if badness == 0 then
+-- 			if accum_badness ~= 0 then
+-- 				meta:set_int("structure_accumulated_badness", math.max(accum_badness - 4, 0))
+-- 				siren_clear(pos, meta)
+-- 			end
+-- 		else
+-- 			siren_danger(pos, meta)
+-- 			accum_badness = accum_badness + badness
+-- 			if accum_badness >= 25 then
+-- 				melt_down_reactor(pos)
+-- 			else
+-- 				meta:set_int("structure_accumulated_badness", accum_badness)
+-- 			end
+-- 		end
+-- 	end,
+-- })
+
+local function meltdown_check(pos)
+	
+	local meta = minetest.get_meta(pos)
+	local badness = reactor_structure_badness(pos)
+	local accum_badness = meta:get_int("structure_accumulated_badness")
+	
+	if badness == 0 then
+		if accum_badness ~= 0 then
+			meta:set_int("structure_accumulated_badness", math.max(accum_badness - 4, 0))
+			siren_clear(pos, meta)
+		end
+	else
+		siren_danger(pos, meta)
+		accum_badness = accum_badness + badness
+		if accum_badness >= 25 then
+			meta:set_int("HV_EU_supply", 0)
+			meta:set_int("power_output", 0)
+			meta:set_int("burn_time", 0)
+			minetest.after(0, melt_down_reactor, pos)
 		else
-			siren_danger(pos, meta)
-			accum_badness = accum_badness + badness
-			if accum_badness >= 25 then
-				melt_down_reactor(pos)
-			else
-				meta:set_int("structure_accumulated_badness", accum_badness)
-			end
+			meta:set_int("structure_accumulated_badness", accum_badness)
+		end
+	end
+	
+end
+	
+-- LBMs to start timers on existing, ABM-driven nodes
+minetest.register_lbm({
+	name = "technic:nuclear_reactor_timer_init",
+	nodenames = {"technic:hv_nuclear_reactor_core_active"},
+	run_at_every_load = false,
+	action = function(pos)
+		local t = minetest.get_node_timer(pos)
+		if not t:is_started() then
+			meta:set_int("power_output", power_supply)
+			t:start(1)
 		end
 	end,
-})
+})	
 
 local function run(pos, node)
 	local meta = minetest.get_meta(pos)
@@ -520,29 +560,38 @@ minetest.register_node("technic:hv_nuclear_reactor_core_active", {
 	allow_metadata_inventory_take = technic.machine_inventory_take,
 	allow_metadata_inventory_move = technic.machine_inventory_move,
 	technic_run = run,
-	technic_on_disable = function(pos, node)
-		local timer = minetest.get_node_timer(pos)
-        	timer:start(1)
-        end,
 	on_timer = function(pos, node)
 		local meta = minetest.get_meta(pos)
 
-		-- Connected back?
-		if meta:get_int("HV_EU_timeout") > 0 then return false end
-
-		local burn_time = meta:get_int("burn_time") or 0
-
-		if burn_time >= burn_ticks or burn_time == 0 then
-			meta:set_int("HV_EU_supply", 0)
-			meta:set_int("burn_time", 0)
-			technic.swap_node(pos, "technic:hv_nuclear_reactor_core")
-			meta:set_int("structure_accumulated_badness", 0)
-			siren_clear(pos, meta)
-			return false
+		local ticks = meta:get_int("timer_count") or 0
+                                                                 
+		ticks = ticks + 1
+		if ticks == meltdown_check_interval then
+			meltdown_check(pos)
+			ticks = 0
 		end
+		meta:set_int("timer_count", ticks)
+                                                                                                                                 
+		-- Connected back?
+		if meta:get_int("HV_EU_timeout") > 0 then 
+			-- skip fuel burn check
+			return true 
+		else 
+			-- account for fuel burnout during time spent off the grid
+			local burn_time = meta:get_int("burn_time") or 0
 
-		meta:set_int("burn_time", burn_time + 1)
-		return true
+			if burn_time >= burn_ticks or burn_time == 0 then
+				meta:set_int("HV_EU_supply", 0)
+				meta:set_int("burn_time", 0)
+				technic.swap_node(pos, "technic:hv_nuclear_reactor_core")
+				meta:set_int("structure_accumulated_badness", 0)
+				siren_clear(pos, meta)
+				return false
+			end
+
+			meta:set_int("burn_time", burn_time + 1)
+			return true
+		end
 	end,
 })
 

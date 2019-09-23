@@ -69,7 +69,7 @@ local twosize_products = {
 }
 
 local cnc_formspec =
-	"invsize[11,11;]"..
+	"size[11,11;]"..
 	"label[0,0;"..S("Choose Milling Program:").."]"..
 	"image_button[0,0.5;1,1;technic_cnc_slope.png;slope; ]"..
 	"image_button[1,0.5;1,1;technic_cnc_slope_edge.png;slope_edge; ]"..
