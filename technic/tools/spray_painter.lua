@@ -33,7 +33,7 @@ minetest.register_node ("technic:paint_layer", {
 			wall_side = {-0.5, -0.5, -0.5, -0.49, 0.5, 0.5},
                 },
 	drop = "",
-	groups = {attached_node = 1, dig_immediate = 2, not_in_creative_inventory = 1, not_blocking_trains = 1},
+	groups = {attached_node = 1, dig_immediate = 2, not_in_creative_inventory = 1, not_blocking_trains = 1, spray_paint = 1},
 	paramtype = "light",
 	paramtype2 = "colorwallmounted",
 	palette = "technic_paint_palette.png",
@@ -50,7 +50,7 @@ minetest.register_node ("technic:fluorescent_paint_layer", {
 			wall_side = {-0.5, -0.5, -0.5, -0.49, 0.5, 0.5},
                 },
 	drop = "",
-	groups = {attached_node = 1, dig_immediate = 2, not_in_creative_inventory = 1, not_blocking_trains = 1},
+	groups = {attached_node = 1, dig_immediate = 2, not_in_creative_inventory = 1, not_blocking_trains = 1, spray_paint = 1},
 	light_source = 5,
 	paramtype = "light",
 	paramtype2 = "colorwallmounted",
@@ -330,3 +330,99 @@ minetest.register_craft({
 		{'dye:red', 'dye:green', 'dye:blue'},
 	}
 })
+
+
+-- Paint thinner tool
+-- A companion tool for the spray painter which allows to quickly remove the paint from 
+-- a large area. Intended to clean up curfaces or to remove marks left durin planning 
+-- phase of a construction project. 
+		
+minetest.register_tool("technic:paint_remover", {
+	description = S("Spray Paint Remover"),
+	groups = {technic_tool = 1},
+	inventory_image = "technic_spray_paint_remover.png",
+	stack_max = 1,
+	on_use = function(itemstack, user, pointed_thing)
+		
+		local pos
+		
+		if pointed_thing.type ~= "node" then
+			if user.get_pos ~= nil then
+				pos = user:get_pos()
+			else
+				return itemstack
+			end
+		else 
+			pos = pointed_thing.under
+		end
+                             
+		-- Defining the area for the search needs two positions
+		-- The tool has a limited range in the vertical axis, which is capped at +/- 1 node
+		local start_pos = {
+			x = pos.x + 3,
+			z = pos.z + 3,
+			y = pos.y + 3 
+		} 
+		local end_pos = {
+			x = pos.x - 3,
+			z = pos.z - 3,
+			y = pos.y - 3
+		} 
+
+		-- Since nodes sometimes cannot be removed, we cannot rely on repeating 
+		-- find_node_near() and removing found nodes
+		local found_paint = minetest.find_nodes_in_area(start_pos, end_pos, {"group:spray_paint"})
+		
+		if found_paint then
+			minetest.sound_play("technic_spray_painter", {
+				pos = user:get_pos(),
+				gain = 0.3,
+			})
+		else
+			return itemstack
+		end
+		
+		for _, f in ipairs(found_paint) do
+			minetest.node_dig(f, minetest.get_node(f), user)
+			if not technic.creative_mode then
+				local item_wear = tonumber(itemstack:get_wear())
+				item_wear = item_wear + 131 -- 500 uses
+				if item_wear > 65535 then
+					itemstack:clear()
+					return itemstack
+				end
+				itemstack:set_wear(item_wear)
+			end
+		end
+                                                
+		return itemstack
+	end,
+})
+
+
+if minetest.get_modpath("farming") and farming.mod 
+	and (farming.mod == "redo" or farming.mod == "undo") then
+	
+	minetest.register_craft({
+		output = 'technic:paint_remover',
+		recipe = {
+			{'pipeworks:tube_1'},
+			{'vessels:steel_bottle'},
+			{'farming:bottle_ethanol'},
+		}
+	})
+
+	else
+	
+	minetest.register_craft({
+		output = 'technic:paint_remover',
+		recipe = {
+			{'pipeworks:tube_1'},
+			{'vessels:steel_bottle'},
+			{'bucket:bucket_water'},
+		},
+		replacements = {{"bucket:bucket_water", "bucket:bucket_empty"}}
+	})
+	
+end
+
