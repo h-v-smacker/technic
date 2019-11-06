@@ -72,6 +72,8 @@ local ripe_for_harvest = {
 	"farming:lettuce_5",
 	"farming:oregano_5",
 	"farming:parsley_3",
+	"farming:soy_7",
+	"farming:vanilla_8"
 }
 
 if minetest.get_modpath("farming") and farming.mod and (farming.mod == "redo") then
