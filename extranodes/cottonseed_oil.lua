@@ -5,7 +5,7 @@ local S = rawget(_G, "intllib") and intllib.Getter() or function(s) return s end
 if minetest.get_modpath("farming") then
 	if minetest.get_modpath("bonemeal") then
 		minetest.register_craftitem(":technic:cottonseed_oil", {
-			description = S("Cottonseed Oil"),
+			description = S("Cottonseed Oil Fertilizer"),
 			inventory_image = "technic_cottonseed_oil.png",
 			on_use = function(itemstack, user, pointed_thing)
 				if pointed_thing.type ~= "node" then
