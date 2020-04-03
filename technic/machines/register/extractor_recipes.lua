@@ -27,6 +27,10 @@ if minetest.get_modpath("dye") then
 		{"flowers:tulip",                     "dye:orange 4"},
 		{"flowers:rose",                      "dye:red 4"},
 		{"flowers:viola",                     "dye:violet 4"},
+		-- +v5 flowers
+		{"flowers:chrysanthemum_green",       "dye:green 4"},
+		{"flowers:tulip_black",               "dye:black 4"},
+		
 		{"bones:bones",                       "dye:black 4"},
 	}
 	
@@ -108,7 +112,7 @@ if minetest.get_modpath("dye") then
 	-- overwrite the existing crafting recipes
 	-- it appears impossible to use clear_craft by recipe, and using it by output could 
 	-- elimiate completely unrelated recipes
-	local dyes = {"white", "red", "yellow", "blue", "violet", "orange"}
+	local dyes = {"white", "red", "yellow", "blue", "violet", "orange", "green", "black"}
 	if minetest.get_modpath("bakedclay") then
 		table.insert(dyes, "cyan")
 		table.insert(dyes, "magenta")
