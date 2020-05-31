@@ -14,6 +14,7 @@ end
 local recipes = {
 	-- Dusts
 	{"default:coal_lump",          "technic:coal_dust 2"},
+	{"default:coalblock",         "technic:coal_dust 18"},
 	{"default:copper_lump",        "technic:copper_dust 2"},
 	{"default:desert_stone",       "default:desert_sand"},
 	{"default:gold_lump",          "technic:gold_dust 2"},
