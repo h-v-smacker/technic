@@ -156,12 +156,28 @@ technic.cnc.register_all("default:silver_sandstone_block",
 
 
 
--- TREE
--------
+-- TREES
+--------
 technic.cnc.register_all("default:tree",
                 {snappy=1, choppy=2, oddly_breakable_by_hand=2, flammable=3, wood=1, not_in_creative_inventory=1},
                 {"default_tree.png"},
                 S("Tree"))
+technic.cnc.register_all("default:acacia_tree",
+                {snappy=1, choppy=2, oddly_breakable_by_hand=2, flammable=3, wood=1, not_in_creative_inventory=1},
+                {"default_acacia_tree.png"},
+                S("Acacia Tree"))
+technic.cnc.register_all("default:aspen_tree",
+                {snappy=1, choppy=2, oddly_breakable_by_hand=2, flammable=3, wood=1, not_in_creative_inventory=1},
+                {"default_aspen_tree.png"},
+                S("Aspen Tree"))
+technic.cnc.register_all("default:jungletree",
+                {snappy=1, choppy=2, oddly_breakable_by_hand=2, flammable=3, wood=1, not_in_creative_inventory=1},
+                {"default_jungletree.png"},
+                S("Jungle Tree"))
+technic.cnc.register_all("default:pine_tree",
+                {snappy=1, choppy=2, oddly_breakable_by_hand=2, flammable=3, wood=1, not_in_creative_inventory=1},
+                {"default_pine_tree.png"},
+                S("Pine Tree"))
 
 -- ICE
 -------
@@ -280,47 +296,79 @@ if minetest.get_modpath("ethereal") then
                 {"crystal_block.png"},
                 S("Crystal"))
 	
-	-- Misc. Wood types
+	-- Ethereal Wood types
 	-------------------
 	technic.cnc.register_all("ethereal:banana_wood",
                 {snappy=2, choppy=2, oddly_breakable_by_hand=2, not_in_creative_inventory=1},
                 {"banana_wood.png"},
                 S("Banana Wood"))
+	technic.cnc.register_all("ethereal:banana_trunk",
+                {snappy=2, choppy=2, oddly_breakable_by_hand=2, not_in_creative_inventory=1},
+                {"banana_trunk.png"},
+                S("Banana Trunk"))
 	
 	technic.cnc.register_all("ethereal:birch_wood",
                 {snappy=2, choppy=2, oddly_breakable_by_hand=2, not_in_creative_inventory=1},
                 {"moretrees_birch_wood.png"},
                 S("Birch Wood"))
+	technic.cnc.register_all("ethereal:birch_trunk",
+                {snappy=2, choppy=2, oddly_breakable_by_hand=2, not_in_creative_inventory=1},
+                {"moretrees_birch_trunk.png"},
+                S("Birch Trunk"))
 	
 	technic.cnc.register_all("ethereal:frost_wood",
                 {snappy=2, choppy=2, oddly_breakable_by_hand=2, not_in_creative_inventory=1},
                 {"frost_wood.png"},
                 S("Frost Wood"))
+	technic.cnc.register_all("ethereal:frost_tree",
+                {snappy=2, choppy=2, oddly_breakable_by_hand=2, not_in_creative_inventory=1},
+                {"ethereal_frost_tree.png"},
+                S("Frost Tree"))
 	
 	technic.cnc.register_all("ethereal:palm_wood",
                 {snappy=2, choppy=2, oddly_breakable_by_hand=2, not_in_creative_inventory=1},
                 {"moretrees_palm_wood.png"},
                 S("Palm Wood"))
+	technic.cnc.register_all("ethereal:palm_trunk",
+                {snappy=2, choppy=2, oddly_breakable_by_hand=2, not_in_creative_inventory=1},
+                {"moretrees_palm_trunk.png"},
+                S("Palm Trunk"))
 	
 	technic.cnc.register_all("ethereal:willow_wood",
                 {snappy=2, choppy=2, oddly_breakable_by_hand=2, not_in_creative_inventory=1},
                 {"willow_wood.png"},
                 S("Willow Wood"))
+	technic.cnc.register_all("ethereal:willow_trunk",
+                {snappy=2, choppy=2, oddly_breakable_by_hand=2, not_in_creative_inventory=1},
+                {"willow_trunk.png"},
+                S("Willow Trunk"))
 	
 	technic.cnc.register_all("ethereal:yellow_wood",
                 {snappy=2, choppy=2, oddly_breakable_by_hand=2, not_in_creative_inventory=1},
                 {"yellow_wood.png"},
                 S("Healing Tree Wood"))
+	technic.cnc.register_all("ethereal:yellow_trunk",
+                {snappy=2, choppy=2, oddly_breakable_by_hand=2, not_in_creative_inventory=1},
+                {"yellow_tree.png"},
+                S("Healing Tree Trunk"))
 	
 	technic.cnc.register_all("ethereal:redwood_wood",
                 {snappy=2, choppy=2, oddly_breakable_by_hand=2, not_in_creative_inventory=1},
                 {"redwood_wood.png"},
                 S("Redwood"))
+	technic.cnc.register_all("ethereal:redwood_trunk",
+                {snappy=2, choppy=2, oddly_breakable_by_hand=2, not_in_creative_inventory=1},
+                {"redwood_trunk.png"},
+                S("Redwood Trunk"))
 
 	technic.cnc.register_all("ethereal:sakura_wood",
                 {snappy=2, choppy=2, oddly_breakable_by_hand=2, not_in_creative_inventory=1},
                 {"ethereal_sakura_wood.png"},
                 S("Sakura"))
+	technic.cnc.register_all("ethereal:sakura_trunk",
+                {snappy=2, choppy=2, oddly_breakable_by_hand=2, not_in_creative_inventory=1},
+                {"ethereal_sakura_trunk.png"},
+                S("Sakura Trunk"))
 
 	
 	-- Glorious bamboo
@@ -365,6 +413,11 @@ if minetest.get_modpath("ethereal") then
 			{snappy=2, choppy=2, oddly_breakable_by_hand=2, not_in_creative_inventory=1},
 			{"olive_wood.png"},
 			S("Olive Wood"))
+		technic.cnc.register_all("ethereal:olive_trunk",
+			{snappy=2, choppy=2, oddly_breakable_by_hand=2, not_in_creative_inventory=1},
+			{"olive_trunk.png"},
+			S("Olive Trunk"))
+		--lemon trees have default:wood trunks
 	end
 	
 end
