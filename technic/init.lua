@@ -10,6 +10,11 @@ technic.creative_mode = minetest.settings:get_bool("creative_mode")
 
 local modpath = minetest.get_modpath("technic")
 technic.modpath = modpath
+if modpath:sub(1,1) == "/" then
+    technic.pathsep = "/"
+else
+    technic.pathsep = "\\"
+end
 
 -- there should be a way to distinguish this fork from others
 technic.mod = "linuxforks"
