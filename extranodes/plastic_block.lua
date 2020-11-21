@@ -66,6 +66,14 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
+	output = "homedecor:plastic_sheeting 9",
+	type = "shapeless",
+	recipe = {
+		{ "technic:plastic_clean"}
+	},
+})
+
+minetest.register_craft({
 	output = "technic:plastic_siding_1_thin 2",
 	recipe = {
 		{"technic:plastic_clean"},
