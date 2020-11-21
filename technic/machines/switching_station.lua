@@ -30,12 +30,12 @@ end
 minetest.register_node("technic:switching_station",{
 	description = S("Switching Station"),
 	tiles  = {
-		"technic_water_mill_top_active.png",
-		"technic_water_mill_top_active.png"..cable_entry,
-		"technic_water_mill_top_active.png",
-		"technic_water_mill_top_active.png",
-		"technic_water_mill_top_active.png",
-		"technic_water_mill_top_active.png"},
+		"technic_switching_station.png",
+		"technic_switching_station.png"..cable_entry,
+		"technic_switching_station.png",
+		"technic_switching_station.png",
+		"technic_switching_station.png",
+		"technic_switching_station.png"},
 	groups = {snappy=2, choppy=2, oddly_breakable_by_hand=2, technic_all_tiers=1},
 	connect_sides = {"bottom"},
 	sounds = default.node_sound_wood_defaults(),

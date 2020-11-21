@@ -10,6 +10,7 @@ dofile(path.."/battery_box.lua")
 -- Generators
 dofile(path.."/solar_array.lua")
 dofile(path.."/nuclear_reactor.lua")
+dofile(path.."/hydro_generator.lua")
 dofile(path.."/generator.lua")
 
 -- Machines
