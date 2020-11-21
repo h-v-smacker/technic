@@ -45,6 +45,7 @@ local supply_converter_receive_fields = function(pos, formname, fields, sender)
 
 	local meta = minetest.get_meta(pos)
 	local power = nil
+		
 	if fields.power then
 		power = tonumber(fields.power) or 0
 		power = math.max(power, 0)
@@ -130,7 +131,8 @@ local run = function(pos, node, run_stage)
 	local machine_name  = S("Supply Converter")
 	local meta          = minetest.get_meta(pos)
 	local enabled       = meta:get_string("enabled")
-	if enabled == "" then
+	-- get_string for an non-nil integer value returns empty string, hence double check
+	if enabled == "" and not meta:get_int("enabled") then
 		-- Backwards compatibility
 		minetest.registered_nodes["technic:supply_converter"].on_construct(pos)
 		enabled = true
