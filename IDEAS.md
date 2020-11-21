@@ -20,7 +20,7 @@ A machine to unite 2-4 ingredients without use of heat.
 
 Speeding stuff up
 
-## Tiered hydro generators
+## Tiered hydro generators - ok
 
 LV, MV, and HV; producing progressively more power.
 

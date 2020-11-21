@@ -57,12 +57,15 @@ if minetest.get_modpath("farming") and farming.mod and (farming.mod == "redo" or
 -- 		                        output = {"farming:pumpkin_slice 5"} })
 	table.insert(recipes, { input = "farming:melon_8", 
 		                        output = {"farming:melon_slice 5"} })
+	table.insert(recipes, { input = "farming:toadskin_7", 
+		                        output = {"farming:toadskin_slice 5"} })
 	table.insert(recipes, { input = "farming:pineapple", 
 		                        output = {"farming:pineapple_ring 6", "farming:pineapple_top"} })
 	table.insert(recipes, { input = "farming:garlic", 
 		                        output = {"farming:garlic_clove 10"} })
 	table.insert(recipes, { input = "farming:pepper", 
 		                        output = {"farming:peppercorn 2"} })
+
 	
 	if minetest.get_modpath("cottages") and cottages.mod and cottages.mod == "linuxforks" then
 		-- work as a mechanized threshing floor from cottages
