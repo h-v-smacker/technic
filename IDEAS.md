@@ -64,3 +64,8 @@ HGS - spreads the grass type around
 ## Include mesecons, pipeworks, and digilines
 
 For coherency's sake
+
+## New constructors
+
+2+ = 3 blocks  
+3+ = 5 blocls  

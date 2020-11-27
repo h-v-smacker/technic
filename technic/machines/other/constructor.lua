@@ -1,37 +1,62 @@
-
 local S = technic.getter
 
 local function deploy_node(inv, slot_name, pos, node, machine_node)
-	if node.param2 > 3 then return end
+	-- param2 can be over 3 for flowing liquids
+	if node.param2 > 3 and minetest.get_node_group(node.name, "liquid") < 1 then 
+		return 
+	end
+	
+	local drops = true
+	
 	if node.name ~= "air" then
+	
+		-- placing tracks causes advtrains restart
+		if string.find(node.name, "advtrains:dtrack") then
+			return
+		end
+		
 		if node.name == "ignore" or
 		   node.name == "default:lava_source" or
 		   node.name == "default:lava_flowing" or
 		   node.name == "default:water_source" or
-		   node.name == "default:water_flowing" then
+		   node.name == "default:water_flowing" or
+		   node.name == "technic:corium_source" or
+		   node.name == "technic:corium_flowing"
+		   then
+			-- return
+			drops = false
+		end
+
+		if drops then
+			-- regular material replacement
+			local drops = minetest.get_node_drops(node.name, "")
+			local remove_to = false
+			for i, item in ipairs(drops) do
+				if not inv:room_for_item(slot_name, item) then
+					remove_to = i - 1
+					break
+				end
+				inv:add_item(slot_name, item)
+			end
+			if remove_to then
+				for i = 1, remove_to do
+					inv:remove_item(slot_name, drops[i])
+				end
+			else
+				minetest.remove_node(pos)
+			end
 			return
 		end
-		local drops = minetest.get_node_drops(node.name, "")
-		local remove_to = false
-		for i, item in ipairs(drops) do
-			if not inv:room_for_item(slot_name, item) then
-				remove_to = i - 1
-				break
-			end
-			inv:add_item(slot_name, item)
-		end
-		if remove_to then
-			for i = 1, remove_to do
-				inv:remove_item(slot_name, drops[i])
-			end
-		else
-			minetest.remove_node(pos)
-		end
-		return
 	end
+	
 	if not inv:is_empty(slot_name) then
 		local stack = inv:get_list(slot_name)[1]
 		local def = stack:get_definition()
+
+		if string.find(stack:get_name(), "advtrains:dtrack") then
+			return
+		end
+		
 		if def.type == "node" then
 			minetest.set_node(pos, {
 				name = stack:get_name(),
@@ -65,12 +90,15 @@ local function deploy_node(inv, slot_name, pos, node, machine_node)
 	end
 end
 
+-- crafting recipes
+
 minetest.register_craft({
 	type = "shapeless",
 	output = 'technic:constructor_mk1_off 1',
 	recipe = {'technic:nodebreaker_off', 'technic:deployer_off'},
 
 })
+
 minetest.register_craft({
 	type = "shapeless",
 	output = 'technic:constructor_mk2_off 2',
@@ -81,9 +109,33 @@ minetest.register_craft({
 minetest.register_craft({
 	type = "shapeless",
 	output = 'technic:constructor_mk3_off 2',
+	recipe = {'technic:constructor_mk1_off', 'technic:constructor_mk2_off'},
+
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = 'technic:constructor_mk4_off 2',
 	recipe = {'technic:constructor_mk2_off', 'technic:constructor_mk2_off'},
 
 })
+
+minetest.register_craft({
+	type = "shapeless",
+	output = 'technic:constructor_mk5_off 2',
+	recipe = {'technic:constructor_mk2_off', 'technic:constructor_mk3_off'},
+
+})
+
+-- recycling recipe
+
+minetest.register_craft({
+	type = "shapeless",
+	output = 'technic:constructor_mk1_off',
+	recipe = {'group:technic_constructor'},
+
+})
+
 
 local function make_on(mark, length)
 	return function(pos, node)
@@ -130,10 +182,10 @@ end
 local function make_constructor(mark, length)
 	minetest.register_node("technic:constructor_mk"..mark.."_off", {
 		description = S("Constructor Mk%d"):format(mark),
-		tiles = {"technic_constructor_mk"..mark.."_top_off.png",
-			"technic_constructor_mk"..mark.."_bottom_off.png",
-			"technic_constructor_mk"..mark.."_side2_off.png",
-			"technic_constructor_mk"..mark.."_side1_off.png",
+		tiles = {"technic_constructor_mk"..mark.."_side_off.png^[transformR180",
+			"technic_constructor_mk"..mark.."_side_off.png",
+			"technic_constructor_mk"..mark.."_side_off.png^[transformR90",
+			"technic_constructor_mk"..mark.."_side_off.png^[transformR270",
 			"technic_constructor_back.png",
 			"technic_constructor_front_off.png"},
 		paramtype2 = "facedir",
@@ -148,9 +200,9 @@ local function make_constructor(mark, length)
 				"list[current_player;main;0,5;8,4;]"
 			for i = 1, length do
 				formspec = formspec
-					.."label[5,"..(i - 1)..";"..S("Slot %d"):format(i).."]"
+					.."label["..(i - 1)..",1;"..S("Slot %d"):format(i).."]"
 					.."list[current_name;slot"..i
-						..";6,"..(i - 1)..";1,1;]"
+						..";"..(i - 1)..",2;1,1;]"
 			end
 			meta:set_string("formspec", formspec)
 			meta:set_string("infotext", S("Constructor Mk%d"):format(mark))
@@ -176,10 +228,10 @@ local function make_constructor(mark, length)
 	})
 
 	minetest.register_node("technic:constructor_mk"..mark.."_on", {
-		tiles = {"technic_constructor_mk"..mark.."_top_on.png",
-			"technic_constructor_mk"..mark.."_bottom_on.png",
-			"technic_constructor_mk"..mark.."_side2_on.png",
-			"technic_constructor_mk"..mark.."_side1_on.png",
+		tiles = {"technic_constructor_mk"..mark.."_side_on.png^[transformR180",
+			"technic_constructor_mk"..mark.."_side_on.png",
+			"technic_constructor_mk"..mark.."_side_on.png^[transformR90",
+			"technic_constructor_mk"..mark.."_side_on.png^[transformR270",
 			"technic_constructor_back.png",
 			"technic_constructor_front_on.png"},
 		paramtype2 = "facedir",
@@ -197,5 +249,6 @@ end
 
 make_constructor(1, 1)
 make_constructor(2, 2)
-make_constructor(3, 4)
-
+make_constructor(3, 3)
+make_constructor(4, 4)
+make_constructor(5, 5)

@@ -5,25 +5,25 @@ local S = rawget(_G, "intllib") and intllib.Getter() or function(s) return s end
 
 
 local path = string.gsub(technic.modpath, "technic"..technic.pathsep.."technic", "technic"..technic.pathsep.."extranodes")
-local patha = path..technic.pathsep
+local path = path .. technic.pathsep
 
 -----------------------------------------------------------------------------------------
 --                           Introducing Extra Stuff
 -----------------------------------------------------------------------------------------
-dofile(patha.."aspirin.lua")
-dofile(patha.."trampoline.lua")
-dofile(patha.."extratubes.lua")
-dofile(patha.."extramesecons.lua")
-dofile(patha.."lox.lua")
-dofile(patha.."plastic_block.lua")
-dofile(patha.."diamonds.lua")
-dofile(patha.."insulator_clips.lua")
-dofile(patha.."cottonseed_oil.lua")
-dofile(patha.."radiation_sign.lua")
-dofile(patha.."planting_block.lua")
+dofile(path.."aspirin.lua")
+dofile(path.."trampoline.lua")
+dofile(path.."extratubes.lua")
+dofile(path.."extramesecons.lua")
+dofile(path.."lox.lua")
+dofile(path.."plastic_block.lua")
+dofile(path.."diamonds.lua")
+dofile(path.."insulator_clips.lua")
+dofile(path.."cottonseed_oil.lua")
+dofile(path.."radiation_sign.lua")
+dofile(path.."planting_block.lua")
 
 if minetest.get_modpath("ethereal") and minetest.get_modpath("flowers") then
-	dofile(patha.."antishroom.lua")
+	dofile(path.."antishroom.lua")
 end
 
 
