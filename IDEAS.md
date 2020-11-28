@@ -65,7 +65,12 @@ HGS - spreads the grass type around
 
 For coherency's sake
 
-## New constructors
+## New constructors - ok
 
 2+ = 3 blocks  
-3+ = 5 blocls  
+3+ = 5 blocks  
+even better -> mk-N system 
+
+## Proper concrete
+
+A block that starts as liquid, spreads, and then solidifies.
