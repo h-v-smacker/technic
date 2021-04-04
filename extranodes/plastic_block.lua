@@ -24,7 +24,7 @@ for _,n in pairs(plastic_nodes) do
 		paramtype2 = "colorwallmounted",
 		palette = "technic_paint_palette.png",
 	})
-	
+
 end
 
 local thin_nodes = {
@@ -51,7 +51,7 @@ for _,n in pairs(thin_nodes) do
 		paramtype2 = "colorwallmounted",
 		palette = "technic_paint_palette.png",
 	})
-	
+
 end
 
 
@@ -133,3 +133,52 @@ minetest.register_craft({
 		{ "technic:plastic_clean", "technic:plastic_clean", "technic:plastic_clean"},
 	},
 })
+
+minetest.register_craft({
+	output = "technic:plastic_cross 5",
+	recipe = {
+		{ "technic:plastic_clean", "", "technic:plastic_clean"},
+		{ "", "technic:plastic_clean", ""},
+		{ "technic:plastic_clean", "", "technic:plastic_clean"},
+	},
+})
+
+minetest.register_craft({
+	output = "technic:plastic_waves 5",
+	recipe = {
+		{ "technic:plastic_clean", "", ""},
+		{ "technic:plastic_clean", "technic:plastic_clean", "technic:plastic_clean"},
+		{ "", "", "technic:plastic_clean"},
+	},
+})
+
+minetest.register_craft({
+	output = "technic:plastic_tiles 5",
+	recipe = {
+		{ "", "technic:plastic_clean", ""},
+		{ "technic:plastic_clean", "technic:plastic_clean", "technic:plastic_clean"},
+		{ "", "technic:plastic_clean", ""},
+	},
+})
+
+minetest.register_craft({
+	output = "homedecor:plastic_sheeting 27",
+	recipe = {
+		{ "technic:plastic_clean", "technic:plastic_clean", "technic:plastic_clean"},
+	},
+})
+
+for _,n in pairs(plastic_nodes) do
+	if n.node ~= "plastic_clean" then
+		local block = "technic:" .. n.node
+		minetest.register_craft({
+			output = "technic:plastic_clean 9",
+			recipe = {
+				{ block, block, block},
+				{ block, block, block},
+				{ block, block, block},
+			},
+		})
+	end
+end
+
