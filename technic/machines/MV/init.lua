@@ -27,6 +27,7 @@ dofile(path.."/tool_workshop.lua")
 
 dofile(path.."/thresher.lua")
 dofile(path.."/freezer.lua")
+dofile(path.."/sawmill.lua")
 
 -- The power radiator supplies appliances with inductive coupled power:
 -- Lighting and associated textures is taken directly from VanessaE's homedecor and made electric.
