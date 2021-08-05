@@ -77,6 +77,8 @@ local function register_recipe(typename, data)
 	end
 	
 	if unified_inventory and technic.recipes[typename].output_size > 1 then
+    
+--[[
 		local short_output = data.output[1]
 		unified_inventory.register_craft({
 			type = typename,
@@ -84,6 +86,18 @@ local function register_recipe(typename, data)
 			items = data.input,
 			width = 0,
 		})
+--]]
+
+        -- account for all products in multiple generation
+        for _, product in ipairs(data.output) do
+    		unified_inventory.register_craft({
+    			type = typename,
+    			output = product,
+    			items = data.input,
+    			width = 0,
+    		})
+        end
+
 	end
 	
 end

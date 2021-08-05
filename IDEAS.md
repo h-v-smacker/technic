@@ -74,3 +74,8 @@ even better -> mk-N system
 ## Proper concrete
 
 A block that starts as liquid, spreads, and then solidifies.
+
+## Power lines
+
+A dedicated cable type for power transmission
+
