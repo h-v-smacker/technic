@@ -82,6 +82,34 @@ if minetest.get_modpath("ehlphabet") then
 
 end
 
+if minetest.get_modpath("extranodes") then
+	minetest.register_node("technic:plastic_clean_technic_cnc_sphere_color", {
+		description = S("Plastic Clean Sphere (colored)"),
+		drawtype = "mesh",
+		mesh = "technic_sphere.obj",
+		tiles = {"technic_plastic_clean.png"},
+		groups = {dig_immediate = 2, paintable_plastic_block = 1, not_in_creative_inventory = 1},
+		drop = "technic:plastic_clean_technic_cnc_sphere",
+		paramtype = "light",
+		paramtype2 = "colorwallmounted",
+		palette = "technic_paint_palette.png",
+	})
+
+	minetest.register_node("technic:plastic_clean_technic_cnc_sphere_color_fluorescent", {
+		description = S("Plastic Clean Sphere (colored)"),
+		drawtype = "mesh",
+		mesh = "technic_sphere.obj",
+		tiles = {"technic_plastic_clean.png"},
+		groups = {dig_immediate = 2, paintable_plastic_block = 1, not_in_creative_inventory = 1},
+		light_source = 7,
+		drop = "technic:plastic_clean_technic_cnc_sphere",
+		paramtype = "light",
+		paramtype2 = "colorwallmounted",
+		palette = "technic_paint_palette.png",
+	})
+
+end
+
 local function spray_painter_setmode(user, itemstack, meta, f)
 	local player_name = user:get_player_name()
 	
@@ -175,6 +203,22 @@ local function spray_paint(itemstack, user, pointed_thing, ptype)
 			
 			paintable = true
 		
+		-- if pointing at plastic cnc sphere, specifically
+		elseif (target.name == "technic:plastic_clean_technic_cnc_sphere"
+				or target.name == "technic:plastic_clean_technic_cnc_sphere_color"
+				or target.name == "technic:plastic_clean_technic_cnc_sphere_color_fluorescent") then
+
+			if target.name == "technic:plastic_clean_technic_cnc_sphere" then
+				if not ptype then
+					minetest.swap_node(pointed_thing.under, { name = "technic:plastic_clean_technic_cnc_sphere_color" })
+				else
+					minetest.swap_node(pointed_thing.under, { name = "technic:plastic_clean_technic_cnc_sphere_color_fluorescent" })
+				end
+				target = minetest.get_node_or_nil(pointed_thing.under)
+			end
+
+			paintable = true
+
 		-- if the tool is pointed at a layer of paint -> cycling colors
 		elseif target.name == paint_name then	
 			
