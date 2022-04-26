@@ -15,4 +15,4 @@ minetest.register_craft({
 	}
 })
 
-technic.register_hydro_generator({tier="LV", supply=35})
+technic.register_hydro_generator({tier="LV", supply=20})
