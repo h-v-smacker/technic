@@ -18,12 +18,26 @@ local recipes = {
 --	for consistency, any sand should be compressed into respective sandstone type
 	{"default:desert_sand 2",      "default:desert_sandstone"},
 	{"technic:mixed_metal_ingot",  "technic:composite_plate"},
-	{"default:copper_ingot 5",     "technic:copper_plate"},
+	{"technic:light_copper_plate 5",     "technic:copper_plate"},
 	{"technic:coal_dust 4",        "technic:graphite"},
 	{"technic:carbon_cloth",       "technic:carbon_plate"},
 	{"technic:uranium35_ingot 5",  "technic:uranium_fuel"},
 	{"default:coalblock",          "technic:graphite_rod"},
-	{"technic:diamond_seed 25",    "default:diamond"}
+	{"technic:diamond_seed 25",    "default:diamond"},
+	{"default:bronze_ingot",       "technic:bronze_plate"},
+	{"default:copper_ingot",       "technic:light_copper_plate"},
+	{"default:gold_ingot",         "technic:gold_plate"},
+	{"default:steel_ingot",        "technic:wrought_iron_plate"},
+	{"default:tin_ingot",          "technic:tin_plate"},
+	{"technic:brass_ingot",        "technic:brass_plate"},
+	{"technic:carbon_steel_ingot", "technic:steel_plate"},
+	{"technic:cast_iron_ingot",    "technic:cast_iron_plate"},
+	{"technic:chromium_ingot",     "technic:chromium_plate"},
+	{"technic:lead_ingot",         "technic:lead_plate"},
+	{"technic:stainless_steel_ingot", "technic:stainless_steel_plate"},
+	{"technic:uranium0_ingot",     "technic:uranium_plate"},
+	{"technic:uranium_ingot",      "technic:uranium_plate"},
+	{"technic:zinc_ingot",         "technic:zinc_plate"}
 }
 
 
@@ -62,7 +76,14 @@ if minetest.get_modpath("pathv7") then
 	table.insert(recipes, {"default:acacia_wood", "pathv7:bridgewood 1"})
 	table.insert(recipes, {"default:junglewood", "pathv7:junglewood 1"})
 end
-	
+
+
+
+if minetest.get_modpath("moreores") then
+	table.insert(recipes, {"moreores:mithril_ingot", "technic:mithril_plate"})
+	table.insert(recipes, {"moreores:silver_ingot",  "technic:silver_plate"})
+end
+
 
 
 for _, data in pairs(recipes) do

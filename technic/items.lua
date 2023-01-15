@@ -139,8 +139,8 @@ minetest.register_craftitem("technic:composite_plate", {
 })
 
 minetest.register_craftitem("technic:copper_plate", {
-	description = S("Copper Plate"),
-	inventory_image = "technic_copper_plate.png",
+	description = S("Dense Copper Plate"),
+	inventory_image = "technic_copper_plate_dense.png",
 })
 
 minetest.register_craftitem("technic:carbon_plate", {
@@ -158,6 +158,87 @@ minetest.register_craftitem("technic:carbon_cloth", {
 	inventory_image = "technic_carbon_cloth.png",
 })
 
+
+minetest.register_craftitem("technic:bronze_plate", {
+	description = S("Bronze Plate"),
+	inventory_image = "technic_bronze_plate.png",
+})
+
+minetest.register_craftitem("technic:gold_plate", {
+	description = S("Gold Plate"),
+	inventory_image = "technic_gold_plate.png",
+})
+
+minetest.register_craftitem("technic:wrought_iron_plate", {
+	description = S("Wrought Iron Plate"),
+	inventory_image = "technic_wrought_iron_plate.png",
+})
+
+minetest.register_craftitem("technic:tin_plate", {
+	description = S("Tin Plate"),
+	inventory_image = "technic_tin_plate.png",
+})
+
+minetest.register_craftitem("technic:brass_plate", {
+	description = S("Brass Plate"),
+	inventory_image = "technic_brass_plate.png",
+})
+
+minetest.register_craftitem("technic:steel_plate", {
+	description = S("Steel Plate"),
+	inventory_image = "technic_steel_plate.png",
+})
+
+minetest.register_craftitem("technic:cast_iron_plate", {
+	description = S("Cast Iron Plate"),
+	inventory_image = "technic_cast_iron_plate.png",
+})
+
+minetest.register_craftitem("technic:chromium_plate", {
+	description = S("Chromium Plate"),
+	inventory_image = "technic_chromium_plate.png",
+})
+
+minetest.register_craftitem("technic:lead_plate", {
+	description = S("Lead Plate"),
+	inventory_image = "technic_lead_plate.png",
+})
+
+minetest.register_craftitem("technic:stainless_steel_plate", {
+	description = S("Stainless Steel Plate"),
+	inventory_image = "technic_stainless_steel_plate.png",
+})
+
+minetest.register_craftitem("technic:uranium_plate", {
+	description = S("Uranium Plate"),
+	inventory_image = "technic_uranium_plate.png",
+})
+
+minetest.register_craftitem("technic:zinc_plate", {
+	description = S("Zinc Plate"),
+	inventory_image = "technic_zinc_plate.png",
+})
+
+minetest.register_craftitem("technic:light_copper_plate", {
+	description = S("Copper Plate"),
+	inventory_image = "technic_copper_plate.png",
+})
+
+if minetest.get_modpath("moreores") then
+	minetest.register_craftitem("technic:mithril_plate", {
+		description = S("Mithril Plate"),
+		inventory_image = "technic_mithril_plate.png",
+	})
+end
+
+if minetest.get_modpath("moreores") then
+	minetest.register_craftitem("technic:silver_plate", {
+		description = S("Silver Plate"),
+		inventory_image = "technic_silver_plate.png",
+	})
+end
+
+
 minetest.register_node("technic:machine_casing", {
 	description = S("Machine Casing"),
 	groups = {cracky=2},
@@ -165,7 +246,7 @@ minetest.register_node("technic:machine_casing", {
 	paramtype = "light",
 	drawtype = "allfaces",
 	tiles = {"technic_machine_casing.png"},
-	sounds = default.node_sound_stone_defaults(),
+	sounds = default.node_sound_metal_defaults(),
 })
 
 for p = 0, 35 do
