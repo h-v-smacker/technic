@@ -1,6 +1,6 @@
 local S = rawget(_G, "intllib") and intllib.Getter() or function(s) return s end
 
-if minetest.get_modpath("mesecons") then
+if minetest.get_modpath("mesecons_switch") then
 
 	mesecon.register_node("extranodes:mesecon_switch_protected", {
 		paramtype2="facedir",
