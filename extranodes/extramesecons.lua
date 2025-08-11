@@ -30,8 +30,8 @@ if minetest.get_modpath("mesecons") then
 		groups = {dig_immediate=2},
 		tiles = {	"mesecons_switch_side.png", 
 	                  "mesecons_switch_side.png",
-				"mesecons_switch_side.png^default_key.png^[transformR180",
-				"mesecons_switch_side.png^default_key.png^[transformR180FX",
+				"mesecons_switch_side.png^keys_key.png^[transformR180",
+				"mesecons_switch_side.png^keys_key.png^[transformR180FX",
 				"mesecons_switch_side.png", 
 				"mesecons_switch_off.png^mesecons_switch_locked_frame.png"},
 		mesecons = {receptor = { state = mesecon.state.off }}
@@ -39,8 +39,8 @@ if minetest.get_modpath("mesecons") then
 		groups = {dig_immediate=2, not_in_creative_inventory=1},
 		tiles = {	"mesecons_switch_side.png", 
 	                  "mesecons_switch_side.png",
-				"mesecons_switch_side.png^default_key.png^[transformR180", 
-				"mesecons_switch_side.png^default_key.png^[transformR180FX",
+				"mesecons_switch_side.png^keys_key.png^[transformR180", 
+				"mesecons_switch_side.png^keys_key.png^[transformR180FX",
 				"mesecons_switch_side.png",
 				"mesecons_switch_on.png^mesecons_switch_locked_frame.png"},
 		mesecons = {receptor = { state = mesecon.state.on }}
