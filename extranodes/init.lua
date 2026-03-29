@@ -21,6 +21,7 @@ dofile(path.."insulator_clips.lua")
 dofile(path.."cottonseed_oil.lua")
 dofile(path.."radiation_sign.lua")
 dofile(path.."planting_block.lua")
+dofile(path.."sheetmetal.lua")
 
 if minetest.get_modpath("ethereal") and minetest.get_modpath("flowers") then
 	dofile(path.."antishroom.lua")
@@ -107,6 +108,90 @@ if minetest.get_modpath("moreblocks") then
 		groups={cracky=1, not_in_creative_inventory=1},
 		tiles={"technic_brass_block.png"},
 	})
+
+	stairsplus:register_all("technic", "bronze_sheetmetal", "technic:bronze_sheetmetal", {
+		description=S("Bronze Sheetmetal"),
+		groups={cracky=2, not_in_creative_inventory=1},
+		tiles={"technic_bronze_sheetmetal.png"},
+	})
+	
+	stairsplus:register_all("technic", "copper_sheetmetal", "technic:copper_sheetmetal", {
+		description=S("Copper Sheetmetal"),
+		groups={cracky=2, not_in_creative_inventory=1},
+		tiles={"technic_copper_sheetmetal.png"},
+	})
+		stairsplus:register_all("technic", "gold_sheetmetal", "technic:gold_sheetmetal", {
+		description=S("Gold Sheetmetal"),
+		groups={cracky=2, not_in_creative_inventory=1},
+		tiles={"technic_gold_sheetmetal.png"},
+	})
+		stairsplus:register_all("technic", "wrought_iron_sheetmetal", "technic:wrought_iron_sheetmetal", {
+		description=S("Wrought Iron Sheetmetal"),
+		groups={cracky=2, not_in_creative_inventory=1},
+		tiles={"technic_wrought_iron_sheetmetal.png"},
+	})
+		stairsplus:register_all("technic", "tin_sheetmetal", "technic:tin_sheetmetal", {
+		description=S("Tin Sheetmetal"),
+		groups={cracky=2, not_in_creative_inventory=1},
+		tiles={"technic_tin_sheetmetal.png"},
+	})
+		stairsplus:register_all("technic", "brass_sheetmetal", "technic:brass_sheetmetal", {
+		description=S("Brass Sheetmetal"),
+		groups={cracky=2, not_in_creative_inventory=1},
+		tiles={"technic_brass_sheetmetal.png"},
+	})
+		stairsplus:register_all("technic", "steel_sheetmetal", "technic:steel_sheetmetal", {
+		description=S("Steel Sheetmetal"),
+		groups={cracky=2, not_in_creative_inventory=1},
+		tiles={"technic_steel_sheetmetal.png"},
+	})
+		stairsplus:register_all("technic", "cast_iron_sheetmetal", "technic:cast_iron_sheetmetal", {
+		description=S("Cast Iron Sheetmetal"),
+		groups={cracky=2, not_in_creative_inventory=1},
+		tiles={"technic_cast_iron_sheetmetal.png"},
+	})
+		stairsplus:register_all("technic", "zinc_sheetmetal", "technic:zinc_sheetmetal", {
+		description=S("Zinc Sheetmetal"),
+		groups={cracky=2, not_in_creative_inventory=1},
+		tiles={"technic_zinc_sheetmetal.png"},
+	})
+		stairsplus:register_all("technic", "chromium_sheetmetal", "technic:chromium_sheetmetal", {
+		description=S("Chromium Sheetmetal"),
+		groups={cracky=2, not_in_creative_inventory=1},
+		tiles={"technic_chromium_sheetmetal.png"},
+	})
+		stairsplus:register_all("technic", "lead_sheetmetal", "technic:lead_sheetmetal", {
+		description=S("Lead Sheetmetal"),
+		groups={cracky=2, not_in_creative_inventory=1},
+		tiles={"technic_lead_sheetmetal.png"},
+	})
+		stairsplus:register_all("technic", "stainless_steel_sheetmetal", "technic:stainless_steel_sheetmetal", {
+		description=S("Stainless Steel Sheetmetal"),
+		groups={cracky=2, not_in_creative_inventory=1},
+		tiles={"technic_stainless_steel_sheetmetal.png"},
+	})
+		stairsplus:register_all("technic", "uranium_sheetmetal", "technic:uranium_sheetmetal", {
+		description=S("Uranium Sheetmetal"),
+		groups={cracky=2, not_in_creative_inventory=1},
+		tiles={"technic_uranium_sheetmetal.png"},
+	})
+	
+
+	if minetest.get_modpath("moreores") then
+		stairsplus:register_all("technic", "mithril_sheetmetal", "technic:mithril_sheetmetal", {
+		description=S("Mithril Sheetmetal"),
+		groups={cracky=2, not_in_creative_inventory=1},
+		tiles={"technic_mithril_sheetmetal.png"},
+	})
+	end
+
+	if minetest.get_modpath("moreores") then
+		stairsplus:register_all("technic", "silver_sheetmetal", "technic:silver_sheetmetal", {
+		description=S("Silver Sheetmetal"),
+		groups={cracky=2, not_in_creative_inventory=1},
+		tiles={"technic_silver_sheetmetal.png"},
+	})
+	end
 
 	function register_technic_stairs_alias(modname, origname, newmod, newname)
 		minetest.register_alias(modname .. ":slab_" .. origname, newmod..":slab_" .. newname)

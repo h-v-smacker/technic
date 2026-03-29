@@ -24,11 +24,11 @@ Speeding stuff up
 
 LV, MV, and HV; producing progressively more power.
 
-## MV Sawmill
+## MV Sawmill - ok
 
 For industrial purposes
 
-## HV alloying furnace
+## HV alloying furnace - ok
 
 Same as above
 
