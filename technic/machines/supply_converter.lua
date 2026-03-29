@@ -149,6 +149,10 @@ local run = function(pos, node, run_stage)
 
 	local from = technic.get_cable_tier(name_up)
 	local to   = technic.get_cable_tier(name_down)
+	
+	if from == "TR" or to == "TR" then
+		remain = 0.99
+	end
 
 	if from and to then
 		local input = meta:get_int(from.."_EU_input")
